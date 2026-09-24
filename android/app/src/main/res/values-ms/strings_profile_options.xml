@@ -31,4 +31,28 @@
     <string name="species_talang">Talang</string>
     <string name="species_ikan_merah">Ikan merah</string>
     <string name="species_belukang">Belukang</string>
+
+    <string name="style_shore_tag">Tanpa bot • Balingan jauh</string>
+    <string name="style_kelong_tag">Naik bot • Bawah pelantar</string>
+    <string name="style_raft_tag">Bermalam • Umpan &amp; gewang</string>
+    <string name="style_boat_tag">Sewa bot • Jigging &amp; dasar</string>
+    <string name="style_estuary_tag">Ikut pasang surut • Casting</string>
+    <string name="style_kayak_tag">Kawasan cetek • Set ringan</string>
+
+    <string name="species_siakap_sub">Barramundi</string>
+    <string name="species_siakap_habitat">Muara &amp; bakau</string>
+    <string name="species_jenahak_sub">Golden snapper</string>
+    <string name="species_jenahak_habitat">Karang &amp; muara</string>
+    <string name="species_kerapu_sub">Grouper</string>
+    <string name="species_kerapu_habitat">Karang &amp; dasar berbatu</string>
+    <string name="species_tenggiri_sub">Spanish mackerel</string>
+    <string name="species_tenggiri_habitat">Laut terbuka &amp; tubir</string>
+    <string name="species_pari_sub">Ray</string>
+    <string name="species_pari_habitat">Dasar pasir &amp; lumpur</string>
+    <string name="species_talang_sub">Queenfish</string>
+    <string name="species_talang_habitat">Karang &amp; pulau pesisir</string>
+    <string name="species_ikan_merah_sub">Red snapper</string>
+    <string name="species_ikan_merah_habitat">Karang dalam &amp; beting</string>
+    <string name="species_belukang_sub">Sea catfish</string>
+    <string name="species_belukang_habitat">Muara &amp; pantai berlumpur</string>
 </resources>

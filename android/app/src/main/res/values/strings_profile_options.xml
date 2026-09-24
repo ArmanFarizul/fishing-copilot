@@ -24,13 +24,39 @@
     <string name="style_kayak">Kayak</string>
     <string name="style_kayak_description">Paddling the coast and estuaries</string>
 
-    <!-- Target species chips. Use the name local anglers actually say in that language. -->
+    <!-- Target species card names (bold, one line). Use the name local anglers actually say in that language. -->
     <string name="species_siakap">Siakap</string>
-    <string name="species_jenahak">Mangrove jack</string>
+    <string name="species_jenahak">Golden snapper</string>
     <string name="species_kerapu">Grouper</string>
     <string name="species_tenggiri">Tenggiri</string>
-    <string name="species_pari">Stingray</string>
+    <string name="species_pari">Ray</string>
     <string name="species_talang">Queenfish</string>
     <string name="species_ikan_merah">Red snapper</string>
-    <string name="species_belukang">Catfish</string>
+    <string name="species_belukang">Sea catfish</string>
+
+    <!-- Chip under each style card's description, two short facets in the form "A • B" (what to expect • typical method) that the label and description don't already say; keep under 30 characters. -->
+    <string name="style_shore_tag">No boat needed • Long casts</string>
+    <string name="style_kelong_tag">Boat access • Fish below deck</string>
+    <string name="style_raft_tag">Stay overnight • Bait &amp; lure</string>
+    <string name="style_boat_tag">Charter trips • Jig &amp; bottom</string>
+    <string name="style_estuary_tag">Tide-dependent • Lure casting</string>
+    <string name="style_kayak_tag">Shallow spots • Light tackle</string>
+
+    <!-- Species card lines under the bold name (card about 190dp wide, each line single-line and cut off past about 24 characters): _sub is the coloured line giving the fish's name in the other language (the Malay name when the label is English, the English name when the label is Malay, never the same as the label), and _habitat is the grey "where to find it" line in sentence case, in the form "A & B". -->
+    <string name="species_siakap_sub">Barramundi</string>
+    <string name="species_siakap_habitat">Estuaries &amp; mangroves</string>
+    <string name="species_jenahak_sub">Jenahak</string>
+    <string name="species_jenahak_habitat">Reefs &amp; estuaries</string>
+    <string name="species_kerapu_sub">Kerapu</string>
+    <string name="species_kerapu_habitat">Reefs &amp; rocky bottoms</string>
+    <string name="species_tenggiri_sub">Spanish mackerel</string>
+    <string name="species_tenggiri_habitat">Open water &amp; drop-offs</string>
+    <string name="species_pari_sub">Pari</string>
+    <string name="species_pari_habitat">Sandy &amp; muddy bottoms</string>
+    <string name="species_talang_sub">Talang</string>
+    <string name="species_talang_habitat">Coastal reefs &amp; islands</string>
+    <string name="species_ikan_merah_sub">Ikan merah</string>
+    <string name="species_ikan_merah_habitat">Deep reefs &amp; shoals</string>
+    <string name="species_belukang_sub">Belukang</string>
+    <string name="species_belukang_habitat">Estuaries &amp; muddy coasts</string>
 </resources>
