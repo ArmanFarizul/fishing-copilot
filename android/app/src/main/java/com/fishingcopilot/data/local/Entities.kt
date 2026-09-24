@@ -39,12 +39,19 @@ data class CatchLogEntity(
     val weightKg: Double?,
     val lengthCm: Double?,
     val baitUsed: String?,
-    val waterLevel: Double,
-    val tideState: String,
-    val moonPhase: String,
-    val biteScore: Double,
+    // Conditions recorded automatically at the strike; null when that data was not available yet.
+    /** Metres relative to the tide model's mean level. */
+    val waterLevel: Double?,
+    /** "RISING" or "FALLING". */
+    val tideState: String?,
+    /** com.fishingcopilot.astro.MoonPhaseName name. */
+    val moonPhase: String?,
+    val biteScore: Double?,
     val photoUri: String?,
-    val timestamp: Long = System.currentTimeMillis()
+    val timestamp: Long = System.currentTimeMillis(),
+    /** Hijri date as yyyy-MM-dd (Hijri year-month-day). */
+    @ColumnInfo(defaultValue = "NULL") val hijriDate: String? = null,
+    @ColumnInfo(defaultValue = "NULL") val notes: String? = null
 )
 
 @Entity(tableName = "tide_cache", primaryKeys = ["stationCode", "timestamp"])

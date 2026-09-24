@@ -7,7 +7,6 @@ import com.fishingcopilot.data.hijri.HijriRepository
 import com.fishingcopilot.data.local.HijriDao
 import com.fishingcopilot.data.local.HijriDayEntity
 import com.fishingcopilot.data.remote.JakimTakwimClient
-import com.fishingcopilot.data.local.CatchLogEntity
 import com.fishingcopilot.data.local.FishingDao
 import com.fishingcopilot.data.local.SpotEntity
 import com.fishingcopilot.data.local.TideCacheEntity
@@ -39,9 +38,7 @@ class SunMoonViewModelTest {
         override suspend fun updateSpot(spot: SpotEntity) { spots.value += spot.id to spot }
         override suspend fun insertSpot(spot: SpotEntity): Long = error("unused")
         override fun getAllSpotsFlow(): Flow<List<SpotEntity>> = error("unused")
-        override suspend fun insertCatchLog(log: CatchLogEntity): Long = error("unused")
-        override fun getAllCatchLogsFlow(): Flow<List<CatchLogEntity>> = error("unused")
-        override suspend fun getLogsBySpotAndSpecies(spotId: Long, species: String): List<CatchLogEntity> = error("unused")
+        override suspend fun deleteSpot(spot: SpotEntity) = error("unused")
         override suspend fun insertTideCache(cacheList: List<TideCacheEntity>) = error("unused")
         override suspend fun getTideForecast(stationCode: String, startTime: Long, endTime: Long): List<TideCacheEntity> =
             error("unused")

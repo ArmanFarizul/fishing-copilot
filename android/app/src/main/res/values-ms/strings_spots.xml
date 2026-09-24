@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Context for every string is in values/strings_spots.xml. Keep keys and format arguments identical to that file. -->
+<resources>
+    <string name="spots_title">Lubuk saya</string>
+    <string name="spots_home_badge">Utama</string>
+
+    <string name="spots_add">Tambah lubuk</string>
+    <string name="spots_add_title">Lubuk baharu</string>
+    <string name="spots_add_save">Simpan</string>
+    <string name="spots_add_cancel">Batal</string>
+
+    <string name="spots_set_home">Jadikan utama</string>
+    <string name="spots_rename">Tukar nama</string>
+    <string name="spots_delete">Padam</string>
+
+    <string name="spots_rename_title">Tukar nama lubuk</string>
+    <string name="spots_rename_label">Nama lubuk</string>
+    <string name="spots_rename_save">Simpan</string>
+    <string name="spots_rename_cancel">Batal</string>
+
+    <string name="spots_delete_title">Padam %1$s?</string>
+    <string name="spots_delete_body">Data pasang surut dan cuaca yang dimuat turun untuk lubuk ini akan dibuang. Tangkapan di sini kekal dalam rekod, cuma tidak lagi dikaitkan dengan mana-mana lubuk.</string>
+    <string name="spots_delete_confirm">Padam</string>
+    <string name="spots_delete_cancel">Batal</string>
+    <string name="spots_delete_home_blocked">Ini lubuk utama. Jadikan lubuk lain sebagai utama dulu, baru boleh padam.</string>
+
+    <string name="spots_home_changed">%1$s kini lubuk utama.</string>
+    <plurals name="spots_catch_count">
+        <item quantity="other">%1$d tangkapan</item>
+    </plurals>
+</resources>

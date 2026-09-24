@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Context for every string is in values/strings_log.xml. Keep keys and format arguments identical to that file. -->
+<resources>
+    <string name="strike_button">Strike!</string>
+    <string name="strike_button_description">Rekod tangkapan</string>
+
+    <string name="catch_sheet_title">Tangkapan baharu</string>
+
+    <string name="catch_autofill_title">Direkod automatik</string>
+    <string name="catch_autofill_note">Diambil daripada pasang surut, bulan dan skor sekarang.</string>
+    <string name="catch_time_label">Masa</string>
+    <string name="catch_spot_label">Lubuk</string>
+    <string name="catch_water_label">Paras air</string>
+    <string name="catch_tide_label">Pasang surut</string>
+    <string name="catch_moon_label">Bulan</string>
+    <string name="catch_hijri_label">Tarikh Hijrah</string>
+    <string name="catch_score_label">Skor</string>
+    <string name="catch_water_value">%1$s dari paras purata</string>
+    <string name="catch_no_data">Belum ada</string>
+
+    <string name="catch_species_label">Spesies</string>
+    <string name="catch_species_other">Lain-lain</string>
+    <string name="catch_species_other_hint">Taip nama ikan</string>
+
+    <string name="catch_bait_label">Umpan</string>
+    <string name="catch_bait_hint">cth. udang hidup</string>
+    <string name="catch_bait_recent">Umpan terkini</string>
+
+    <string name="catch_weight_label">Berat (kg)</string>
+    <string name="catch_length_label">Panjang (cm)</string>
+
+    <string name="catch_notes_label">Nota</string>
+
+    <string name="catch_photo_add">Tambah gambar</string>
+    <string name="catch_photo_remove">Buang gambar</string>
+
+    <string name="catch_save">Simpan</string>
+    <string name="catch_cancel">Batal</string>
+    <string name="catch_saved">Tangkapan disimpan. Mantap!</string>
+    <string name="catch_species_required">Pilih spesies dulu.</string>
+
+    <string name="log_title">Rekod tangkapan</string>
+    <string name="log_empty_title">Belum ada tangkapan</string>
+    <string name="log_empty_body">Bila ikan makan, ketik Strike! di skrin utama. Pasang surut, bulan dan skor akan direkod sekali.</string>
+
+    <string name="log_summary_title">Ringkasan tangkapan</string>
+    <plurals name="log_summary_count">
+        <item quantity="other">%1$d tangkapan</item>
+    </plurals>
+    <string name="log_summary_top_bait">Umpan paling mengena: %1$s, %2$d%% daripada tangkapan yang ada rekod umpan</string>
+    <string name="log_summary_best_tide">Paling banyak hasil semasa %1$s</string>
+    <string name="log_tide_rising_phrase">air naik</string>
+    <string name="log_tide_falling_phrase">air turun</string>
+    <string name="log_summary_best_species">Paling banyak: %1$s (%2$d ekor)</string>
+
+    <string name="log_weight_value">%1$s kg</string>
+    <string name="log_length_value">%1$s cm</string>
+    <string name="log_bait_value">Umpan: %1$s</string>
+    <string name="log_score_value">Skor %1$s</string>
+    <string name="log_unknown_spot">Lubuk dipadam</string>
+
+    <string name="log_delete">Padam</string>
+    <string name="log_delete_title">Padam tangkapan ini?</string>
+    <string name="log_delete_body">Rekod ini akan hilang terus dan tidak boleh dikembalikan.</string>
+    <string name="log_delete_confirm">Padam</string>
+    <string name="log_delete_cancel">Batal</string>
+
+    <string name="log_photo_description">Gambar tangkapan %1$s</string>
+</resources>

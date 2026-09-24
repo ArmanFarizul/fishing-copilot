@@ -10,23 +10,32 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fishingcopilot.R
+import com.fishingcopilot.bite.BiteForecast
+import com.fishingcopilot.catchlog.CatchConditions
 import com.fishingcopilot.data.profile.UserProfile
 import com.fishingcopilot.ui.components.AvatarBadge
+import com.fishingcopilot.ui.theme.NauticalCyan
+import com.fishingcopilot.ui.theme.OceanMidnight
 import java.time.LocalTime
 
 @Composable
@@ -35,16 +44,39 @@ fun HomeScreen(
     homeViewModel: HomeViewModel?,
     marineViewModel: MarineViewModel?,
     sunMoonViewModel: SunMoonViewModel?,
-    biteViewModel: BiteViewModel?
+    biteViewModel: BiteViewModel?,
+    onStrike: (CatchConditions) -> Unit
 ) {
     val period = remember { DayPeriod.fromHour(LocalTime.now().hour) }
-    Scaffold { innerPadding ->
+    val tideState = homeViewModel?.uiState?.collectAsStateWithLifecycle()?.value
+    val marineState = marineViewModel?.uiState?.collectAsStateWithLifecycle()?.value
+    val sunMoonState = sunMoonViewModel?.uiState?.collectAsStateWithLifecycle()?.value
+    val bite = biteViewModel?.uiState?.collectAsStateWithLifecycle()?.value
+    val haptics = LocalHapticFeedback.current
+    val strikeDescription = stringResource(R.string.strike_button_description)
+
+    Scaffold(
+        floatingActionButton = {
+            ExtendedFloatingActionButton(
+                onClick = {
+                    // Spec "Quick Strike Snap": a long-press haptic confirms the tap even with wet hands.
+                    haptics.performHapticFeedback(HapticFeedbackType.LongPress)
+                    onStrike(strikeConditions(profile.homeSpotId, tideState, sunMoonState, bite))
+                },
+                containerColor = NauticalCyan,
+                contentColor = OceanMidnight,
+                modifier = Modifier.semantics { contentDescription = strikeDescription }
+            ) {
+                Text(stringResource(R.string.strike_button), fontWeight = FontWeight.Black)
+            }
+        }
+    ) { innerPadding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
                 .verticalScroll(rememberScrollState())
-                .padding(24.dp)
+                .padding(start = 24.dp, end = 24.dp, top = 24.dp, bottom = 96.dp)
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -64,28 +96,24 @@ fun HomeScreen(
                 }
             }
             if (biteViewModel != null) {
-                val bite by biteViewModel.uiState.collectAsStateWithLifecycle()
                 Spacer(Modifier.height(24.dp))
                 BiteScoreCard(forecast = bite)
             }
-            if (homeViewModel != null) {
-                val state by homeViewModel.uiState.collectAsStateWithLifecycle()
+            if (homeViewModel != null && tideState != null) {
                 Spacer(Modifier.height(16.dp))
                 TideCard(
-                    state = state,
+                    state = tideState,
                     onRetry = homeViewModel::retry,
                     onUseNearestArea = homeViewModel::useNearestArea,
                     onOffsetChange = homeViewModel::onOffsetChange,
                     onOffsetCommit = homeViewModel::onOffsetCommit
                 )
             }
-            if (marineViewModel != null) {
-                val marineState by marineViewModel.uiState.collectAsStateWithLifecycle()
+            if (marineViewModel != null && marineState != null) {
                 Spacer(Modifier.height(16.dp))
                 MarineCard(state = marineState, onRetry = marineViewModel::retry)
             }
             if (sunMoonViewModel != null) {
-                val sunMoonState by sunMoonViewModel.uiState.collectAsStateWithLifecycle()
                 Spacer(Modifier.height(16.dp))
                 SunMoonCard(state = sunMoonState)
             }
@@ -105,4 +133,25 @@ fun HomeScreen(
             }
         }
     }
+}
+
+/** What the cards show right now, frozen at the moment of the strike. */
+private fun strikeConditions(
+    spotId: Long?,
+    tide: HomeUiState?,
+    sunMoon: SunMoonUiState?,
+    bite: BiteForecast?
+): CatchConditions {
+    val summary = (tide?.tide as? TideCardState.Ready)?.summary
+    val today = sunMoon?.calendar?.firstOrNull()
+    return CatchConditions(
+        timestamp = System.currentTimeMillis(),
+        spotId = spotId,
+        spotName = tide?.spotName,
+        waterLevel = summary?.heightNow,
+        rising = summary?.rising,
+        moonPhase = today?.moon?.phase,
+        hijri = today?.hijri?.hijri,
+        biteScore = bite?.now?.score?.score
+    )
 }

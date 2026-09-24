@@ -56,6 +56,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.fishingcopilot.R
+import com.fishingcopilot.ui.components.hijriDateText
+import com.fishingcopilot.ui.components.label
 import com.fishingcopilot.astro.MoonPhaseName
 import com.fishingcopilot.astro.SolunarType
 import com.fishingcopilot.astro.TideStrength
@@ -247,16 +249,9 @@ private fun MoonCalendarStrip(calendar: List<CalendarDay>, selected: Int, onSele
 
 @Composable
 private fun hijriText(entry: HijriEntry): String {
-    val h = entry.hijri
-    val date = stringResource(R.string.hijri_date, h.day, stringResource(HIJRI_MONTHS[h.month - 1]), h.year)
+    val date = hijriDateText(entry.hijri)
     return if (entry.official) date else stringResource(R.string.hijri_estimate, date)
 }
-
-private val HIJRI_MONTHS = listOf(
-    R.string.hijri_month_1, R.string.hijri_month_2, R.string.hijri_month_3, R.string.hijri_month_4,
-    R.string.hijri_month_5, R.string.hijri_month_6, R.string.hijri_month_7, R.string.hijri_month_8,
-    R.string.hijri_month_9, R.string.hijri_month_10, R.string.hijri_month_11, R.string.hijri_month_12
-)
 
 /** True when the user turned off animations (Developer options or Accessibility "Remove animations"). */
 @Composable
@@ -349,19 +344,6 @@ private fun MoonIcon(illumination: Double, waxing: Boolean, description: String?
         else drawOval(OceanCardBorder, ellipseTopLeft, ellipseSize)
     }
 }
-
-@get:StringRes
-private val MoonPhaseName.label: Int
-    get() = when (this) {
-        MoonPhaseName.NEW_MOON -> R.string.moon_new
-        MoonPhaseName.WAXING_CRESCENT -> R.string.moon_waxing_crescent
-        MoonPhaseName.FIRST_QUARTER -> R.string.moon_first_quarter
-        MoonPhaseName.WAXING_GIBBOUS -> R.string.moon_waxing_gibbous
-        MoonPhaseName.FULL_MOON -> R.string.moon_full
-        MoonPhaseName.WANING_GIBBOUS -> R.string.moon_waning_gibbous
-        MoonPhaseName.LAST_QUARTER -> R.string.moon_last_quarter
-        MoonPhaseName.WANING_CRESCENT -> R.string.moon_waning_crescent
-    }
 
 private fun clock(time: ZonedDateTime, locale: Locale): String =
     time.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT).withLocale(locale))

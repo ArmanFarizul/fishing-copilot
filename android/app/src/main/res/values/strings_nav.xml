@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Labels on the three bottom navigation tabs. Home shows the Bite Score, tide and moon cards for the home spot; Log lists logged catches; Spots manages saved fishing spots. Keep each under 10 characters. -->
+    <string name="nav_home">Home</string>
+    <string name="nav_log">Log</string>
+    <string name="nav_spots">Spots</string>
+</resources>

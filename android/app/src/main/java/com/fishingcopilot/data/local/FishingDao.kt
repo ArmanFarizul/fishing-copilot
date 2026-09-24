@@ -1,6 +1,7 @@
 package com.fishingcopilot.data.local
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -23,14 +24,9 @@ interface FishingDao {
     @Query("SELECT * FROM spots ORDER BY isFavorite DESC, createdAt DESC")
     fun getAllSpotsFlow(): Flow<List<SpotEntity>>
 
-    @Insert
-    suspend fun insertCatchLog(log: CatchLogEntity): Long
-
-    @Query("SELECT * FROM catch_logs ORDER BY timestamp DESC")
-    fun getAllCatchLogsFlow(): Flow<List<CatchLogEntity>>
-
-    @Query("SELECT * FROM catch_logs WHERE spotId = :spotId AND species LIKE '%' || :species || '%' ORDER BY timestamp DESC")
-    suspend fun getLogsBySpotAndSpecies(spotId: Long, species: String): List<CatchLogEntity>
+    /** Cascades to the spot's tide model and marine forecast; catch logs keep their row with spotId set to null. */
+    @Delete
+    suspend fun deleteSpot(spot: SpotEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTideCache(cacheList: List<TideCacheEntity>)

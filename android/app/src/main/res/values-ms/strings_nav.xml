@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Context for every string is in values/strings_nav.xml. Keep keys and format arguments identical to that file. -->
+<resources>
+    <string name="nav_home">Utama</string>
+    <string name="nav_log">Rekod</string>
+    <string name="nav_spots">Lubuk</string>
+</resources>

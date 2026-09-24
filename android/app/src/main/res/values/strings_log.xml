@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Prominent button on the home screen that opens the catch bottom sheet. Short and energetic; Malaysian anglers shout "Strike!" when a fish takes the bait, so keep the English word in every language. -->
+    <string name="strike_button">Strike!</string>
+    <!-- TalkBack description of strike_button. -->
+    <string name="strike_button_description">Log a catch</string>
+
+    <!-- Title of the bottom sheet for logging a catch. -->
+    <string name="catch_sheet_title">New catch</string>
+
+    <!-- Heading of the panel at the top of the sheet with values the app records by itself (time, spot, water level, tide, moon phase, Hijri date, Bite Score); the user does not type these. -->
+    <string name="catch_autofill_title">Recorded for you</string>
+    <!-- One short line under catch_autofill_title. -->
+    <string name="catch_autofill_note">Taken from the tide, moon and score right now.</string>
+    <!-- Short labels in the auto-recorded panel. Keep each under 14 characters. -->
+    <string name="catch_time_label">Time</string>
+    <string name="catch_spot_label">Spot</string>
+    <string name="catch_water_label">Water level</string>
+    <string name="catch_tide_label">Tide</string>
+    <string name="catch_moon_label">Moon</string>
+    <!-- Label for the Hijri date in the panel; the value is shown like "13 Rabiulakhir 1448H". Keep under 14 characters. -->
+    <string name="catch_hijri_label">Hijri date</string>
+    <string name="catch_score_label">Bite Score</string>
+    <!-- Water level value in the panel; %1$s is the signed height already formatted, such as "+0.6 m", measured from average (mean) sea level. Keep very short. -->
+    <string name="catch_water_value">%1$s from average</string>
+    <!-- Shown in the panel in place of a value that is not available yet (for example offline). Keep under 12 characters. -->
+    <string name="catch_no_data">No data yet</string>
+
+    <!-- Species picker: chips of the user's target species, then all species, then catch_species_other, which reveals a text field with catch_species_other_hint. -->
+    <string name="catch_species_label">Species</string>
+    <string name="catch_species_other">Other</string>
+    <string name="catch_species_other_hint">Type the fish name</string>
+
+    <!-- Bait text field; catch_bait_hint is the placeholder example. catch_bait_recent is a small label above chips of baits the user used recently. -->
+    <string name="catch_bait_label">Bait</string>
+    <string name="catch_bait_hint">e.g. live prawn</string>
+    <string name="catch_bait_recent">Recent baits</string>
+
+    <!-- Optional number fields; the unit is part of the label. -->
+    <string name="catch_weight_label">Weight (kg)</string>
+    <string name="catch_length_label">Length (cm)</string>
+
+    <!-- Optional free-text notes field. -->
+    <string name="catch_notes_label">Notes</string>
+
+    <!-- Optional photo picked from the gallery. -->
+    <string name="catch_photo_add">Add photo</string>
+    <string name="catch_photo_remove">Remove photo</string>
+
+    <!-- Sheet buttons. -->
+    <string name="catch_save">Save</string>
+    <string name="catch_cancel">Cancel</string>
+    <!-- Snackbar after the catch is saved. -->
+    <string name="catch_saved">Catch saved. Nice one!</string>
+    <!-- Error shown when the user taps Save without picking a species. -->
+    <string name="catch_species_required">Pick a species first.</string>
+
+    <!-- Title at the top of the Log tab. -->
+    <string name="log_title">Catch log</string>
+    <!-- Empty state of the Log tab. The body points the user to strike_button on the home screen; keep the button name identical to strike_button. -->
+    <string name="log_empty_title">No catches yet</string>
+    <string name="log_empty_body">When a fish is on, tap Strike! on the home screen. Tide, moon and score get saved with it.</string>
+
+    <!-- Summary card at the top of the Log tab. -->
+    <string name="log_summary_title">Your catches so far</string>
+    <!-- Total number of catches; %1$d is the count. -->
+    <plurals name="log_summary_count">
+        <item quantity="one">%1$d catch</item>
+        <item quantity="other">%1$d catches</item>
+    </plurals>
+    <!-- Most used bait; %1$s is the bait, %2$d the whole percent of catches that have a bait recorded (catches without a bait are not counted). -->
+    <string name="log_summary_top_bait">Top bait: %1$s, %2$d%% of catches with bait noted</string>
+    <!-- Tide state with the most catches; %1$s is log_tide_rising_phrase or log_tide_falling_phrase. -->
+    <string name="log_summary_best_tide">Most catches on a %1$s</string>
+    <!-- Phrases inserted into log_summary_best_tide, lowercase because they sit mid-sentence. -->
+    <string name="log_tide_rising_phrase">rising tide</string>
+    <string name="log_tide_falling_phrase">falling tide</string>
+    <!-- Most caught species; %1$s is the species name, %2$d how many were caught. -->
+    <string name="log_summary_best_species">Most caught: %1$s (%2$d)</string>
+
+    <!-- Values on each catch row in the list. %1$s is already formatted: weight such as "2.4", length such as "58", bait text, score such as "8.4". -->
+    <string name="log_weight_value">%1$s kg</string>
+    <string name="log_length_value">%1$s cm</string>
+    <string name="log_bait_value">Bait: %1$s</string>
+    <string name="log_score_value">Score %1$s</string>
+    <!-- Shown in place of the spot name for a catch whose spot was deleted. -->
+    <string name="log_unknown_spot">Spot deleted</string>
+
+    <!-- Menu action on a catch row. -->
+    <string name="log_delete">Delete</string>
+    <!-- Confirmation dialog for deleting one catch; it cannot be undone. -->
+    <string name="log_delete_title">Delete this catch?</string>
+    <string name="log_delete_body">It\'ll be gone for good. This can\'t be undone.</string>
+    <string name="log_delete_confirm">Delete</string>
+    <string name="log_delete_cancel">Cancel</string>
+
+    <!-- TalkBack description of a catch photo; %1$s is the species name. -->
+    <string name="log_photo_description">Photo of your %1$s catch</string>
+</resources>

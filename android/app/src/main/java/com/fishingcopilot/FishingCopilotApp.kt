@@ -1,6 +1,8 @@
 package com.fishingcopilot
 
 import android.app.Application
+import com.fishingcopilot.catchlog.AppPhotoStore
+import com.fishingcopilot.catchlog.PhotoStore
 import com.fishingcopilot.data.hijri.HijriRepository
 import com.fishingcopilot.data.local.FishingDatabase
 import com.fishingcopilot.data.marine.MarineRepository
@@ -23,4 +25,5 @@ class FishingCopilotApp : Application() {
     val tideRepository: TideRepository by lazy { TideRepository(database.tideDao(), OpenMeteoMarineClient()) }
     val marineRepository: MarineRepository by lazy { MarineRepository(database.marineDao(), OpenMeteoWeatherClient()) }
     val hijriRepository: HijriRepository by lazy { HijriRepository(database.hijriDao(), JakimTakwimClient()) }
+    val photoStore: PhotoStore by lazy { AppPhotoStore(this) }
 }
