@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Context for every string is in values/strings_tides.xml. Keep keys and format arguments identical to that file. -->
+<resources>
+    <string name="tide_card_title">Pasang surut</string>
+
+    <string name="tide_rising">Air sedang naik</string>
+    <string name="tide_falling">Air sedang turun</string>
+    <string name="tide_height_relative">%1$s dari paras purata laut</string>
+
+    <string name="tide_next_high">Pasang seterusnya %1$s</string>
+    <string name="tide_next_low">Surut seterusnya %1$s</string>
+    <string name="tide_countdown_hours_minutes">lagi %1$d jam %2$d min</string>
+    <string name="tide_countdown_minutes">lagi %1$d min</string>
+
+    <string name="tide_now">Sekarang</string>
+    <string name="tide_chart_description">Graf pasang surut 24 jam, dengan penanda pada waktu sekarang.</string>
+
+    <string name="tide_offset_label">Laras waktu</string>
+    <string name="tide_offset_value">%1$+d min</string>
+    <string name="tide_offset_help">Air di lubuk berubah lebih lewat atau awal? Laraskan di sini. Di kuala dan sungai, biasanya lewat.</string>
+
+    <string name="tide_source">Anggaran daripada data Open-Meteo, bukan jadual pasang surut rasmi JUPEM. Ketinggian diukur dari paras purata laut, jadi angkanya berbeza daripada JUPEM, tetapi waktunya sepatutnya hampir sama.</string>
+
+    <string name="tide_loading">Sedang muat turun data pasang surut setahun untuk lubuk ini. Perlu internet sekali ini sahaja.</string>
+    <string name="tide_error_offline">Data pasang surut belum dapat dimuat turun. Ia akan dipaparkan sebaik sahaja ada internet.</string>
+    <string name="tide_retry">Cuba lagi</string>
+
+    <string name="tide_no_marine_data">Tiada data laut untuk titik ini. Mungkin ia di darat.</string>
+    <string name="tide_use_nearest_area">Guna %1$s (%2$d km)</string>
+</resources>

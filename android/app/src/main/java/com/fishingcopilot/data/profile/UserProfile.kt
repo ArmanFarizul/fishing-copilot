@@ -4,7 +4,8 @@ data class UserProfile(
     val nickname: String,
     val avatar: Avatar,
     val fishingStyle: FishingStyle,
-    val targetSpecies: Set<Species>
+    val targetSpecies: Set<Species>,
+    val homeSpotId: Long? = null
 )
 
 enum class Avatar { JETTY, KELONG, RAFT_HOUSE, BOAT, KAYAK, ROD, FISH, ANCHOR }

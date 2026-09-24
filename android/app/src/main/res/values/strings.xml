@@ -3,9 +3,6 @@
     <!-- App identity. Not translated. -->
     <string name="app_name" translatable="false">Fishing Copilot</string>
 
-    <!-- Home screen. Placeholder body text shown under the greeting until the tide module ships. -->
-    <string name="home_placeholder">Tides, bite score and marine weather are on the way.</string>
-
     <!-- Home screen greeting, a small label above the user's nickname. Chosen by hour: morning 05-11, midday 12-13, afternoon 14-18, night 19-04. Languages without a separate midday period may repeat the afternoon wording. -->
     <string name="greeting_morning">Good morning</string>
     <string name="greeting_midday">Good afternoon</string>

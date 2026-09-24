@@ -78,6 +78,21 @@ Tiada stesen IOC di selatan Semenanjung (Johor, Melaka, Tioman) atau Sarawak. St
 
 Senarai penuh stesen: `https://ioc-sealevelmonitoring.org/service.php?query=stationlist&showall=all`
 
+### Kualiti data dan ketepatan (diuji 2026-09-24, data 9 hingga 22 September 2026)
+
+- **Bacaan yang hilang dilaporkan sebagai `0`, bukan kosong.** Buang nilai `slevel == 0` sebelum menggunakan data.
+- **Liputan data tidak menentu.** Kerachut (`ms002`) hanya ada 108 daripada 336 jam dengan bacaan sah. Kudat (`ms005`) tiada bacaan langsung dalam tempoh itu.
+- **Perbandingan dengan `sea_level_height_msl` Open-Meteo (selepas purata dibuang):**
+
+| Stesen | Korelasi | Julat sebenar | Julat Open-Meteo |
+|---|---|---|---|
+| Kerachut, Pulau Pinang (`ms002`) | 0.81 | 2.03 m | 1.57 m |
+| Pulau Perhentian (`ms004`) | -0.20 | 0.56 m | 1.51 m |
+
+Di Pulau Pinang, Open-Meteo mengikut corak pasang surut dengan baik tetapi julatnya kira-kira 25% lebih kecil. Di Perhentian, kedua-dua sumber tidak sepadan. Belum dipastikan sama ada sensor IOC atau model Open-Meteo yang salah. Kesimpulan: Open-Meteo tidak boleh dianggap tepat tanpa disahkan dengan sumber rasmi (JUPEM).
+
+Open-Meteo menyediakan `sea_level_height_msl` untuk ramalan kira-kira 10 hari dan data sejarah sekurang-kurangnya setahun ke belakang (`start_date`/`end_date`).
+
 ## 5. MetMalaysia melalui data.gov.my (amaran cuaca dan laut)
 
 ```
@@ -117,3 +132,18 @@ Pembangunan:
 - [ ] **Matahari, bulan dan solunar:** dikira dalam aplikasi, jadi tiada API diperlukan. Pustaka Kotlin belum dipilih.
 - [ ] **Tarikh Hijrah:** dikira dalam aplikasi. Kaedah belum dipilih dan belum disahkan.
 - [ ] **Atribusi Open-Meteo dan Copernicus** dalam aplikasi.
+
+## Enjin ramalan pasang surut: keputusan pengesahan
+
+Diuji pada 2026-09-24. Enjin harmonik (`android/app/src/main/java/com/fishingcopilot/tide/`) dilatih dengan 8,760 jam data `sea_level_height_msl` Open-Meteo (20 September 2025 hingga 19 September 2026). Ramalannya kemudian dibandingkan dengan data yang tidak digunakan semasa latihan:
+
+| Spot | Rujukan | Korelasi | Ralat (RMSE, selepas purata dibuang) |
+|---|---|---|---|
+| Kukup | Open-Meteo, 14 hari seterusnya | 0.998 | 0.05 m |
+| Pulau Pinang | Open-Meteo, 14 hari seterusnya | 0.995 | 0.05 m |
+| Pulau Pinang | Pengukuran sebenar IOC `ms002` (56 jam sah) | 0.85 | 0.24 m |
+
+- Pengiraan (fit) setahun data mengambil 12 hingga 54 ms pada JVM.
+- Enjin menghasilkan semula Open-Meteo hampir tepat. Jurang yang tinggal dengan pengukuran sebenar datang daripada model Open-Meteo sendiri: julat pasang surutnya kira-kira 20% lebih kecil di Pulau Pinang.
+- **Datum berbeza.** Open-Meteo memberi ketinggian relatif kepada aras laut min (MSL). Jadual JUPEM dan tolok IOC menggunakan datum carta atau sifar tolok, jadi nombor ketinggian tidak boleh dibandingkan terus. Masa pasang dan surut pula boleh dibandingkan.
+- Konstituen utama: Kukup M2 0.87 m, S2 0.39 m, O1 0.29 m dan K1 0.29 m (pasang surut campuran, kebanyakannya separuh harian). Pulau Pinang M2 0.50 m, S2 0.29 m dan K1 0.21 m.

@@ -5,6 +5,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
+import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.core.stringSetPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
@@ -35,6 +36,7 @@ class DataStoreProfileRepository(context: Context) : ProfileRepository {
             it[AVATAR] = profile.avatar.name
             it[FISHING_STYLE] = profile.fishingStyle.name
             it[TARGET_SPECIES] = profile.targetSpecies.mapTo(mutableSetOf()) { species -> species.name }
+            if (profile.homeSpotId != null) it[HOME_SPOT_ID] = profile.homeSpotId else it.remove(HOME_SPOT_ID)
         }
     }
 
@@ -44,7 +46,8 @@ class DataStoreProfileRepository(context: Context) : ProfileRepository {
             nickname = nickname,
             avatar = enumOrNull<Avatar>(this[AVATAR]) ?: Avatar.JETTY,
             fishingStyle = enumOrNull<FishingStyle>(this[FISHING_STYLE]) ?: FishingStyle.SHORE,
-            targetSpecies = this[TARGET_SPECIES].orEmpty().mapNotNullTo(mutableSetOf()) { enumOrNull<Species>(it) }
+            targetSpecies = this[TARGET_SPECIES].orEmpty().mapNotNullTo(mutableSetOf()) { enumOrNull<Species>(it) },
+            homeSpotId = this[HOME_SPOT_ID]
         )
     }
 
@@ -57,5 +60,6 @@ class DataStoreProfileRepository(context: Context) : ProfileRepository {
         val AVATAR = stringPreferencesKey("avatar")
         val FISHING_STYLE = stringPreferencesKey("fishing_style")
         val TARGET_SPECIES = stringSetPreferencesKey("target_species")
+        val HOME_SPOT_ID = longPreferencesKey("home_spot_id")
     }
 }

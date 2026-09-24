@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Coastal fishing areas shown in the onboarding spot list (area name in bold) and later on the map. Use the name local anglers and road signs use, and keep it short. -->
+    <string name="area_kuala_perlis">Kuala Perlis</string>
+    <string name="area_kuala_kedah">Kuala Kedah</string>
+    <string name="area_pulau_pinang">Penang</string>
+    <string name="area_lumut_pangkor">Lumut &amp; Pangkor</string>
+    <string name="area_kuala_selangor">Kuala Selangor</string>
+    <string name="area_pelabuhan_klang">Port Klang</string>
+    <string name="area_port_dickson">Port Dickson</string>
+    <string name="area_melaka">Melaka</string>
+    <string name="area_muar">Muar</string>
+    <string name="area_kukup">Kukup</string>
+    <string name="area_desaru">Desaru</string>
+    <string name="area_mersing">Mersing</string>
+    <string name="area_pulau_tioman">Tioman Island</string>
+    <string name="area_kuantan">Kuantan</string>
+    <string name="area_kemaman">Kemaman</string>
+    <string name="area_kuala_terengganu">Kuala Terengganu</string>
+    <string name="area_tok_bali">Tok Bali</string>
+    <string name="area_santubong">Santubong</string>
+    <string name="area_miri">Miri</string>
+    <string name="area_labuan">Labuan</string>
+    <string name="area_kota_kinabalu">Kota Kinabalu</string>
+    <string name="area_kudat">Kudat</string>
+    <string name="area_sandakan">Sandakan</string>
+    <string name="area_semporna">Semporna</string>
+
+    <!-- State names shown under each area in the onboarding spot list; state_labuan is the Federal Territory of Labuan in its short everyday form. -->
+    <string name="state_perlis">Perlis</string>
+    <string name="state_kedah">Kedah</string>
+    <string name="state_pulau_pinang">Penang</string>
+    <string name="state_perak">Perak</string>
+    <string name="state_selangor">Selangor</string>
+    <string name="state_negeri_sembilan">Negeri Sembilan</string>
+    <string name="state_melaka">Melaka</string>
+    <string name="state_johor">Johor</string>
+    <string name="state_pahang">Pahang</string>
+    <string name="state_terengganu">Terengganu</string>
+    <string name="state_kelantan">Kelantan</string>
+    <string name="state_sarawak">Sarawak</string>
+    <string name="state_labuan">Labuan</string>
+    <string name="state_sabah">Sabah</string>
+</resources>

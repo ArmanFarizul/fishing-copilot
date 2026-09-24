@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Context for every string is in values/strings_areas.xml. Keep keys and format arguments identical to that file. -->
+<resources>
+    <string name="area_kuala_perlis">Kuala Perlis</string>
+    <string name="area_kuala_kedah">Kuala Kedah</string>
+    <string name="area_pulau_pinang">Pulau Pinang</string>
+    <string name="area_lumut_pangkor">Lumut &amp; Pangkor</string>
+    <string name="area_kuala_selangor">Kuala Selangor</string>
+    <string name="area_pelabuhan_klang">Pelabuhan Klang</string>
+    <string name="area_port_dickson">Port Dickson</string>
+    <string name="area_melaka">Melaka</string>
+    <string name="area_muar">Muar</string>
+    <string name="area_kukup">Kukup</string>
+    <string name="area_desaru">Desaru</string>
+    <string name="area_mersing">Mersing</string>
+    <string name="area_pulau_tioman">Pulau Tioman</string>
+    <string name="area_kuantan">Kuantan</string>
+    <string name="area_kemaman">Kemaman</string>
+    <string name="area_kuala_terengganu">Kuala Terengganu</string>
+    <string name="area_tok_bali">Tok Bali</string>
+    <string name="area_santubong">Santubong</string>
+    <string name="area_miri">Miri</string>
+    <string name="area_labuan">Labuan</string>
+    <string name="area_kota_kinabalu">Kota Kinabalu</string>
+    <string name="area_kudat">Kudat</string>
+    <string name="area_sandakan">Sandakan</string>
+    <string name="area_semporna">Semporna</string>
+
+    <string name="state_perlis">Perlis</string>
+    <string name="state_kedah">Kedah</string>
+    <string name="state_pulau_pinang">Pulau Pinang</string>
+    <string name="state_perak">Perak</string>
+    <string name="state_selangor">Selangor</string>
+    <string name="state_negeri_sembilan">Negeri Sembilan</string>
+    <string name="state_melaka">Melaka</string>
+    <string name="state_johor">Johor</string>
+    <string name="state_pahang">Pahang</string>
+    <string name="state_terengganu">Terengganu</string>
+    <string name="state_kelantan">Kelantan</string>
+    <string name="state_sarawak">Sarawak</string>
+    <string name="state_labuan">Labuan</string>
+    <string name="state_sabah">Sabah</string>
+</resources>

@@ -1,5 +1,6 @@
 package com.fishingcopilot.data.local
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
@@ -14,7 +15,9 @@ data class SpotEntity(
     val notes: String? = null,
     val depthMeters: Double? = null,
     val isFavorite: Boolean = false,
-    val createdAt: Long = System.currentTimeMillis()
+    val createdAt: Long = System.currentTimeMillis(),
+    /** Shift applied to predicted tide times at this spot; estuaries usually turn later than the open sea. */
+    @ColumnInfo(defaultValue = "0") val tideOffsetMinutes: Int = 0
 )
 
 @Entity(

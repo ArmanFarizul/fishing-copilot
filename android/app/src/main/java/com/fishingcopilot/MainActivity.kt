@@ -11,9 +11,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.fishingcopilot.data.profile.ProfileRepository
 import com.fishingcopilot.data.profile.UserProfile
 import com.fishingcopilot.ui.home.HomeScreen
+import com.fishingcopilot.ui.home.HomeViewModel
 import com.fishingcopilot.ui.onboarding.OnboardingScreen
 import com.fishingcopilot.ui.onboarding.OnboardingViewModel
 import com.fishingcopilot.ui.theme.FishingCopilotTheme
@@ -27,10 +27,10 @@ class MainActivity : ComponentActivity() {
             statusBarStyle = SystemBarStyle.dark(Color.TRANSPARENT),
             navigationBarStyle = SystemBarStyle.dark(Color.TRANSPARENT)
         )
-        val repository = (application as FishingCopilotApp).profileRepository
+        val app = application as FishingCopilotApp
         setContent {
             FishingCopilotTheme {
-                AppRoot(repository)
+                AppRoot(app)
             }
         }
     }
@@ -43,14 +43,26 @@ private sealed interface ProfileState {
 }
 
 @Composable
-private fun AppRoot(repository: ProfileRepository) {
+private fun AppRoot(app: FishingCopilotApp) {
+    val repository = app.profileRepository
     val profileState by remember(repository) {
         repository.profile.map { if (it == null) ProfileState.Missing else ProfileState.Ready(it) }
     }.collectAsStateWithLifecycle<ProfileState>(ProfileState.Loading)
 
     when (val state = profileState) {
         ProfileState.Loading -> Unit
-        ProfileState.Missing -> OnboardingScreen(viewModel(factory = OnboardingViewModel.factory(repository)))
-        is ProfileState.Ready -> HomeScreen(state.profile)
+        ProfileState.Missing -> OnboardingScreen(
+            viewModel(factory = OnboardingViewModel.factory(repository) { app.database.fishingDao().insertSpot(it) })
+        )
+        is ProfileState.Ready -> {
+            val spotId = state.profile.homeSpotId
+            val home = spotId?.let {
+                viewModel<HomeViewModel>(
+                    key = "home-$it",
+                    factory = HomeViewModel.factory(it, app.database.fishingDao(), app.tideRepository)
+                )
+            }
+            HomeScreen(state.profile, home)
+        }
     }
 }

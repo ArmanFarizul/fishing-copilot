@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Context for every string is in values/strings.xml. Keep keys and format arguments identical to that file. -->
 <resources>
-    <string name="home_placeholder">Jadual pasang surut, skor ikan makan dan cuaca laut akan menyusul tidak lama lagi.</string>
-
     <string name="greeting_morning">Selamat pagi</string>
     <string name="greeting_midday">Selamat tengah hari</string>
     <string name="greeting_afternoon">Selamat petang</string>

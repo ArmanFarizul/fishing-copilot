@@ -1,16 +1,25 @@
 package com.fishingcopilot.data.local
 
 import android.content.Context
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
 @Database(
-    entities = [SpotEntity::class, CatchLogEntity::class, TideCacheEntity::class],
-    version = 1
+    entities = [
+        SpotEntity::class,
+        CatchLogEntity::class,
+        TideCacheEntity::class,
+        TideModelEntity::class,
+        TideConstantEntity::class
+    ],
+    version = 3,
+    autoMigrations = [AutoMigration(from = 1, to = 2), AutoMigration(from = 2, to = 3)]
 )
 abstract class FishingDatabase : RoomDatabase() {
     abstract fun fishingDao(): FishingDao
+    abstract fun tideDao(): TideDao
 
     companion object {
         @Volatile

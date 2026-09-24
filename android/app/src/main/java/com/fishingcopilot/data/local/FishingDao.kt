@@ -4,12 +4,21 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface FishingDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertSpot(spot: SpotEntity): Long
+
+    @Query("SELECT * FROM spots WHERE id = :id")
+    fun spotFlow(id: Long): Flow<SpotEntity?>
+
+    // Update rather than REPLACE: a replace deletes the row first, which would cascade to tide models
+    // and null out catch log links.
+    @Update
+    suspend fun updateSpot(spot: SpotEntity)
 
     @Query("SELECT * FROM spots ORDER BY isFavorite DESC, createdAt DESC")
     fun getAllSpotsFlow(): Flow<List<SpotEntity>>

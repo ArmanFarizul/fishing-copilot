@@ -11,6 +11,8 @@
     <string name="onboarding_identity_subtitle">Your nickname and avatar will show on the home screen.</string>
     <string name="onboarding_nickname_label">Nickname</string>
     <string name="onboarding_avatar_label">Pick an avatar</string>
+    <!-- Stand-in name shown in bold on the step 1 preview card until the user types a nickname; keep under 16 characters so it fits on one line. -->
+    <string name="onboarding_preview_name_placeholder">Weekend Angler</string>
 
     <!-- Onboarding step 2: where the user fishes most. Single choice; option labels live in strings_profile_options.xml. -->
     <string name="onboarding_style_title">Where do you fish most?</string>
@@ -19,4 +21,37 @@
     <!-- Onboarding step 3: target species. Multiple choice; chip labels live in strings_profile_options.xml. -->
     <string name="onboarding_species_title">What are you chasing?</string>
     <string name="onboarding_species_subtitle">Pick as many as you like.</string>
+    <!-- Count above the species grid, such as "3 selected"; %1$d is how many species are picked, keep under 16 characters. -->
+    <plurals name="onboarding_species_selected">
+        <item quantity="one">%1$d selected</item>
+        <item quantity="other">%1$d selected</item>
+    </plurals>
+
+    <!-- Onboarding step 4: the user's main fishing spot, used to show tides. A map of Malaysia with 24 coastal area pins and a fixed crosshair fills the top of the screen; the user taps a pin, drags the map under the crosshair or jumps to their current location. Area and state names live in strings_areas.xml. -->
+    <string name="onboarding_spot_title">Where\'s your home spot?</string>
+    <!-- One line under the headline in the panel below the map. -->
+    <string name="onboarding_spot_subtitle">Tap a pin or drag the map to your spot.</string>
+    <!-- TalkBack description of the map itself; it must name the onboarding_spot_pick_from_list button so screen reader users can find the list. -->
+    <string name="onboarding_spot_map_description">Map of coastal fishing areas. To choose from a list instead, use the Pick from a list button.</string>
+    <!-- TalkBack description of the round button floating on the map that moves the map to the user's current location. -->
+    <string name="onboarding_spot_use_location">Go to my current location</string>
+    <!-- Selection card text before anything is chosen. -->
+    <string name="onboarding_spot_none">Nothing picked yet. Line up the crosshair with your spot or tap a nearby pin. Close enough is fine.</string>
+    <!-- Selection card status while the phone looks for a location fix. -->
+    <string name="onboarding_spot_locating">Finding your location…</string>
+    <!-- Selection card title for a point set by dragging the map or by current location; %1$s is "latitude, longitude" already formatted, such as "2.9800, 101.3000". -->
+    <string name="onboarding_spot_custom_point">Your spot (%1$s)</string>
+    <!-- Tappable line in the selection card under onboarding_spot_custom_point; tapping it selects that area. %1$s is the area name, %2$d the distance in whole kilometres. -->
+    <string name="onboarding_spot_nearest_area">Nearest area: %1$s (%2$d km). Tap to pick it.</string>
+    <!-- Shown in the selection card when the user refuses location permission. -->
+    <string name="onboarding_spot_location_denied">No location access? No problem. Tap a pin or drag the map instead.</string>
+    <!-- Shown in the selection card when location is switched off or no fix could be found. -->
+    <string name="onboarding_spot_location_unavailable">Couldn\'t find your location. Turn on location and try again. You can also tap a pin or drag the map.</string>
+    <!-- Small text button that opens a bottom sheet listing the same 24 areas; used for accessibility and when map tiles cannot load offline. -->
+    <string name="onboarding_spot_pick_from_list">Pick from a list</string>
+    <!-- Title of the bottom sheet listing the coastal areas. -->
+    <string name="onboarding_spot_areas_label">Pick an area</string>
+    <!-- Text field at the bottom, prefilled with the chosen area name or with onboarding_spot_default_name for a custom point; keep the default under 16 characters. -->
+    <string name="onboarding_spot_name_label">Spot name</string>
+    <string name="onboarding_spot_default_name">My spot</string>
 </resources>

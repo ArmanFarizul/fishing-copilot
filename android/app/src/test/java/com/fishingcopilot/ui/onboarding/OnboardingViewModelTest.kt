@@ -1,10 +1,12 @@
 package com.fishingcopilot.ui.onboarding
 
+import com.fishingcopilot.data.local.SpotEntity
 import com.fishingcopilot.data.profile.Avatar
 import com.fishingcopilot.data.profile.FishingStyle
 import com.fishingcopilot.data.profile.ProfileRepository
 import com.fishingcopilot.data.profile.Species
 import com.fishingcopilot.data.profile.UserProfile
+import com.fishingcopilot.data.spots.CoastalArea
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -33,6 +35,7 @@ class OnboardingViewModelTest {
 
     private lateinit var repository: FakeProfileRepository
     private lateinit var viewModel: OnboardingViewModel
+    private val savedSpots = mutableListOf<SpotEntity>()
 
     private val state get() = viewModel.uiState.value
 
@@ -40,7 +43,10 @@ class OnboardingViewModelTest {
     fun setUp() {
         Dispatchers.setMain(UnconfinedTestDispatcher())
         repository = FakeProfileRepository()
-        viewModel = OnboardingViewModel(repository)
+        viewModel = OnboardingViewModel(repository) { spot ->
+            savedSpots += spot
+            42L
+        }
     }
 
     @After
@@ -92,8 +98,7 @@ class OnboardingViewModelTest {
         assertEquals(0, state.step)
     }
 
-    @Test
-    fun `finishing saves the trimmed profile exactly once`() {
+    private fun completeFirstThreeSteps() {
         viewModel.onNicknameChange("  Arman  ")
         viewModel.onAvatarSelect(Avatar.KAYAK)
         viewModel.next()
@@ -101,17 +106,55 @@ class OnboardingViewModelTest {
         viewModel.next()
         viewModel.onSpeciesToggle(Species.TENGGIRI)
         viewModel.onSpeciesToggle(Species.KERAPU)
+        viewModel.next()
+    }
+
+    @Test
+    fun `spot step needs a selection and a name`() {
+        completeFirstThreeSteps()
+        assertEquals(3, state.step)
+        assertFalse(state.canContinue)
+
+        viewModel.onSpotSelect(SpotSelection.Area(CoastalArea.KUKUP), defaultName = "Kukup")
+        assertTrue(state.canContinue)
+
+        viewModel.onSpotNameChange("   ")
+        assertFalse(state.canContinue)
+    }
+
+    @Test
+    fun `choosing another spot replaces the default name but keeps a typed one`() {
+        completeFirstThreeSteps()
+        viewModel.onSpotSelect(SpotSelection.Area(CoastalArea.KUKUP), defaultName = "Kukup")
+        viewModel.onSpotSelect(SpotSelection.Area(CoastalArea.MUAR), defaultName = "Muar")
+        assertEquals("Muar", state.spotName)
+
+        viewModel.onSpotNameChange("Jeti Kukup")
+        viewModel.onSpotSelect(SpotSelection.Area(CoastalArea.KUKUP), defaultName = "Kukup")
+        assertEquals("Jeti Kukup", state.spotName)
+    }
+
+    @Test
+    fun `finishing saves the spot, then the trimmed profile pointing at it, exactly once`() {
+        completeFirstThreeSteps()
+        viewModel.onSpotSelect(SpotSelection.Point(1.3301, 103.4402), defaultName = "Spot saya")
+        viewModel.onSpotNameChange("  Jeti Kukup ")
         assertNull(repository.profile.value)
 
         viewModel.next()
         viewModel.next()
 
         assertEquals(
+            listOf(SpotEntity(name = "Jeti Kukup", latitude = 1.3301, longitude = 103.4402, isFavorite = true, createdAt = savedSpots.single().createdAt)),
+            savedSpots
+        )
+        assertEquals(
             UserProfile(
                 nickname = "Arman",
                 avatar = Avatar.KAYAK,
                 fishingStyle = FishingStyle.BOAT,
-                targetSpecies = setOf(Species.TENGGIRI, Species.KERAPU)
+                targetSpecies = setOf(Species.TENGGIRI, Species.KERAPU),
+                homeSpotId = 42L
             ),
             repository.profile.value
         )

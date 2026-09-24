@@ -10,10 +10,29 @@
     <string name="onboarding_identity_subtitle">Nama panggilan dan avatar ini akan terpapar di skrin utama.</string>
     <string name="onboarding_nickname_label">Nama panggilan</string>
     <string name="onboarding_avatar_label">Pilih avatar</string>
+    <string name="onboarding_preview_name_placeholder">Kaki Pancing</string>
 
     <string name="onboarding_style_title">Biasa memancing di mana?</string>
     <string name="onboarding_style_subtitle">Pilih satu yang paling kerap.</string>
 
     <string name="onboarding_species_title">Ikan apa yang jadi target?</string>
     <string name="onboarding_species_subtitle">Boleh pilih lebih daripada satu.</string>
+    <plurals name="onboarding_species_selected">
+        <item quantity="other">%1$d dipilih</item>
+    </plurals>
+
+    <string name="onboarding_spot_title">Lubuk utama di mana?</string>
+    <string name="onboarding_spot_subtitle">Ketik pin atau seret peta ke lubuk sendiri.</string>
+    <string name="onboarding_spot_map_description">Peta kawasan memancing di pesisir pantai. Untuk memilih daripada senarai, guna butang Pilih daripada senarai.</string>
+    <string name="onboarding_spot_use_location">Pergi ke lokasi semasa</string>
+    <string name="onboarding_spot_none">Belum ada pilihan. Letakkan tanda pangkah di atas lubuk atau ketik pin yang berdekatan. Tidak perlu tepat sampai ke jeti.</string>
+    <string name="onboarding_spot_locating">Mencari lokasi…</string>
+    <string name="onboarding_spot_custom_point">Lubuk pilihan (%1$s)</string>
+    <string name="onboarding_spot_nearest_area">Kawasan terdekat: %1$s (%2$d km). Ketik untuk pilih.</string>
+    <string name="onboarding_spot_location_denied">Tiada akses lokasi? Tidak mengapa. Ketik pin atau seret peta sahaja.</string>
+    <string name="onboarding_spot_location_unavailable">Lokasi tidak dapat dikesan. Hidupkan lokasi dan cuba lagi. Boleh juga ketik pin atau seret peta.</string>
+    <string name="onboarding_spot_pick_from_list">Pilih daripada senarai</string>
+    <string name="onboarding_spot_areas_label">Pilih kawasan</string>
+    <string name="onboarding_spot_name_label">Nama lubuk</string>
+    <string name="onboarding_spot_default_name">Lubuk saya</string>
 </resources>

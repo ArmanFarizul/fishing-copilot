@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Title of the tide card on the home screen, under the greeting; the home spot name sits next to it. Keep under 20 characters. -->
+    <string name="tide_card_title">Tides</string>
+
+    <!-- Big line on the tide card saying which way the water is moving at the home spot right now; keep under 20 characters. -->
+    <string name="tide_rising">Tide rising</string>
+    <string name="tide_falling">Tide falling</string>
+    <!-- Line under the rising/falling state; %1$s is the signed height already formatted, such as "+0.8 m" or "-1.2 m", measured from mean sea level (not chart datum). Keep under 35 characters. -->
+    <string name="tide_height_relative">%1$s from average sea level</string>
+
+    <!-- Labels for the next high and next low water; %1$s is the clock time, such as "10:21 PM" or "22:21". A countdown (tide_countdown_*) sits beside it. Keep under 24 characters. -->
+    <string name="tide_next_high">Next high %1$s</string>
+    <string name="tide_next_low">Next low %1$s</string>
+    <!-- Compact countdown beside the next high or low, such as "in 2 h 10 min"; %1$d is hours, %2$d minutes. tide_countdown_minutes is used under one hour; %1$d is minutes. Keep under 16 characters. -->
+    <string name="tide_countdown_hours_minutes">in %1$d h %2$d min</string>
+    <string name="tide_countdown_minutes">in %1$d min</string>
+
+    <!-- Tiny label on the vertical marker for the current time on the 24-hour tide chart; keep under 8 characters. -->
+    <string name="tide_now">Now</string>
+    <!-- TalkBack description of the 24-hour tide chart; the next high and low lines already read out the times. -->
+    <string name="tide_chart_description">Tide curve for 24 hours, with a marker at the current time.</string>
+
+    <!-- Label above a small slider that shifts all predicted times for this spot, because rivers and estuaries often turn later than the open sea. Keep under 24 characters. -->
+    <string name="tide_offset_label">Adjust timing</string>
+    <!-- Current slider value; %1$+d is signed minutes, so it shows "+30 min", "+0 min" or "-15 min". -->
+    <string name="tide_offset_value">%1$+d min</string>
+    <!-- One short sentence under the slider explaining when to use it. -->
+    <string name="tide_offset_help">Tide turns later or earlier at your spot? Shift it here. Rivers and estuaries usually run late.</string>
+
+    <!-- Small footer on the tide card. Must credit Open-Meteo (licence requirement) and say, calmly, that this is a model estimate, not the official JUPEM tide table, and that heights use mean sea level so numbers differ from JUPEM while times should be close. -->
+    <string name="tide_source">Estimated from Open-Meteo data, not the official JUPEM tide table. Heights are from average sea level, so they won\'t match JUPEM, but times should be close.</string>
+
+    <!-- Shown in the card while a year of tide data downloads for the spot the first time; after that it works offline. -->
+    <string name="tide_loading">Getting a year of tides for your spot. Needs internet just this once.</string>
+    <!-- Shown when that first download failed because there is no internet or the server did not answer; tide_retry is the button under it (keep under 24 characters). -->
+    <string name="tide_error_offline">Couldn\'t get tide data. Tides will show once you\'re back online.</string>
+    <string name="tide_retry">Try again</string>
+
+    <!-- Shown when the chosen point has no sea data, most likely because it is on land. -->
+    <string name="tide_no_marine_data">No sea data for this point. It may be on land.</string>
+    <!-- Button under tide_no_marine_data that moves the spot to the nearest coastal area; %1$s is the area name, %2$d the distance in whole kilometres. Keep under 24 characters plus the area name. -->
+    <string name="tide_use_nearest_area">Use %1$s (%2$d km)</string>
+</resources>
