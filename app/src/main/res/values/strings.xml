@@ -30,6 +30,10 @@
     <string name="onboarding_style_subtitle">Pick the one you do most often.</string>
     <string name="style_shore">Shore</string>
     <string name="style_shore_description">Beach, breakwater or jetty</string>
+    <string name="style_kelong">Kelong</string>
+    <string name="style_kelong_description">Wooden platforms on stilts at sea</string>
+    <string name="style_raft">Raft house</string>
+    <string name="style_raft_description">Floating houses on lakes and calm waters</string>
     <string name="style_boat">Boat</string>
     <string name="style_boat_description">Offshore, unjam and around the islands</string>
     <string name="style_estuary">Estuary</string>

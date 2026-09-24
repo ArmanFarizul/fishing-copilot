@@ -9,6 +9,6 @@ data class UserProfile(
 
 enum class Avatar { JETTY, KELONG, RAFT_HOUSE, BOAT, KAYAK, ROD, FISH, ANCHOR }
 
-enum class FishingStyle { SHORE, BOAT, ESTUARY, KAYAK }
+enum class FishingStyle { SHORE, KELONG, RAFT, BOAT, ESTUARY, KAYAK }
 
 enum class Species { SIAKAP, JENAHAK, KERAPU, TENGGIRI, PARI, TALANG, IKAN_MERAH, BELUKANG }

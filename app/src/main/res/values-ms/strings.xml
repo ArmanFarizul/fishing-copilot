@@ -29,6 +29,10 @@
     <string name="onboarding_style_subtitle">Pilih satu yang paling kerap.</string>
     <string name="style_shore">Darat</string>
     <string name="style_shore_description">Pantai, tembok batu atau jeti</string>
+    <string name="style_kelong">Kelong</string>
+    <string name="style_kelong_description">Pelantar kayu bertiang di laut</string>
+    <string name="style_raft">Rakit</string>
+    <string name="style_raft_description">Rumah terapung di tasik dan perairan tenang</string>
     <string name="style_boat">Bot</string>
     <string name="style_boat_description">Laut dalam, unjam dan pulau</string>
     <string name="style_estuary">Muara</string>

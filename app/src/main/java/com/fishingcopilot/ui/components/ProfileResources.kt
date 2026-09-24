@@ -50,6 +50,8 @@ val Avatar.label: Int
 val FishingStyle.label: Int
     get() = when (this) {
         FishingStyle.SHORE -> R.string.style_shore
+        FishingStyle.KELONG -> R.string.style_kelong
+        FishingStyle.RAFT -> R.string.style_raft
         FishingStyle.BOAT -> R.string.style_boat
         FishingStyle.ESTUARY -> R.string.style_estuary
         FishingStyle.KAYAK -> R.string.style_kayak
@@ -59,6 +61,8 @@ val FishingStyle.label: Int
 val FishingStyle.description: Int
     get() = when (this) {
         FishingStyle.SHORE -> R.string.style_shore_description
+        FishingStyle.KELONG -> R.string.style_kelong_description
+        FishingStyle.RAFT -> R.string.style_raft_description
         FishingStyle.BOAT -> R.string.style_boat_description
         FishingStyle.ESTUARY -> R.string.style_estuary_description
         FishingStyle.KAYAK -> R.string.style_kayak_description
