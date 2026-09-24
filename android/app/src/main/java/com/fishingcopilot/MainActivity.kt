@@ -71,7 +71,7 @@ private fun AppRoot(app: FishingCopilotApp) {
                 )
             }
             val sunMoon = spotId?.let {
-                viewModel<SunMoonViewModel>(key = "sunmoon-$it", factory = SunMoonViewModel.factory(it, app.database.fishingDao()))
+                viewModel<SunMoonViewModel>(key = "sunmoon-$it", factory = SunMoonViewModel.factory(it, app.database.fishingDao(), app.hijriRepository))
             }
             HomeScreen(state.profile, home, marine, sunMoon)
         }

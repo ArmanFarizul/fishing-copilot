@@ -14,4 +14,18 @@ class TideStrengthTest {
             28.9 to TideStrength.NORMAL, 29.2 to TideStrength.SPRING
         ).forEach { (age, expected) -> assertEquals("age $age", expected, TideStrength.of(age)) }
     }
+
+    @Test
+    fun `Hijri day bands match the spec exactly`() {
+        val spring = setOf(1, 2, 3, 14, 15, 16)
+        val neap = setOf(7, 8, 9, 21, 22, 23)
+        (1..30).forEach { day ->
+            val expected = when (day) {
+                in spring -> TideStrength.SPRING
+                in neap -> TideStrength.NEAP
+                else -> TideStrength.NORMAL
+            }
+            assertEquals("Hijri day $day", expected, TideStrength.ofHijriDay(day))
+        }
+    }
 }

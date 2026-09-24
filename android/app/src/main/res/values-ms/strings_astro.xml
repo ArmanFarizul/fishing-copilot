@@ -35,4 +35,25 @@
     <string name="astro_solunar_note">Utama: bulan di atas kepala atau di sebalik bumi. Kecil: bulan terbit atau terbenam. Panduan lama, bukan jaminan.</string>
 
     <string name="astro_moon_description">Fasa bulan: %1$s, %2$d%% terang</string>
+
+    <string name="hijri_month_1">Muharam</string>
+    <string name="hijri_month_2">Safar</string>
+    <string name="hijri_month_3">Rabiulawal</string>
+    <string name="hijri_month_4">Rabiulakhir</string>
+    <string name="hijri_month_5">Jamadilawal</string>
+    <string name="hijri_month_6">Jamadilakhir</string>
+    <string name="hijri_month_7">Rejab</string>
+    <string name="hijri_month_8">Syaaban</string>
+    <string name="hijri_month_9">Ramadan</string>
+    <string name="hijri_month_10">Syawal</string>
+    <string name="hijri_month_11">Zulkaedah</string>
+    <string name="hijri_month_12">Zulhijah</string>
+    <string name="hijri_date">%1$d %2$s %3$dH</string>
+    <string name="hijri_estimate">%1$s (anggaran)</string>
+    <string name="hijri_source">Tarikh Hijrah daripada JAKIM</string>
+
+    <string name="moon_calendar_title">Kalendar fasa bulan</string>
+    <string name="moon_calendar_today">Hari ini</string>
+    <string name="moon_calendar_hint">Seret atau ketik satu hari untuk lihat fasa bulan.</string>
+    <string name="moon_calendar_day_description">%1$s, %2$s, %3$s</string>
 </resources>

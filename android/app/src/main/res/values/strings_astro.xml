@@ -48,4 +48,33 @@
 
     <!-- TalkBack description of the drawn moon icon; %1$s is the phase name (moon_*), %2$d is how much of the moon is lit, as a whole percent. -->
     <string name="astro_moon_description">Moon phase: %1$s, %2$d%% lit</string>
+
+    <!-- Islamic (Hijri) month names, used in the full Hijri date of the moon row and the calendar. Malaysian English media and JAKIM's own English pages use the Malay spellings, so these match JAKIM's takwim exactly. Keep under 14 characters. -->
+    <string name="hijri_month_1">Muharam</string>
+    <string name="hijri_month_2">Safar</string>
+    <string name="hijri_month_3">Rabiulawal</string>
+    <string name="hijri_month_4">Rabiulakhir</string>
+    <string name="hijri_month_5">Jamadilawal</string>
+    <string name="hijri_month_6">Jamadilakhir</string>
+    <string name="hijri_month_7">Rejab</string>
+    <string name="hijri_month_8">Syaaban</string>
+    <string name="hijri_month_9">Ramadan</string>
+    <string name="hijri_month_10">Syawal</string>
+    <string name="hijri_month_11">Zulkaedah</string>
+    <string name="hijri_month_12">Zulhijah</string>
+    <!-- Full Hijri date in the moon row, such as "13 Rabiulakhir 1448H"; %1$d is the day, %2$s the month name (hijri_month_*), %3$d the Hijri year. The H suffix follows JAKIM's takwim. Keep under 24 characters. -->
+    <string name="hijri_date">%1$d %2$s %3$dH</string>
+    <!-- Wraps a Hijri date the app worked out itself because JAKIM has not published that day yet; it can be one day off. %1$s is the formatted date (hijri_date). Keep the added words under 12 characters. -->
+    <string name="hijri_estimate">%1$s (estimate)</string>
+    <!-- Tiny credit line at the bottom of the sun and moon card. Keep under 30 characters. -->
+    <string name="hijri_source">Hijri dates from JAKIM</string>
+
+    <!-- Title over the moon calendar, a strip of the next 30 days the user can drag. Keep under 24 characters. -->
+    <string name="moon_calendar_title">Moon calendar</string>
+    <!-- Label on today's cell in the strip, in place of the weekday. Keep under 8 characters. -->
+    <string name="moon_calendar_today">Today</string>
+    <!-- One line under the strip title telling users they can drag the strip or tap a day to see its moon above. Keep under 50 characters. -->
+    <string name="moon_calendar_hint">Drag or tap a day to see its moon.</string>
+    <!-- TalkBack description of one day cell; %1$s is the weekday and date, such as "Friday 25 September", %2$s the phase name (moon_*), %3$s the Hijri date text (hijri_date, possibly wrapped in hijri_estimate). -->
+    <string name="moon_calendar_day_description">%1$s, %2$s, %3$s</string>
 </resources>

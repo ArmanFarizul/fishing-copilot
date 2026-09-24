@@ -1,6 +1,12 @@
 package com.fishingcopilot.ui.home
 
+import com.fishingcopilot.astro.HijriDate
 import com.fishingcopilot.astro.SolunarType
+import com.fishingcopilot.astro.TideStrength
+import com.fishingcopilot.data.hijri.HijriRepository
+import com.fishingcopilot.data.local.HijriDao
+import com.fishingcopilot.data.local.HijriDayEntity
+import com.fishingcopilot.data.remote.JakimTakwimClient
 import com.fishingcopilot.data.local.CatchLogEntity
 import com.fishingcopilot.data.local.FishingDao
 import com.fishingcopilot.data.local.SpotEntity
@@ -41,6 +47,19 @@ class SunMoonViewModelTest {
             error("unused")
     }
 
+    private class FakeHijriDao : HijriDao {
+        val rows = MutableStateFlow<Map<String, HijriDayEntity>>(emptyMap())
+        override fun range(from: String, to: String): Flow<List<HijriDayEntity>> =
+            rows.map { all -> all.values.filter { it.date in from..to }.sortedBy { it.date } }
+        override suspend fun countInYear(yearPrefix: String): Int = rows.value.keys.count { it.startsWith(yearPrefix) }
+        override suspend fun upsertAll(days: List<HijriDayEntity>) { rows.value += days.associateBy { it.date } }
+    }
+
+    // JAKIM 2026-10-10 = 28 Rabiulakhir 1448 and 2026-10-12 = 1 Jamadilawal 1448 (e-solat takwim).
+    private val takwim = JakimTakwimClient {
+        """{"status":"OK!","prayerTime":[{"hijri":"1448-04-28","date":"10-Okt-2026"},{"hijri":"1448-04-29","date":"11-Okt-2026"},{"hijri":"1448-05-01","date":"12-Okt-2026"}]}"""
+    }
+
     private val myt = ZoneId.of("Asia/Kuala_Lumpur")
     private val penang = SpotEntity(id = 9, name = "Pulau Pinang", latitude = 5.42, longitude = 100.36)
 
@@ -49,7 +68,7 @@ class SunMoonViewModelTest {
 
     private fun stateAt(time: ZonedDateTime): SunMoonUiState? {
         val now = time.toInstant().toEpochMilli()
-        val vm = SunMoonViewModel(penang.id, FakeSpots(penang), ticks = flowOf(now), zone = myt, computeDispatcher = Dispatchers.Main)
+        val vm = SunMoonViewModel(penang.id, FakeSpots(penang), HijriRepository(FakeHijriDao(), takwim), ticks = flowOf(now), zone = myt, computeDispatcher = Dispatchers.Main) { now }
         var state: SunMoonUiState? = null
         runTest {
             backgroundScope.launch { vm.uiState.collect { state = it } }
@@ -77,5 +96,19 @@ class SunMoonViewModelTest {
         assertEquals(PeriodStatus.NEXT, upcoming.first().status)
         assertTrue(upcoming.drop(1).all { it.status == PeriodStatus.LATER })
         assertEquals(1, state.periods.count { it.status == PeriodStatus.NEXT })
+    }
+
+    @Test
+    fun `calendar covers 30 days with official Hijri dates where JAKIM has them`() {
+        val state = stateAt(ZonedDateTime.of(2026, 10, 10, 9, 0, 0, 0, myt))!!
+        assertEquals(30, state.calendar.size)
+        assertEquals(HijriDate(1448, 4, 28), state.calendar[0].hijri.hijri)
+        assertTrue(state.calendar[0].hijri.official)
+        assertEquals(HijriDate(1448, 5, 1), state.calendar[2].hijri.hijri)
+        assertTrue("later days are estimates", state.calendar.drop(3).none { it.hijri.official })
+        assertEquals(HijriDate(1448, 5, 2), state.calendar[3].hijri.hijri)
+        // Hijri day 28 is outside the spec's spring and neap bands; day 1 is spring.
+        assertEquals(TideStrength.NORMAL, state.tideStrength)
+        assertEquals(TideStrength.SPRING, state.calendar[2].tideStrength)
     }
 }

@@ -18,6 +18,11 @@ enum class SolunarType { MAJOR, MINOR }
 
 data class SolunarPeriod(val type: SolunarType, val start: ZonedDateTime, val center: ZonedDateTime, val end: ZonedDateTime)
 
+/** The moon at local noon, for the moon calendar strip. */
+data class MoonDay(val date: LocalDate, val illumination: Double, val phase: MoonPhaseName, val moonAgeDays: Double) {
+    val waxing: Boolean get() = moonAgeDays < 29.530588853 / 2
+}
+
 /** Sun, moon and solunar periods for one local calendar day. Any event may be null on a day it does not occur. */
 data class AstroDay(
     val civilDawn: ZonedDateTime?,
@@ -79,6 +84,18 @@ object Astro {
             phase = phaseName(start, noon, latitude, longitude),
             moonAgeDays = moonAgeDays(noon),
             solunar = periods
+        )
+    }
+
+    /** Just the moon for a day, without the transit scan, so a month of days stays cheap. */
+    fun moon(latitude: Double, longitude: Double, date: LocalDate, zone: ZoneId): MoonDay {
+        val start = date.atStartOfDay(zone)
+        val noon = start.plusHours(12)
+        return MoonDay(
+            date = date,
+            illumination = MoonIllumination.compute().on(noon).at(latitude, longitude).execute().fraction,
+            phase = phaseName(start, noon, latitude, longitude),
+            moonAgeDays = moonAgeDays(noon)
         )
     }
 
@@ -155,6 +172,13 @@ enum class TideStrength {
          * Product spec: Hijri days 1-3 and 14-16 are spring tides (air hidup), 7-9 and 21-23 neap (air mati).
          * Mapped onto moon age as Hijri day ~ age + 1; age 29+ is the next new moon, so spring again.
          */
+        /** The spec's own definition, used whenever the official Hijri date is known. */
+        fun ofHijriDay(day: Int): TideStrength = when (day) {
+            in 1..3, in 14..16 -> SPRING
+            in 7..9, in 21..23 -> NEAP
+            else -> NORMAL
+        }
+
         fun of(moonAgeDays: Double): TideStrength = when {
             moonAgeDays < 3 || moonAgeDays in 13.0..<16.0 || moonAgeDays >= 29 -> SPRING
             moonAgeDays in 6.0..<9.0 || moonAgeDays in 20.0..<23.0 -> NEAP
@@ -162,3 +186,6 @@ enum class TideStrength {
         }
     }
 }
+
+/** A date in the Islamic (Hijri) calendar; month 1 = Muharram. */
+data class HijriDate(val year: Int, val month: Int, val day: Int)

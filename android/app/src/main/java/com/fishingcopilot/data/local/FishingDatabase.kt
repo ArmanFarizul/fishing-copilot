@@ -13,19 +13,22 @@ import androidx.room.RoomDatabase
         TideCacheEntity::class,
         TideModelEntity::class,
         TideConstantEntity::class,
-        MarineForecastEntity::class
+        MarineForecastEntity::class,
+        HijriDayEntity::class
     ],
-    version = 4,
+    version = 5,
     autoMigrations = [
         AutoMigration(from = 1, to = 2),
         AutoMigration(from = 2, to = 3),
-        AutoMigration(from = 3, to = 4)
+        AutoMigration(from = 3, to = 4),
+        AutoMigration(from = 4, to = 5)
     ]
 )
 abstract class FishingDatabase : RoomDatabase() {
     abstract fun fishingDao(): FishingDao
     abstract fun tideDao(): TideDao
     abstract fun marineDao(): MarineDao
+    abstract fun hijriDao(): HijriDao
 
     companion object {
         @Volatile

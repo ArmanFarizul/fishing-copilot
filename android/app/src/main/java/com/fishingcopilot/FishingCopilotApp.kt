@@ -1,8 +1,10 @@
 package com.fishingcopilot
 
 import android.app.Application
+import com.fishingcopilot.data.hijri.HijriRepository
 import com.fishingcopilot.data.local.FishingDatabase
 import com.fishingcopilot.data.marine.MarineRepository
+import com.fishingcopilot.data.remote.JakimTakwimClient
 import com.fishingcopilot.data.remote.OpenMeteoMarineClient
 import com.fishingcopilot.data.remote.OpenMeteoWeatherClient
 import com.fishingcopilot.data.tide.TideRepository
@@ -20,4 +22,5 @@ class FishingCopilotApp : Application() {
     val database: FishingDatabase by lazy { FishingDatabase.get(this) }
     val tideRepository: TideRepository by lazy { TideRepository(database.tideDao(), OpenMeteoMarineClient()) }
     val marineRepository: MarineRepository by lazy { MarineRepository(database.marineDao(), OpenMeteoWeatherClient()) }
+    val hijriRepository: HijriRepository by lazy { HijriRepository(database.hijriDao(), JakimTakwimClient()) }
 }
