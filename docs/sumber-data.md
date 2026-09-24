@@ -77,3 +77,43 @@ Respons: `[{"slevel":1.046,"stime":"2026-09-24 00:00:00","sensor":"prs"}, ...]` 
 Tiada stesen IOC di selatan Semenanjung (Johor, Melaka, Tioman) atau Sarawak. Stesen Tanjong Pagar (Singapura, `tanjo`) sudah tidak aktif sejak 2015. Untuk kawasan ini, aplikasi bergantung pada jadual JUPEM dan `sea_level_height_msl` daripada Open-Meteo.
 
 Senarai penuh stesen: `https://ioc-sealevelmonitoring.org/service.php?query=stationlist&showall=all`
+
+## 5. MetMalaysia melalui data.gov.my (amaran cuaca dan laut)
+
+```
+https://api.data.gov.my/weather/warning/
+```
+
+Percuma, tanpa kunci. Setiap amaran ada teks dalam BM dan English (`heading_bm`, `text_bm`, `heading_en`, `text_en`) serta tempoh sah (`valid_from`, `valid_to`). Jenis amaran yang dilihat semasa diuji: "Strong Winds and Rough Seas Warning", "Thunderstorms Warning" dan nasihat siklon tropika ("No Advisory" jika tiada).
+
+Kegunaan: modul keselamatan marin. Bukan keperluan MVP.
+
+Nota: URL mesti berakhir dengan `/`. Tanpanya, pelayan membalas dengan redirect 301.
+
+## Checklist
+
+Status pada 2026-09-24.
+
+### Sudah ada
+
+- [x] **Open-Meteo Marine:** endpoint dan pemboleh ubah diuji (ombak, arus, SST, aras laut).
+- [x] **Open-Meteo Forecast:** endpoint diuji (angin, tiupan, tekanan `pressure_msl`).
+- [x] **UNESCO IOC:** endpoint data diuji. Senarai 7 stesen Malaysia yang sebenar disahkan.
+- [x] **Copernicus Marine:** ID dataset klorofil-a, SST dan kejernihan air disahkan daripada katalog (Toolbox 2.4.1).
+- [x] **MetMalaysia:** endpoint amaran diuji.
+
+### Belum ada
+
+Tindakan anda:
+- [ ] **GitHub Secrets Copernicus:** `COPERNICUSMARINE_SERVICE_USERNAME` dan `COPERNICUSMARINE_SERVICE_PASSWORD` belum dimasukkan ke repo.
+- [ ] **Jadual pasang surut JUPEM:** belum diperoleh. Format, harga dan syarat penggunaannya juga belum disemak.
+- [ ] **Senarai spot memancing:** nama dan koordinat.
+
+Pembangunan:
+- [ ] **Ujian muat turun Copernicus sebenar** (`copernicusmarine subset`). Menunggu kelayakan di atas.
+- [ ] **Pipeline satelit:** `process_satellite.py` dan workflow GitHub Actions belum ditulis. Cara meringkaskan kira-kira 80,000 titik kepada JSON di bawah 200KB juga belum ditentukan.
+- [ ] **Pemalar harmonik pasang surut** untuk ramalan 365 hari tanpa internet. Sumbernya belum ditentukan. Pilihan: TPXO atau FES (perlu pendaftaran), analisis data IOC (7 stesen sahaja), atau jadual JUPEM.
+- [ ] **Peta luar talian:** sumber peta asas, lapisan OpenSeaMap, grid kedalaman GEBCO, cara menjana MBTiles, dan pustaka peta Android belum dipilih.
+- [ ] **Matahari, bulan dan solunar:** dikira dalam aplikasi, jadi tiada API diperlukan. Pustaka Kotlin belum dipilih.
+- [ ] **Tarikh Hijrah:** dikira dalam aplikasi. Kaedah belum dipilih dan belum disahkan.
+- [ ] **Atribusi Open-Meteo dan Copernicus** dalam aplikasi.
