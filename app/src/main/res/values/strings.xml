@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">Fishing Copilot</string>
+    <string name="home_placeholder">Tides, bite score and marine weather are coming soon.</string>
+</resources>
