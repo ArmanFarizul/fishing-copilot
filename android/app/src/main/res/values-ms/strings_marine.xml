@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Context for every string is in values/strings_marine.xml. Keep keys and format arguments identical to that file. -->
+<resources>
+    <string name="marine_card_title">Cuaca laut</string>
+    <string name="marine_updated">Dikemas kini %1$s</string>
+
+    <string name="marine_status_calm">Tenang</string>
+    <string name="marine_status_caution">Berhati-hati</string>
+    <string name="marine_status_danger">Bergelora</string>
+    <string name="marine_advice_calm">Ombak kecil. Tetap awasi ribut petir.</string>
+    <string name="marine_advice_caution">Berombak. Bot kecil dan kayak, lebih waspada.</string>
+    <string name="marine_advice_danger">Bot kecil dan kayak, elakkan turun ke laut.</string>
+
+    <string name="marine_waves">Ombak</string>
+    <string name="marine_wave_value">%1$s m · %2$d s</string>
+    <string name="marine_wind">Angin</string>
+    <string name="marine_wind_value">%1$d kn, tiupan %2$d</string>
+    <string name="marine_pressure">Tekanan udara</string>
+    <string name="marine_pressure_value">%1$d hPa</string>
+    <string name="marine_pressure_steady">Stabil</string>
+    <string name="marine_pressure_rising">Naik</string>
+    <string name="marine_pressure_falling">Turun</string>
+    <string name="marine_pressure_falling_fast">Turun mendadak</string>
+    <string name="marine_current">Arus</string>
+    <string name="marine_current_value">%1$s kn</string>
+    <string name="marine_from">Dari %1$s</string>
+    <string name="marine_sea_temp">Suhu laut %1$s °C</string>
+    <string name="marine_next_24h">Dalam 24 jam: ombak hingga %1$s m, angin hingga %2$d kn</string>
+
+    <string name="direction_n">U</string>
+    <string name="direction_ne">TL</string>
+    <string name="direction_e">T</string>
+    <string name="direction_se">TG</string>
+    <string name="direction_s">S</string>
+    <string name="direction_sw">BD</string>
+    <string name="direction_w">B</string>
+    <string name="direction_nw">BL</string>
+
+    <string name="marine_loading">Sedang muat turun ramalan cuaca laut untuk lubuk ini.</string>
+    <string name="marine_error_offline">Ramalan cuaca laut belum dapat dimuat turun. Semak internet dan cuba lagi.</string>
+    <string name="marine_retry">Cuba lagi</string>
+    <string name="marine_stale">Data pukul %1$s, mungkin tidak terkini</string>
+</resources>

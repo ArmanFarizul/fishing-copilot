@@ -2,7 +2,9 @@ package com.fishingcopilot
 
 import android.app.Application
 import com.fishingcopilot.data.local.FishingDatabase
+import com.fishingcopilot.data.marine.MarineRepository
 import com.fishingcopilot.data.remote.OpenMeteoMarineClient
+import com.fishingcopilot.data.remote.OpenMeteoWeatherClient
 import com.fishingcopilot.data.tide.TideRepository
 import org.maplibre.android.MapLibre
 import com.fishingcopilot.data.profile.DataStoreProfileRepository
@@ -17,4 +19,5 @@ class FishingCopilotApp : Application() {
     val profileRepository: ProfileRepository by lazy { DataStoreProfileRepository(this) }
     val database: FishingDatabase by lazy { FishingDatabase.get(this) }
     val tideRepository: TideRepository by lazy { TideRepository(database.tideDao(), OpenMeteoMarineClient()) }
+    val marineRepository: MarineRepository by lazy { MarineRepository(database.marineDao(), OpenMeteoWeatherClient()) }
 }

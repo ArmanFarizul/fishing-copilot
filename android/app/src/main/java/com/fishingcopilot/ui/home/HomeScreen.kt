@@ -1,5 +1,6 @@
 package com.fishingcopilot.ui.home
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -17,15 +18,19 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.fishingcopilot.R
 import com.fishingcopilot.data.profile.UserProfile
 import com.fishingcopilot.ui.components.AvatarBadge
 import java.time.LocalTime
 
 @Composable
-fun HomeScreen(profile: UserProfile, homeViewModel: HomeViewModel?) {
+fun HomeScreen(profile: UserProfile, homeViewModel: HomeViewModel?, marineViewModel: MarineViewModel?) {
     val period = remember { DayPeriod.fromHour(LocalTime.now().hour) }
     Scaffold { innerPadding ->
         Column(
@@ -61,6 +66,25 @@ fun HomeScreen(profile: UserProfile, homeViewModel: HomeViewModel?) {
                     onUseNearestArea = homeViewModel::useNearestArea,
                     onOffsetChange = homeViewModel::onOffsetChange,
                     onOffsetCommit = homeViewModel::onOffsetCommit
+                )
+            }
+            if (marineViewModel != null) {
+                val marineState by marineViewModel.uiState.collectAsStateWithLifecycle()
+                Spacer(Modifier.height(16.dp))
+                MarineCard(state = marineState, onRetry = marineViewModel::retry)
+            }
+            if (homeViewModel != null || marineViewModel != null) {
+                val uriHandler = LocalUriHandler.current
+                Spacer(Modifier.height(16.dp))
+                Text(
+                    text = stringResource(R.string.attribution_open_meteo),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.primary,
+                    textDecoration = TextDecoration.Underline,
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .clickable(role = Role.Button) { uriHandler.openUri("https://open-meteo.com/") }
+                        .padding(8.dp)
                 )
             }
         }

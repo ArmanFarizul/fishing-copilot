@@ -16,7 +16,7 @@ import java.time.LocalDate
  * Endpoint and variables are documented in docs/sumber-data.md.
  */
 class OpenMeteoMarineClient(
-    private val get: suspend (url: String) -> String = ::httpGet
+    private val get: suspend (url: String) -> String = ::openMeteoGet
 ) {
     suspend fun seaLevel(latitude: Double, longitude: Double, start: LocalDate, end: LocalDate): List<SeaLevelSample> {
         val url = "$BASE_URL?latitude=$latitude&longitude=$longitude" +
@@ -37,20 +37,6 @@ class OpenMeteoMarineClient(
                 height?.let { SeaLevelSample(seconds * 1000, it) }
             }
         }
-
-        private suspend fun httpGet(url: String): String = withContext(Dispatchers.IO) {
-            val connection = URL(url).openConnection() as HttpURLConnection
-            try {
-                connection.connectTimeout = 15_000
-                connection.readTimeout = 60_000
-                // Open-Meteo returns its JSON error body with HTTP 400, so read whichever stream exists.
-                val stream = if (connection.responseCode < 400) connection.inputStream else connection.errorStream
-                stream?.bufferedReader()?.use { it.readText() }
-                    ?: throw IOException("HTTP ${connection.responseCode} from Open-Meteo")
-            } finally {
-                connection.disconnect()
-            }
-        }
     }
 }
 
@@ -66,3 +52,17 @@ private data class Hourly(
     val time: List<Long>,
     @SerialName("sea_level_height_msl") val seaLevel: List<Double?>
 )
+
+/** Open-Meteo returns its JSON error body with HTTP 400, so read whichever stream exists. */
+internal suspend fun openMeteoGet(url: String): String = withContext(Dispatchers.IO) {
+    val connection = URL(url).openConnection() as HttpURLConnection
+    try {
+        connection.connectTimeout = 15_000
+        connection.readTimeout = 60_000
+        val stream = if (connection.responseCode < 400) connection.inputStream else connection.errorStream
+        stream?.bufferedReader()?.use { it.readText() }
+            ?: throw IOException("HTTP ${connection.responseCode} from Open-Meteo")
+    } finally {
+        connection.disconnect()
+    }
+}

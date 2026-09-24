@@ -14,6 +14,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.fishingcopilot.data.profile.UserProfile
 import com.fishingcopilot.ui.home.HomeScreen
 import com.fishingcopilot.ui.home.HomeViewModel
+import com.fishingcopilot.ui.home.MarineViewModel
 import com.fishingcopilot.ui.onboarding.OnboardingScreen
 import com.fishingcopilot.ui.onboarding.OnboardingViewModel
 import com.fishingcopilot.ui.theme.FishingCopilotTheme
@@ -62,7 +63,13 @@ private fun AppRoot(app: FishingCopilotApp) {
                     factory = HomeViewModel.factory(it, app.database.fishingDao(), app.tideRepository)
                 )
             }
-            HomeScreen(state.profile, home)
+            val marine = spotId?.let {
+                viewModel<MarineViewModel>(
+                    key = "marine-$it",
+                    factory = MarineViewModel.factory(it, app.database.fishingDao(), app.marineRepository)
+                )
+            }
+            HomeScreen(state.profile, home, marine)
         }
     }
 }

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Title of the marine weather card on the home screen, below the tide card; keep under 20 characters. -->
+    <string name="marine_card_title">Marine weather</string>
+    <!-- Small line beside the card title; %1$s is the clock time of the latest download, already formatted, such as "10:21 PM" or "22:21". Keep under 20 characters. -->
+    <string name="marine_updated">Updated %1$s</string>
+
+    <!-- Status chip based on wave height: calm under 0.8 m, caution 0.8 to 1.5 m, rough over 1.5 m. Keep under 12 characters. -->
+    <string name="marine_status_calm">Calm</string>
+    <string name="marine_status_caution">Caution</string>
+    <string name="marine_status_danger">Rough</string>
+    <!-- One short line of advice under the status chip, matching the chip above. Modest advice only, never call the sea safe. Keep under 45 characters. -->
+    <string name="marine_advice_calm">Small waves. Still watch for storms.</string>
+    <string name="marine_advice_caution">Choppy. Small boats and kayaks, take care.</string>
+    <string name="marine_advice_danger">Small boats and kayaks should stay in.</string>
+
+    <!-- Tile label for wave height; keep under 12 characters. -->
+    <string name="marine_waves">Waves</string>
+    <!-- Wave tile value; %1$s is height in metres already formatted, such as "1.2", %2$d is wave period in whole seconds. Keep under 16 characters. -->
+    <string name="marine_wave_value">%1$s m · %2$d s</string>
+    <!-- Tile label for wind; keep under 12 characters. -->
+    <string name="marine_wind">Wind</string>
+    <!-- Wind tile value; %1$d is average wind speed in knots, %2$d is gust speed in knots. Keep under 16 characters. -->
+    <string name="marine_wind_value">%1$d kn, gusts %2$d</string>
+    <!-- Tile label for air pressure at sea level; keep under 14 characters. -->
+    <string name="marine_pressure">Pressure</string>
+    <!-- Pressure tile value; %1$d is pressure in hectopascals, such as 1009. Keep under 16 characters. -->
+    <string name="marine_pressure_value">%1$d hPa</string>
+    <!-- Short trend under the pressure value over the last 3 hours. falling_fast means a drop of more than 3 hPa in 3 hours, often a sign of a coming storm. Keep under 16 characters. -->
+    <string name="marine_pressure_steady">Steady</string>
+    <string name="marine_pressure_rising">Rising</string>
+    <string name="marine_pressure_falling">Falling</string>
+    <string name="marine_pressure_falling_fast">Falling fast</string>
+    <!-- Tile label for sea current; keep under 12 characters. -->
+    <string name="marine_current">Current</string>
+    <!-- Current tile value; %1$s is speed in knots already formatted, such as "0.8". Keep under 16 characters. -->
+    <string name="marine_current_value">%1$s kn</string>
+    <!-- Small line under the wave and wind values; %1$s is a compass abbreviation (direction_*) and means the direction the waves or wind come FROM. Keep under 12 characters. -->
+    <string name="marine_from">From %1$s</string>
+    <!-- Small line below the tiles; %1$s is sea surface temperature in Celsius already formatted, such as "29.7". Keep under 20 characters. -->
+    <string name="marine_sea_temp">Sea %1$s °C</string>
+    <!-- One-line summary of the highest values over the next 24 hours; %1$s is the highest wave height in metres already formatted, such as "1.4", %2$d the highest wind speed in knots. Keep under 52 characters. -->
+    <string name="marine_next_24h">Next 24 h: waves up to %1$s m, wind up to %2$d kn</string>
+
+    <!-- Compass abbreviations used in marine_from; 1 to 2 letters, written the way the national weather service abbreviates them in each language. -->
+    <string name="direction_n">N</string>
+    <string name="direction_ne">NE</string>
+    <string name="direction_e">E</string>
+    <string name="direction_se">SE</string>
+    <string name="direction_s">S</string>
+    <string name="direction_sw">SW</string>
+    <string name="direction_w">W</string>
+    <string name="direction_nw">NW</string>
+
+    <!-- Shown in the card while marine data downloads for the first time. -->
+    <string name="marine_loading">Getting the marine forecast for your spot.</string>
+    <!-- Shown when there is no saved data and the download failed; marine_retry is the button under it (keep under 24 characters). -->
+    <string name="marine_error_offline">Couldn\'t get the marine forecast. Check your internet and try again.</string>
+    <string name="marine_retry">Try again</string>
+    <!-- Small warning under the card title when the saved data is more than about 6 hours old; %1$s is the clock time of that data, such as "6:00 AM". Keep under 36 characters. -->
+    <string name="marine_stale">From %1$s, may be out of date</string>
+</resources>
