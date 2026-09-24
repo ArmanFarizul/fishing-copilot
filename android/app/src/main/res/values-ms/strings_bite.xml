@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Context for every string is in values/strings_bite.xml. Keep keys and format arguments identical to that file. -->
+<resources>
+    <string name="bite_card_title">Skor ikan makan</string>
+
+    <string name="bite_band_poor">Kurang baik</string>
+    <string name="bite_band_fair">Sederhana</string>
+    <string name="bite_band_good">Baik</string>
+    <string name="bite_band_prime">Waktu emas</string>
+
+    <string name="bite_factor_tide">Pasang surut</string>
+    <string name="bite_factor_light">Cahaya</string>
+    <string name="bite_factor_moon">Bulan</string>
+    <string name="bite_factor_pressure">Tekanan udara</string>
+    <string name="bite_factor_weight">%1$d%%</string>
+
+    <string name="bite_tide_slack">Air genang, hampir tak bergerak</string>
+    <string name="bite_tide_moving">Air mula bergerak selepas bertukar arah</string>
+    <string name="bite_tide_mid">Arus deras atau mula reda</string>
+
+    <string name="bite_light_golden">Cahaya redup awal pagi atau senja</string>
+    <string name="bite_light_night">Malam, sesetengah ikan masih makan</string>
+    <string name="bite_light_midday">Terik tengah hari, ikan culas</string>
+    <string name="bite_light_daylight">Siang, kurang aktif berbanding senja</string>
+
+    <string name="bite_moon_spring">Hari air besar, arus lebih kuat</string>
+    <string name="bite_moon_neap">Hari air mati, arus lemah</string>
+    <string name="bite_moon_normal">Antara air besar dan air mati</string>
+
+    <string name="bite_pressure_ideal">Stabil pada 1010–1015 hPa, paling sesuai</string>
+    <string name="bite_pressure_steady">Stabil, di luar 1010–1015 hPa</string>
+    <string name="bite_pressure_rising">Naik, cuaca semakin reda</string>
+    <string name="bite_pressure_falling">Turun, cuaca mungkin berubah</string>
+    <string name="bite_pressure_falling_fast">Turun mendadak, mungkin ribut</string>
+
+    <string name="bite_factor_missing">Belum ada data, tidak dikira dalam skor</string>
+
+    <string name="bite_timeline_title">Skor sepanjang 24 jam</string>
+    <string name="bite_best_window">Waktu emas %1$s – %2$s, puncak %3$s</string>
+    <string name="bite_no_prime_window">Tiada waktu emas dalam 24 jam akan datang.</string>
+    <string name="bite_timeline_description">Skor ikan makan sepanjang 24 jam, dengan penanda pada waktu sekarang. %1$s</string>
+    <string name="bite_score_description">Skor ikan makan %1$s daripada 10, %2$s</string>
+
+    <string name="bite_disclaimer">Panduan daripada pasang surut, cahaya, bulan dan tekanan udara, bukan jaminan.</string>
+</resources>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Title of the Bite Score hero card at the top of the home screen; the score (1 to 10) is a guide worked out from tide, light, moon and pressure. Keep under 20 characters. -->
+    <string name="bite_card_title">Bite Score</string>
+
+    <!-- Band label under the big score: poor below 4, fair 4 to 6, good 6 to 7.5, prime 7.5 and above. Prime is the product's "golden time", when the circle pulses. Keep under 14 characters. -->
+    <string name="bite_band_poor">Poor</string>
+    <string name="bite_band_fair">Fair</string>
+    <string name="bite_band_good">Good</string>
+    <string name="bite_band_prime">Prime time</string>
+
+    <!-- Labels on the four factor rows, each with a small bar and a short reason. Pressure is air pressure at sea level. Keep under 14 characters. -->
+    <string name="bite_factor_tide">Tide</string>
+    <string name="bite_factor_light">Light</string>
+    <string name="bite_factor_moon">Moon</string>
+    <string name="bite_factor_pressure">Pressure</string>
+    <!-- Small weight beside each factor label, showing how much it counts toward the score; %1$d is a whole percent (35, 25, 25 or 15), so it shows "35%". -->
+    <string name="bite_factor_weight">%1$d%%</string>
+
+    <!-- Reason on the tide row. slack: within 30 minutes of high or low water, water barely moving. moving: 45 to 150 minutes after the turn, water starting to run (the best tide score). mid: any other time, current running hard or easing off. Keep under 40 characters. -->
+    <string name="bite_tide_slack">Slack water, barely moving</string>
+    <string name="bite_tide_moving">Water starting to run after the turn</string>
+    <string name="bite_tide_mid">Current running hard or easing off</string>
+
+    <!-- Reason on the light row. golden: dawn (first light to an hour after sunrise) or dusk (an hour before sunset to last light). night: after last light, before first light. midday: 11:00 to 15:00, harsh sun, fish shy. daylight: other daylight hours, scored the same as night. Keep under 40 characters. -->
+    <string name="bite_light_golden">Low light at dawn or dusk</string>
+    <string name="bite_light_night">Night, some fish still feeding</string>
+    <string name="bite_light_midday">Harsh midday sun, fish shy</string>
+    <string name="bite_light_daylight">Daylight, quieter than dawn or dusk</string>
+
+    <!-- Reason on the moon row, from the moon's age. spring: days around new and full moon (spring tides). neap: days around the quarter moons (neap tides). normal: the days in between. Keep under 40 characters. -->
+    <string name="bite_moon_spring">Spring tide days, stronger flow</string>
+    <string name="bite_moon_neap">Neap tide days, weaker flow</string>
+    <string name="bite_moon_normal">Between spring and neap tides</string>
+
+    <!-- Reason on the pressure row, from the reading and its 3-hour trend. ideal: steady and between 1010 and 1015 hPa (best score). steady: steady but outside that range. falling_fast: a drop of more than 3 hPa in 3 hours, often a storm sign. Modest wording only. Keep under 40 characters. -->
+    <string name="bite_pressure_ideal">Steady at 1010–1015 hPa, ideal</string>
+    <string name="bite_pressure_steady">Steady, outside 1010–1015 hPa</string>
+    <string name="bite_pressure_rising">Rising, weather settling</string>
+    <string name="bite_pressure_falling">Falling, weather may turn</string>
+    <string name="bite_pressure_falling_fast">Dropping fast, possible storm</string>
+
+    <!-- Shown in place of the reason when a factor has no data yet (for example offline); the score is worked out from the other factors for now. Keep under 40 characters. -->
+    <string name="bite_factor_missing">No data yet, left out of the score</string>
+
+    <!-- Title above the 24-hour bar chart of the score, which has a marker at the current time and the best window highlighted. Keep under 28 characters. -->
+    <string name="bite_timeline_title">Score over 24 hours</string>
+    <!-- Line under the chart with the best upcoming prime window; %1$s is the start time and %2$s the end time, both formatted such as "5:40 AM" or "17:40"; %3$s is the highest score in the window, such as "8.6". Keep under 50 characters. -->
+    <string name="bite_best_window">Prime time %1$s – %2$s, peaks at %3$s</string>
+    <!-- Shown instead of bite_best_window when no hour reaches prime in the next 24 hours. Keep under 50 characters. -->
+    <string name="bite_no_prime_window">No prime time in the next 24 hours.</string>
+    <!-- TalkBack description of the 24-hour chart; %1$s is the full bite_best_window or bite_no_prime_window sentence. -->
+    <string name="bite_timeline_description">Bite Score for 24 hours, with a marker at the current time. %1$s</string>
+    <!-- TalkBack description of the big score; %1$s is the score such as "7.8", %2$s the band label (bite_band_*). -->
+    <string name="bite_score_description">Bite Score %1$s out of 10, %2$s</string>
+
+    <!-- One-line footer on the card: the score is a guide from tide, light, moon and pressure, not a promise of fish. Keep under 80 characters. -->
+    <string name="bite_disclaimer">A guide from tide, light, moon and pressure. Not a promise of fish.</string>
+</resources>

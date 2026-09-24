@@ -87,6 +87,15 @@ object Astro {
         )
     }
 
+    /** Just the sun times for a day: first light, sunrise, sunset and last light (civil twilight). */
+    fun sun(latitude: Double, longitude: Double, date: LocalDate, zone: ZoneId): List<ZonedDateTime?> {
+        val start = date.atStartOfDay(zone)
+        val sun = SunTimes.compute().on(start).timezone(zone).at(latitude, longitude).oneDay().execute()
+        val civil = SunTimes.compute().on(start).timezone(zone).at(latitude, longitude).oneDay()
+            .twilight(SunTimes.Twilight.CIVIL).execute()
+        return listOf(civil.rise, sun.rise, sun.set, civil.set)
+    }
+
     /** Just the moon for a day, without the transit scan, so a month of days stays cheap. */
     fun moon(latitude: Double, longitude: Double, date: LocalDate, zone: ZoneId): MoonDay {
         val start = date.atStartOfDay(zone)

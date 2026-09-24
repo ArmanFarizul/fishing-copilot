@@ -12,6 +12,7 @@ import androidx.compose.runtime.remember
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.fishingcopilot.data.profile.UserProfile
+import com.fishingcopilot.ui.home.BiteViewModel
 import com.fishingcopilot.ui.home.HomeScreen
 import com.fishingcopilot.ui.home.HomeViewModel
 import com.fishingcopilot.ui.home.MarineViewModel
@@ -73,7 +74,15 @@ private fun AppRoot(app: FishingCopilotApp) {
             val sunMoon = spotId?.let {
                 viewModel<SunMoonViewModel>(key = "sunmoon-$it", factory = SunMoonViewModel.factory(it, app.database.fishingDao(), app.hijriRepository))
             }
-            HomeScreen(state.profile, home, marine, sunMoon)
+            val bite = spotId?.let {
+                viewModel<BiteViewModel>(
+                    key = "bite-$it",
+                    factory = BiteViewModel.factory(
+                        it, app.database.fishingDao(), app.tideRepository, app.marineRepository, app.hijriRepository
+                    )
+                )
+            }
+            HomeScreen(state.profile, home, marine, sunMoon, bite)
         }
     }
 }

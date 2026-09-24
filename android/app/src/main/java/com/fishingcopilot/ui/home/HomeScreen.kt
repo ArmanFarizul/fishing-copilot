@@ -34,7 +34,8 @@ fun HomeScreen(
     profile: UserProfile,
     homeViewModel: HomeViewModel?,
     marineViewModel: MarineViewModel?,
-    sunMoonViewModel: SunMoonViewModel?
+    sunMoonViewModel: SunMoonViewModel?,
+    biteViewModel: BiteViewModel?
 ) {
     val period = remember { DayPeriod.fromHour(LocalTime.now().hour) }
     Scaffold { innerPadding ->
@@ -62,9 +63,14 @@ fun HomeScreen(
                     )
                 }
             }
+            if (biteViewModel != null) {
+                val bite by biteViewModel.uiState.collectAsStateWithLifecycle()
+                Spacer(Modifier.height(24.dp))
+                BiteScoreCard(forecast = bite)
+            }
             if (homeViewModel != null) {
                 val state by homeViewModel.uiState.collectAsStateWithLifecycle()
-                Spacer(Modifier.height(24.dp))
+                Spacer(Modifier.height(16.dp))
                 TideCard(
                     state = state,
                     onRetry = homeViewModel::retry,
