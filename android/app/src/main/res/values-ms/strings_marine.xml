@@ -4,9 +4,9 @@
     <string name="marine_card_title">Cuaca laut</string>
     <string name="marine_updated">Dikemas kini %1$s</string>
 
-    <string name="marine_status_calm">Tenang</string>
+    <string name="marine_status_calm">Risiko kecil</string>
     <string name="marine_status_caution">Berhati-hati</string>
-    <string name="marine_status_danger">Bergelora</string>
+    <string name="marine_status_danger">Bahaya</string>
     <string name="marine_advice_calm">Ombak kecil. Tetap awasi ribut petir.</string>
     <string name="marine_advice_caution">Berombak. Bot kecil dan kayak, lebih waspada.</string>
     <string name="marine_advice_danger">Bot kecil dan kayak, elakkan turun ke laut.</string>

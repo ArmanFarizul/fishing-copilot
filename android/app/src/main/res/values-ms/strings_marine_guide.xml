@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Context for every string is in values/strings_marine_guide.xml. Keep keys and format arguments identical to that file. -->
+<resources>
+    <string name="sea_state_0">Tenang (berkaca)</string>
+    <string name="sea_state_1">Tenang (beriak)</string>
+    <string name="sea_state_2">Ombak kecil</string>
+    <string name="sea_state_3">Sedikit berombak</string>
+    <string name="sea_state_4">Ombak sederhana</string>
+    <string name="sea_state_5">Bergelora</string>
+    <string name="sea_state_6">Sangat bergelora</string>
+    <string name="sea_state_7">Ombak tinggi</string>
+    <string name="sea_state_8">Ombak amat tinggi</string>
+    <string name="sea_state_9">Ombak luar biasa</string>
+
+    <string name="wave_body_flat">Hampir rata</string>
+    <string name="wave_body_ankle">Kira-kira paras buku lali</string>
+    <string name="wave_body_knee">Kira-kira paras lutut</string>
+    <string name="wave_body_waist">Kira-kira paras pinggang</string>
+    <string name="wave_body_chest">Kira-kira paras dada</string>
+    <string name="wave_body_head">Kira-kira paras kepala</string>
+    <string name="wave_body_overhead">Lebih tinggi daripada orang</string>
+    <string name="guide_wave_explainer">Tinggi ombak ialah purata ombak yang lebih besar. Tempoh ialah jarak saat antara ombak: lebih panjang bermaksud alun landai, lebih pendek bermaksud air berkocak.</string>
+    <string name="guide_body_note">Perbandingan badan ini anggaran kasar untuk orang dewasa yang berdiri di pantai.</string>
+
+    <string name="beaufort_0">Tenang</string>
+    <string name="beaufort_1">Angin silir</string>
+    <string name="beaufort_2">Bayu silir</string>
+    <string name="beaufort_3">Bayu lembut</string>
+    <string name="beaufort_4">Bayu sederhana</string>
+    <string name="beaufort_5">Bayu segar</string>
+    <string name="beaufort_6">Bayu kuat</string>
+    <string name="beaufort_7">Bebadai sendalu</string>
+    <string name="beaufort_8">Bebadai segar</string>
+    <string name="beaufort_9">Bebadai kencang</string>
+    <string name="beaufort_10">Bebadai cekang kelat</string>
+    <string name="beaufort_11">Ribut ganas</string>
+    <string name="beaufort_12">Angin daya hurikan</string>
+    <string name="beaufort_sign_0">Laut seperti cermin, asap naik lurus</string>
+    <string name="beaufort_sign_1">Riak kecil, asap condong ikut angin</string>
+    <string name="beaufort_sign_2">Riak ombak kecil, angin terasa di muka</string>
+    <string name="beaufort_sign_3">Puncak ombak mula pecah, ranting bergoyang</string>
+    <string name="beaufort_sign_4">Ada buih putih, habuk dan kertas berterbangan</string>
+    <string name="beaufort_sign_5">Banyak buih putih, pokok kecil bergoyang</string>
+    <string name="beaufort_sign_6">Ombak besar berpercik, payung susah dipegang</string>
+    <string name="beaufort_sign_7">Buih berjalur, susah berjalan melawan angin</string>
+    <string name="beaufort_sign_8">Puncak ombak jadi percikan, ranting patah</string>
+    <string name="beaufort_sign_9">Ombak runtuh, percikan mengaburkan pandangan</string>
+    <string name="beaufort_sign_10">Laut memutih, pokok tumbang</string>
+    <string name="beaufort_sign_11">Ombak amat tinggi, kerosakan meluas</string>
+    <string name="beaufort_sign_12">Laut putih, udara penuh percikan</string>
+    <string name="guide_wind_explainer">Kelajuan ialah angin tetap dalam knot (1 kn lebih kurang 1.85 km/j). Tiupan ialah hembusan paling kuat yang sekejap.</string>
+
+    <string name="pressure_meaning_steady">Cuaca biasanya tidak banyak berubah.</string>
+    <string name="pressure_meaning_rising">Selalunya tanda cuaca makin baik.</string>
+    <string name="pressure_meaning_falling">Cuaca mungkin bertukar mendung atau hujan.</string>
+    <string name="pressure_meaning_falling_fast">Turun lebih 3 hPa dalam 3 jam, sering tanda ribut.</string>
+    <string name="guide_pressure_explainer">Perubahan dalam 3 jam lepas lebih bermakna daripada angkanya. Tekanan yang jatuh cepat selalunya tanda cuaca buruk.</string>
+
+    <string name="current_slow">Perlahan</string>
+    <string name="current_moderate">Sederhana</string>
+    <string name="current_fast">Laju</string>
+    <string name="current_feel_slow">Jauh lebih perlahan daripada orang berjalan</string>
+    <string name="current_feel_moderate">Mengalir tetap, kurang separuh laju berjalan</string>
+    <string name="current_feel_fast">Kira-kira separuh laju berjalan, atau lebih</string>
+    <string name="current_sinker_slow">Ladung saiz 2–4 · Perambut running sinker / hanyut</string>
+    <string name="current_sinker_moderate">Ladung saiz 5–7</string>
+    <string name="current_sinker_fast">Ladung saiz 8–10 atau sauh · Perambut Apollo</string>
+    <string name="guide_current_explainer">Arus ialah kelajuan air bergerak melalui lubuk anda. Arus yang lebih kuat perlukan ladung lebih berat supaya kekal di dasar.</string>
+
+    <string name="guide_tap_hint">Ketik untuk info</string>
+    <string name="guide_you_are_here">Anda di sini</string>
+    <string name="guide_level_description">%1$s, tahap %2$d daripada %3$d</string>
+    <string name="guide_sources">Skala: keadaan laut WMO dan Beaufort (Met Office). Saranan ladung ialah panduan umum.</string>
+</resources>

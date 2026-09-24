@@ -26,9 +26,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.fishingcopilot.R
+import com.fishingcopilot.marine.Beaufort
 import com.fishingcopilot.marine.Compass
+import com.fishingcopilot.marine.CurrentLevel
 import com.fishingcopilot.marine.MarineSummary
 import com.fishingcopilot.marine.PressureTrend
+import com.fishingcopilot.marine.SeaState
+import com.fishingcopilot.marine.WaveBody
 import com.fishingcopilot.marine.WaveStatus
 import com.fishingcopilot.ui.theme.AlertRed
 import com.fishingcopilot.ui.theme.CautionYellow
@@ -115,40 +119,14 @@ private fun ReadyContent(state: MarineCardState.Ready, locale: Locale) {
         Spacer(Modifier.height(12.dp))
     }
 
-    Row(horizontalArrangement = Arrangement.spacedBy(10.dp), modifier = Modifier.fillMaxWidth()) {
-        Tile(
-            label = R.string.marine_waves,
-            value = hour.waveHeight?.let {
-                stringResource(R.string.marine_wave_value, oneDecimal(it, locale), (hour.wavePeriod ?: 0.0).roundToInt())
-            },
-            detail = hour.waveDirection?.let { stringResource(R.string.marine_from, compassLabel(it)) },
-            modifier = Modifier.weight(1f)
-        )
-        Tile(
-            label = R.string.marine_wind,
-            value = hour.windKn?.let {
-                stringResource(R.string.marine_wind_value, it.roundToInt(), (hour.gustKn ?: it).roundToInt())
-            },
-            detail = hour.windDirection?.let { stringResource(R.string.marine_from, compassLabel(it)) },
-            modifier = Modifier.weight(1f)
-        )
+    Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+        hour.waveHeight?.let { height -> WaveRow(height, hour.wavePeriod, hour.waveDirection, summary.waveStatus, locale) }
+        hour.windKn?.let { knots -> WindRow(knots, hour.gustKn ?: knots, hour.windDirection) }
+        hour.pressureHpa?.let { hPa -> PressureRow(hPa, summary.pressureTrend) }
+        hour.currentKn?.let { knots -> CurrentRow(knots, hour.seaTempC, locale) }
     }
-    Spacer(Modifier.height(10.dp))
-    Row(horizontalArrangement = Arrangement.spacedBy(10.dp), modifier = Modifier.fillMaxWidth()) {
-        Tile(
-            label = R.string.marine_pressure,
-            value = hour.pressureHpa?.let { stringResource(R.string.marine_pressure_value, it.roundToInt()) },
-            detail = summary.pressureTrend?.let { stringResource(it.label) },
-            detailColor = if (summary.pressureTrend == PressureTrend.FALLING_FAST) AlertRed else TextMuted,
-            modifier = Modifier.weight(1f)
-        )
-        Tile(
-            label = R.string.marine_current,
-            value = hour.currentKn?.let { stringResource(R.string.marine_current_value, oneDecimal(it, locale)) },
-            detail = hour.seaTempC?.let { stringResource(R.string.marine_sea_temp, oneDecimal(it, locale)) },
-            modifier = Modifier.weight(1f)
-        )
-    }
+    Spacer(Modifier.height(8.dp))
+    Text(stringResource(R.string.guide_sources), style = MaterialTheme.typography.labelSmall, color = TextMuted)
 
     val maxWave = summary.maxWaveNext24h
     val maxWind = summary.maxWindNext24h
@@ -171,21 +149,188 @@ private fun ReadyContent(state: MarineCardState.Ready, locale: Locale) {
 }
 
 @Composable
-private fun Tile(
-    @StringRes label: Int,
-    value: String?,
-    detail: String?,
-    modifier: Modifier = Modifier,
-    detailColor: Color = TextMuted
-) {
-    Surface(shape = RoundedCornerShape(14.dp), color = OceanMidnight, modifier = modifier) {
-        Column(modifier = Modifier.padding(horizontal = 12.dp, vertical = 10.dp)) {
-            Text(stringResource(label), style = MaterialTheme.typography.labelMedium, color = TextMuted)
-            Text(value ?: "–", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold, color = TextHighContrast)
-            if (detail != null) Text(detail, style = MaterialTheme.typography.bodySmall, color = detailColor)
+private fun WaveRow(height: Double, period: Double?, direction: Double?, status: WaveStatus?, locale: Locale) {
+    val state = SeaState.of(height)
+    val color = status?.color ?: NauticalCyan
+    val numbers = listOfNotNull(
+        stringResource(R.string.marine_wave_value, oneDecimal(height, locale), (period ?: 0.0).roundToInt()),
+        direction?.let { stringResource(R.string.marine_from, compassLabel(it)) }
+    ).joinToString(" · ")
+    // The everyday scale stops at "very rough"; anything bigger still shows as the last step.
+    val shown = SeaState.entries.take(7)
+    GuideRow(
+        title = stringResource(R.string.marine_waves),
+        levelName = stringResource(state.label),
+        comparison = stringResource(WaveBody.of(height).label),
+        numbers = numbers,
+        levelIndex = state.code.coerceAtMost(shown.lastIndex),
+        levelCount = shown.size,
+        levelColor = color,
+        explainer = stringResource(R.string.guide_wave_explainer) + " " + stringResource(R.string.guide_body_note),
+        scale = shown.mapIndexed { i, s ->
+            ScaleStep(stringResource(s.label), if (i == 0) "0 m" else "${meters(shown[i - 1].maxHeight, locale)}–${meters(s.maxHeight, locale)} m")
         }
+    ) { WaveAnimation(height, period ?: 6.0, color) }
+}
+
+@Composable
+private fun WindRow(knots: Double, gusts: Double, direction: Double?) {
+    // The Beaufort table is in whole knots, and so is the number shown, so classify the rounded value.
+    val beaufort = Beaufort.of(knots.roundToInt().toDouble())
+    val color = when {
+        beaufort.force <= 3 -> PrimeGreen
+        beaufort.force <= 5 -> CautionYellow
+        else -> AlertRed
+    }
+    val shown = Beaufort.entries.take(9)
+    val numbers = listOfNotNull(
+        stringResource(R.string.marine_wind_value, knots.roundToInt(), gusts.roundToInt()),
+        direction?.let { stringResource(R.string.marine_from, compassLabel(it)) }
+    ).joinToString(" · ")
+    GuideRow(
+        title = stringResource(R.string.marine_wind),
+        levelName = stringResource(beaufort.label),
+        comparison = stringResource(beaufort.sign),
+        numbers = numbers,
+        levelIndex = beaufort.force.coerceAtMost(shown.lastIndex),
+        levelCount = shown.size,
+        levelColor = color,
+        explainer = stringResource(R.string.guide_wind_explainer),
+        scale = shown.mapIndexed { i, b ->
+            val low = if (i == 0) null else (shown[i - 1].belowKnots + 0.5).toInt()
+            val high = if (b.belowKnots == Double.MAX_VALUE) null else (b.belowKnots - 0.5).toInt()
+            ScaleStep(stringResource(b.label), when {
+                low == null -> "< 1 kn"
+                high == null -> "$low+ kn"
+                else -> "$low–$high kn"
+            })
+        }
+    ) { WindAnimation(knots, beaufort.force, color) }
+}
+
+@Composable
+private fun PressureRow(hPa: Double, trend: PressureTrend?) {
+    val color = when (trend) {
+        PressureTrend.FALLING_FAST -> AlertRed
+        PressureTrend.FALLING -> CautionYellow
+        else -> PrimeGreen
+    }
+    val trendIndex = when (trend) {
+        PressureTrend.RISING -> 0
+        null, PressureTrend.STEADY -> 1
+        PressureTrend.FALLING -> 2
+        PressureTrend.FALLING_FAST -> 3
+    }
+    val steps = listOf(PressureTrend.RISING, PressureTrend.STEADY, PressureTrend.FALLING, PressureTrend.FALLING_FAST)
+    GuideRow(
+        title = stringResource(R.string.marine_pressure),
+        levelName = stringResource((trend ?: PressureTrend.STEADY).label),
+        comparison = stringResource((trend ?: PressureTrend.STEADY).meaning),
+        numbers = stringResource(R.string.marine_pressure_value, hPa.roundToInt()),
+        levelIndex = trendIndex,
+        levelCount = steps.size,
+        levelColor = color,
+        explainer = stringResource(R.string.guide_pressure_explainer),
+        scale = steps.map { ScaleStep(stringResource(it.label) + " — " + stringResource(it.meaning), null) }
+    ) {
+        PressureGauge(
+            hPa = hPa,
+            trendDirection = when (trend) {
+                PressureTrend.RISING -> 1
+                PressureTrend.FALLING, PressureTrend.FALLING_FAST -> -1
+                else -> 0
+            },
+            alarm = trend == PressureTrend.FALLING_FAST,
+            color = color
+        )
     }
 }
+
+@Composable
+private fun CurrentRow(knots: Double, seaTemp: Double?, locale: Locale) {
+    val level = CurrentLevel.of(knots)
+    val (name, feel, sinker) = when (level) {
+        CurrentLevel.SLOW -> Triple(R.string.current_slow, R.string.current_feel_slow, R.string.current_sinker_slow)
+        CurrentLevel.MODERATE -> Triple(R.string.current_moderate, R.string.current_feel_moderate, R.string.current_sinker_moderate)
+        CurrentLevel.FAST -> Triple(R.string.current_fast, R.string.current_feel_fast, R.string.current_sinker_fast)
+    }
+    val numbers = listOfNotNull(
+        stringResource(R.string.marine_current_value, oneDecimal(knots, locale)),
+        seaTemp?.let { stringResource(R.string.marine_sea_temp, oneDecimal(it, locale)) }
+    ).joinToString(" · ")
+    GuideRow(
+        title = stringResource(R.string.marine_current),
+        levelName = stringResource(name),
+        comparison = stringResource(feel),
+        numbers = numbers,
+        levelIndex = level.ordinal,
+        levelCount = CurrentLevel.entries.size,
+        levelColor = NauticalCyan,
+        explainer = stringResource(R.string.guide_current_explainer),
+        scale = listOf(
+            ScaleStep(stringResource(R.string.current_slow), "< 0.5 kn"),
+            ScaleStep(stringResource(R.string.current_moderate), "0.5–1.2 kn"),
+            ScaleStep(stringResource(R.string.current_fast), "> 1.2 kn")
+        ),
+        extra = stringResource(sinker)
+    ) { CurrentAnimation(knots, NauticalCyan) }
+}
+
+private val WaveStatus.color: Color
+    get() = when (this) {
+        WaveStatus.CALM -> PrimeGreen
+        WaveStatus.CAUTION -> CautionYellow
+        WaveStatus.DANGER -> AlertRed
+    }
+
+/** Scale bounds such as 0.1, 1.25 and 4 without trailing zeros, in the user's decimal separator. */
+private fun meters(value: Double, locale: Locale): String =
+    java.text.DecimalFormat("0.##", java.text.DecimalFormatSymbols.getInstance(locale)).format(value)
+
+@get:StringRes
+private val SeaState.label: Int
+    get() = listOf(
+        R.string.sea_state_0, R.string.sea_state_1, R.string.sea_state_2, R.string.sea_state_3, R.string.sea_state_4,
+        R.string.sea_state_5, R.string.sea_state_6, R.string.sea_state_7, R.string.sea_state_8, R.string.sea_state_9
+    )[code]
+
+@get:StringRes
+private val WaveBody.label: Int
+    get() = when (this) {
+        WaveBody.FLAT -> R.string.wave_body_flat
+        WaveBody.ANKLE -> R.string.wave_body_ankle
+        WaveBody.KNEE -> R.string.wave_body_knee
+        WaveBody.WAIST -> R.string.wave_body_waist
+        WaveBody.CHEST -> R.string.wave_body_chest
+        WaveBody.HEAD -> R.string.wave_body_head
+        WaveBody.OVERHEAD -> R.string.wave_body_overhead
+    }
+
+@get:StringRes
+private val Beaufort.label: Int
+    get() = listOf(
+        R.string.beaufort_0, R.string.beaufort_1, R.string.beaufort_2, R.string.beaufort_3, R.string.beaufort_4,
+        R.string.beaufort_5, R.string.beaufort_6, R.string.beaufort_7, R.string.beaufort_8, R.string.beaufort_9,
+        R.string.beaufort_10, R.string.beaufort_11, R.string.beaufort_12
+    )[force]
+
+@get:StringRes
+private val Beaufort.sign: Int
+    get() = listOf(
+        R.string.beaufort_sign_0, R.string.beaufort_sign_1, R.string.beaufort_sign_2, R.string.beaufort_sign_3,
+        R.string.beaufort_sign_4, R.string.beaufort_sign_5, R.string.beaufort_sign_6, R.string.beaufort_sign_7,
+        R.string.beaufort_sign_8, R.string.beaufort_sign_9, R.string.beaufort_sign_10, R.string.beaufort_sign_11,
+        R.string.beaufort_sign_12
+    )[force]
+
+@get:StringRes
+private val PressureTrend.meaning: Int
+    get() = when (this) {
+        PressureTrend.STEADY -> R.string.pressure_meaning_steady
+        PressureTrend.RISING -> R.string.pressure_meaning_rising
+        PressureTrend.FALLING -> R.string.pressure_meaning_falling
+        PressureTrend.FALLING_FAST -> R.string.pressure_meaning_falling_fast
+    }
 
 @Composable
 private fun compassLabel(degrees: Double): String = stringResource(

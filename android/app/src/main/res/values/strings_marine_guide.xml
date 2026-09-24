@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Sea state level name in bold on the waves row, from WMO code table 3700 by wave height: 0 is 0 m, 1 up to 0.1 m, 2 up to 0.5 m, 3 up to 1.25 m, 4 up to 2.5 m, 5 up to 4 m, 6 up to 6 m, 7 up to 9 m, 8 up to 14 m, 9 above 14 m. Also listed on the expanded scale. Keep under 18 characters. -->
+    <string name="sea_state_0">Calm (glassy)</string>
+    <string name="sea_state_1">Calm (rippled)</string>
+    <string name="sea_state_2">Smooth (wavelets)</string>
+    <string name="sea_state_3">Slight</string>
+    <string name="sea_state_4">Moderate</string>
+    <string name="sea_state_5">Rough</string>
+    <string name="sea_state_6">Very rough</string>
+    <string name="sea_state_7">High</string>
+    <string name="sea_state_8">Very high</string>
+    <string name="sea_state_9">Phenomenal</string>
+
+    <!-- Everyday comparison under the sea state name: wave height against an adult standing on the shore. Bands: flat under 0.1 m, ankle under 0.3 m, knee under 0.6 m, waist under 1.0 m, chest under 1.4 m, head under 1.9 m, overhead above that. Keep under 28 characters. -->
+    <string name="wave_body_flat">Almost flat</string>
+    <string name="wave_body_ankle">About ankle high</string>
+    <string name="wave_body_knee">About knee high</string>
+    <string name="wave_body_waist">About waist high</string>
+    <string name="wave_body_chest">About chest high</string>
+    <string name="wave_body_head">About head high</string>
+    <string name="wave_body_overhead">Taller than a person</string>
+    <!-- Shown when the waves row is expanded; explains wave height and wave period. Keep under 170 characters. -->
+    <string name="guide_wave_explainer">Wave height is the average of the bigger waves. Period is the seconds between waves: longer means smoother, rolling swell, shorter means choppy water.</string>
+    <!-- Tiny note under the expanded waves scale; the body comparison is only approximate. Keep under 80 characters. -->
+    <string name="guide_body_note">Body comparison is a rough guide for an adult standing on the shore.</string>
+
+    <!-- Beaufort force name in bold on the wind row, by average wind speed (Met Office): 0 under 1 kn, 1 is 1-3, 2 is 4-6, 3 is 7-10, 4 is 11-16, 5 is 17-21, 6 is 22-27, 7 is 28-33, 8 is 34-40, 9 is 41-47, 10 is 48-55, 11 is 56-63, 12 is 64 kn and above. Also listed on the expanded scale. Keep under 20 characters. -->
+    <string name="beaufort_0">Calm</string>
+    <string name="beaufort_1">Light air</string>
+    <string name="beaufort_2">Light breeze</string>
+    <string name="beaufort_3">Gentle breeze</string>
+    <string name="beaufort_4">Moderate breeze</string>
+    <string name="beaufort_5">Fresh breeze</string>
+    <string name="beaufort_6">Strong breeze</string>
+    <string name="beaufort_7">Near gale</string>
+    <string name="beaufort_8">Gale</string>
+    <string name="beaufort_9">Strong gale</string>
+    <string name="beaufort_10">Storm</string>
+    <string name="beaufort_11">Violent storm</string>
+    <string name="beaufort_12">Hurricane force</string>
+    <!-- One line under the Beaufort name: what you would notice at sea or on land at that force, following the standard Beaufort descriptions. Keep under 45 characters. -->
+    <string name="beaufort_sign_0">Sea like a mirror, smoke rises straight up</string>
+    <string name="beaufort_sign_1">Small ripples, smoke drifts with the wind</string>
+    <string name="beaufort_sign_2">Small wavelets, wind felt on your face</string>
+    <string name="beaufort_sign_3">Crests begin to break, leaves and twigs move</string>
+    <string name="beaufort_sign_4">Some white horses, dust and paper blow about</string>
+    <string name="beaufort_sign_5">Many white horses, small trees sway</string>
+    <string name="beaufort_sign_6">Large waves and spray, umbrellas hard to use</string>
+    <string name="beaufort_sign_7">Foam blows in streaks, hard to walk into wind</string>
+    <string name="beaufort_sign_8">Crests blow into spray, twigs snap off trees</string>
+    <string name="beaufort_sign_9">Crests topple, spray cuts visibility</string>
+    <string name="beaufort_sign_10">Sea turns white, trees uprooted</string>
+    <string name="beaufort_sign_11">Huge waves, widespread damage</string>
+    <string name="beaufort_sign_12">Air full of foam and spray, severe damage</string>
+    <!-- Shown when the wind row is expanded; explains wind speed in knots and gusts. Keep under 130 characters. -->
+    <string name="guide_wind_explainer">Speed is the steady wind in knots (1 kn is about 1.85 km/h). Gusts are the short, strongest bursts.</string>
+
+    <!-- One line on the pressure row saying what the 3-hour trend usually means for the weather; matches marine_pressure_steady, _rising, _falling and _falling_fast. falling_fast means a drop of more than 3 hPa in 3 hours. Modest wording only. Keep under 55 characters. -->
+    <string name="pressure_meaning_steady">Weather usually stays much the same.</string>
+    <string name="pressure_meaning_rising">Often a sign of settled, fairer weather.</string>
+    <string name="pressure_meaning_falling">Weather may turn cloudy or wet.</string>
+    <string name="pressure_meaning_falling_fast">Down over 3 hPa in 3 hours, often a storm sign.</string>
+    <!-- Shown when the pressure row is expanded; the trend matters more than the reading. Keep under 130 characters. -->
+    <string name="guide_pressure_explainer">The change over the last 3 hours tells you more than the number itself. A quick drop often comes before bad weather.</string>
+
+    <!-- Current level name in bold on the current row: slow under 0.5 kn, moderate 0.5 to 1.2 kn, fast above 1.2 kn. Keep under 14 characters. -->
+    <string name="current_slow">Slow</string>
+    <string name="current_moderate">Moderate</string>
+    <string name="current_fast">Fast</string>
+    <!-- Everyday comparison under the current level, against an adult walking at about 2.5 to 3 kn (5 km/h). Slow is under 0.9 km/h, moderate 0.9 to 2.2 km/h. Keep under 45 characters. -->
+    <string name="current_feel_slow">A gentle drift, far slower than walking</string>
+    <string name="current_feel_moderate">A steady pull, under half walking pace</string>
+    <string name="current_feel_fast">About half walking pace or faster</string>
+    <!-- Sinker and rig suggestion for the current level; a general guide, not a rule. The dot separates sinker from rig. Keep under 50 characters. -->
+    <string name="current_sinker_slow">Sinker size 2–4 · Running sinker or drift rig</string>
+    <string name="current_sinker_moderate">Sinker size 5–7</string>
+    <string name="current_sinker_fast">Sinker size 8–10 or grapnel · Apollo rig</string>
+    <!-- Shown when the current row is expanded; explains current and why sinker weight changes. Keep under 130 characters. -->
+    <string name="guide_current_explainer">Current is how fast the water moves past your spot. Stronger current needs a heavier sinker to hold the bottom.</string>
+
+    <!-- Tiny hint on each row that tapping shows more. Keep under 20 characters. -->
+    <string name="guide_tap_hint">Tap for more</string>
+    <!-- Marker label on the expanded scale pointing at the current level. Keep under 16 characters. -->
+    <string name="guide_you_are_here">You are here</string>
+    <!-- TalkBack description for a level bar; %1$s is the level name (such as "Slight"), %2$d is the level number starting at 1, %3$d is the number of levels. -->
+    <string name="guide_level_description">%1$s, level %2$d of %3$d</string>
+    <!-- Tiny credit line at the bottom of the expanded card. Keep under 90 characters. -->
+    <string name="guide_sources">Scales: WMO sea state and Beaufort (Met Office). Sinker advice is a general guide.</string>
+</resources>

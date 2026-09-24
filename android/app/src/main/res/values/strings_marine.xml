@@ -5,10 +5,10 @@
     <!-- Small line beside the card title; %1$s is the clock time of the latest download, already formatted, such as "10:21 PM" or "22:21". Keep under 20 characters. -->
     <string name="marine_updated">Updated %1$s</string>
 
-    <!-- Status chip based on wave height: calm under 0.8 m, caution 0.8 to 1.5 m, rough over 1.5 m. Keep under 12 characters. -->
-    <string name="marine_status_calm">Calm</string>
+    <!-- Status chip for the app's own small-boat risk bands by wave height: low risk under 0.8 m, caution 0.8 to 1.5 m, danger over 1.5 m. These are not the WMO sea state shown on the waves row, so never reuse a sea state or Beaufort name here. Keep under 12 characters. -->
+    <string name="marine_status_calm">Low risk</string>
     <string name="marine_status_caution">Caution</string>
-    <string name="marine_status_danger">Rough</string>
+    <string name="marine_status_danger">Danger</string>
     <!-- One short line of advice under the status chip, matching the chip above. Modest advice only, never call the sea safe. Keep under 45 characters. -->
     <string name="marine_advice_calm">Small waves. Still watch for storms.</string>
     <string name="marine_advice_caution">Choppy. Small boats and kayaks, take care.</string>
