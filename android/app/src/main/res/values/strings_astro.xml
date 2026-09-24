@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Title of the sun and moon card on the home screen, below the marine weather card; keep under 20 characters. -->
+    <string name="astro_card_title">Sun and moon</string>
+
+    <!-- Labels over the four times in the sun row. First and last light are civil twilight (sun 6° below the horizon), not prayer times, so never use Subuh, Maghrib or similar words. Keep under 12 characters. -->
+    <string name="astro_first_light">First light</string>
+    <string name="astro_sunrise">Sunrise</string>
+    <string name="astro_sunset">Sunset</string>
+    <string name="astro_last_light">Last light</string>
+
+    <!-- Labels over the moonrise and moonset times in the moon row, beside the moon icon and phase name. Keep under 12 characters. -->
+    <string name="astro_moonrise">Moonrise</string>
+    <string name="astro_moonset">Moonset</string>
+    <!-- Shown in place of a time when the moon does not rise or set on this day; keep under 12 characters. -->
+    <string name="astro_no_event">None today</string>
+
+    <!-- Moon phase name in the moon row, one of the 8 standard phases; use the established astronomy names for each language. Keep under 22 characters. -->
+    <string name="moon_new">New moon</string>
+    <string name="moon_waxing_crescent">Waxing crescent</string>
+    <string name="moon_first_quarter">First quarter</string>
+    <string name="moon_waxing_gibbous">Waxing gibbous</string>
+    <string name="moon_full">Full moon</string>
+    <string name="moon_waning_gibbous">Waning gibbous</string>
+    <string name="moon_last_quarter">Last quarter</string>
+    <string name="moon_waning_crescent">Waning crescent</string>
+    <!-- Small line under the phase name; %1$d is how much of the moon is lit, as a whole percent from 0 to 100. Keep under 14 characters. -->
+    <string name="astro_illumination">%1$d%% lit</string>
+
+    <!-- Chip beside the phase name, shown only around new and full moon (spring) or around the quarter moons (neap), based on the moon's age. Keep under 14 characters. -->
+    <string name="astro_spring_tide">Spring tide</string>
+    <string name="astro_neap_tide">Neap tide</string>
+
+    <!-- Heading of the solunar section, a list of today's traditional fish feeding periods worked out from the moon's position. Keep under 28 characters. -->
+    <string name="astro_solunar_title">Solunar feeding times</string>
+    <!-- Label on each period. Major is when the moon is overhead or underfoot (about 2 hours); minor is around moonrise or moonset (about 1 hour). Keep under 10 characters. -->
+    <string name="astro_solunar_major">Major</string>
+    <string name="astro_solunar_minor">Minor</string>
+    <!-- Time range of one period; %1$s is the start time and %2$s the end time, both already formatted, such as "5:40 AM" or "17:40". -->
+    <string name="astro_solunar_range">%1$s – %2$s</string>
+    <!-- Small badges on the period happening now and the next one to come; keep under 10 characters. -->
+    <string name="astro_solunar_now">Now</string>
+    <string name="astro_solunar_next">Next</string>
+    <!-- Shown when all of today's periods are over; they start again tomorrow. Keep under 50 characters. -->
+    <string name="astro_solunar_none_left">That\'s all for today. More tomorrow.</string>
+    <!-- One-line footnote under the list saying what major and minor mean and, modestly, that solunar times are a traditional guide, not a promise of fish. Keep under 120 characters. -->
+    <string name="astro_solunar_note">Major: moon overhead or underfoot. Minor: moonrise or moonset. An old guide, not a promise.</string>
+
+    <!-- TalkBack description of the drawn moon icon; %1$s is the phase name (moon_*), %2$d is how much of the moon is lit, as a whole percent. -->
+    <string name="astro_moon_description">Moon phase: %1$s, %2$d%% lit</string>
+</resources>

@@ -30,7 +30,12 @@ import com.fishingcopilot.ui.components.AvatarBadge
 import java.time.LocalTime
 
 @Composable
-fun HomeScreen(profile: UserProfile, homeViewModel: HomeViewModel?, marineViewModel: MarineViewModel?) {
+fun HomeScreen(
+    profile: UserProfile,
+    homeViewModel: HomeViewModel?,
+    marineViewModel: MarineViewModel?,
+    sunMoonViewModel: SunMoonViewModel?
+) {
     val period = remember { DayPeriod.fromHour(LocalTime.now().hour) }
     Scaffold { innerPadding ->
         Column(
@@ -72,6 +77,11 @@ fun HomeScreen(profile: UserProfile, homeViewModel: HomeViewModel?, marineViewMo
                 val marineState by marineViewModel.uiState.collectAsStateWithLifecycle()
                 Spacer(Modifier.height(16.dp))
                 MarineCard(state = marineState, onRetry = marineViewModel::retry)
+            }
+            if (sunMoonViewModel != null) {
+                val sunMoonState by sunMoonViewModel.uiState.collectAsStateWithLifecycle()
+                Spacer(Modifier.height(16.dp))
+                SunMoonCard(state = sunMoonState)
             }
             if (homeViewModel != null || marineViewModel != null) {
                 val uriHandler = LocalUriHandler.current

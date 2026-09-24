@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Context for every string is in values/strings_astro.xml. Keep keys and format arguments identical to that file. -->
+<resources>
+    <string name="astro_card_title">Matahari dan bulan</string>
+
+    <string name="astro_first_light">Terang tanah</string>
+    <string name="astro_sunrise">Terbit</string>
+    <string name="astro_sunset">Terbenam</string>
+    <string name="astro_last_light">Akhir senja</string>
+
+    <string name="astro_moonrise">Terbit</string>
+    <string name="astro_moonset">Terbenam</string>
+    <string name="astro_no_event">Tiada</string>
+
+    <string name="moon_new">Anak bulan</string>
+    <string name="moon_waxing_crescent">Bulan sabit</string>
+    <string name="moon_first_quarter">Bulan separa</string>
+    <string name="moon_waxing_gibbous">Bulan hampir purnama</string>
+    <string name="moon_full">Bulan purnama</string>
+    <string name="moon_waning_gibbous">Bulan selepas purnama</string>
+    <string name="moon_last_quarter">Bulan separa tua</string>
+    <string name="moon_waning_crescent">Bulan sabit tua</string>
+    <string name="astro_illumination">%1$d%% terang</string>
+
+    <string name="astro_spring_tide">Air besar</string>
+    <string name="astro_neap_tide">Air mati</string>
+
+    <string name="astro_solunar_title">Waktu makan ikan (solunar)</string>
+    <string name="astro_solunar_major">Utama</string>
+    <string name="astro_solunar_minor">Kecil</string>
+    <string name="astro_solunar_range">%1$s – %2$s</string>
+    <string name="astro_solunar_now">Sekarang</string>
+    <string name="astro_solunar_next">Seterusnya</string>
+    <string name="astro_solunar_none_left">Waktu hari ini sudah habis. Sambung esok.</string>
+    <string name="astro_solunar_note">Utama: bulan di atas kepala atau di sebalik bumi. Kecil: bulan terbit atau terbenam. Panduan lama, bukan jaminan.</string>
+
+    <string name="astro_moon_description">Fasa bulan: %1$s, %2$d%% terang</string>
+</resources>

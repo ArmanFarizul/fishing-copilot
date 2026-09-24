@@ -15,6 +15,7 @@ import com.fishingcopilot.data.profile.UserProfile
 import com.fishingcopilot.ui.home.HomeScreen
 import com.fishingcopilot.ui.home.HomeViewModel
 import com.fishingcopilot.ui.home.MarineViewModel
+import com.fishingcopilot.ui.home.SunMoonViewModel
 import com.fishingcopilot.ui.onboarding.OnboardingScreen
 import com.fishingcopilot.ui.onboarding.OnboardingViewModel
 import com.fishingcopilot.ui.theme.FishingCopilotTheme
@@ -69,7 +70,10 @@ private fun AppRoot(app: FishingCopilotApp) {
                     factory = MarineViewModel.factory(it, app.database.fishingDao(), app.marineRepository)
                 )
             }
-            HomeScreen(state.profile, home, marine)
+            val sunMoon = spotId?.let {
+                viewModel<SunMoonViewModel>(key = "sunmoon-$it", factory = SunMoonViewModel.factory(it, app.database.fishingDao()))
+            }
+            HomeScreen(state.profile, home, marine, sunMoon)
         }
     }
 }
