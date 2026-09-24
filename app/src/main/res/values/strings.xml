@@ -1,5 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">Fishing Copilot</string>
-    <string name="home_placeholder">Tides, bite score and marine weather are coming soon.</string>
+    <string name="home_placeholder">Tides, bite score and marine weather are on the way.</string>
+
+    <string name="greeting_morning">Good morning</string>
+    <string name="greeting_midday">Good afternoon</string>
+    <string name="greeting_afternoon">Good afternoon</string>
+    <string name="greeting_night">Good evening</string>
+
+    <string name="onboarding_step">Step %1$d of %2$d</string>
+    <string name="onboarding_next">Next</string>
+    <string name="onboarding_back">Back</string>
+    <string name="onboarding_finish">Let\'s go</string>
+
+    <string name="onboarding_identity_title">Who\'s fishing?</string>
+    <string name="onboarding_identity_subtitle">Your nickname and avatar will show on the home screen.</string>
+    <string name="onboarding_nickname_label">Nickname</string>
+    <string name="onboarding_avatar_label">Pick an avatar</string>
+    <string name="avatar_jetty">Jetty</string>
+    <string name="avatar_boat">Boat</string>
+    <string name="avatar_kayak">Kayak</string>
+    <string name="avatar_rod">Rod</string>
+    <string name="avatar_fish">Fish</string>
+    <string name="avatar_anchor">Anchor</string>
+
+    <string name="onboarding_style_title">Where do you fish most?</string>
+    <string name="onboarding_style_subtitle">Pick the one you do most often.</string>
+    <string name="style_shore">Shore</string>
+    <string name="style_shore_description">Beach, breakwater or jetty</string>
+    <string name="style_boat">Boat</string>
+    <string name="style_boat_description">Offshore, unjam and around the islands</string>
+    <string name="style_estuary">Estuary</string>
+    <string name="style_estuary_description">Mangroves and river mouths</string>
+    <string name="style_kayak">Kayak</string>
+    <string name="style_kayak_description">Paddling the coast and estuaries</string>
+
+    <string name="onboarding_species_title">What are you chasing?</string>
+    <string name="onboarding_species_subtitle">Pick as many as you like.</string>
+    <string name="species_siakap">Siakap</string>
+    <string name="species_jenahak">Mangrove jack</string>
+    <string name="species_kerapu">Grouper</string>
+    <string name="species_tenggiri">Tenggiri</string>
+    <string name="species_pari">Stingray</string>
+    <string name="species_talang">Queenfish</string>
+    <string name="species_ikan_merah">Red snapper</string>
+    <string name="species_belukang">Catfish</string>
 </resources>
