@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Avatar captions under icons in a 4-column grid (about 72dp wide). Keep to one or two short words. -->
+    <string name="avatar_jetty">Jetty</string>
+    <string name="avatar_kelong">Kelong</string>
+    <string name="avatar_raft_house">Raft house</string>
+    <string name="avatar_boat">Boat</string>
+    <string name="avatar_kayak">Kayak</string>
+    <string name="avatar_rod">Rod</string>
+    <string name="avatar_fish">Fish</string>
+    <string name="avatar_anchor">Anchor</string>
+
+    <!-- Fishing style options. Each is a card with a short label and a one-line description. -->
+    <string name="style_shore">Shore</string>
+    <string name="style_shore_description">Beach, breakwater or jetty</string>
+    <string name="style_kelong">Kelong</string>
+    <string name="style_kelong_description">Wooden platforms on stilts at sea</string>
+    <string name="style_raft">Raft house</string>
+    <string name="style_raft_description">Floating houses on lakes and calm waters</string>
+    <string name="style_boat">Boat</string>
+    <string name="style_boat_description">Offshore, unjam and around the islands</string>
+    <string name="style_estuary">Estuary</string>
+    <string name="style_estuary_description">Mangroves and river mouths</string>
+    <string name="style_kayak">Kayak</string>
+    <string name="style_kayak_description">Paddling the coast and estuaries</string>
+
+    <!-- Target species chips. Use the name local anglers actually say in that language. -->
+    <string name="species_siakap">Siakap</string>
+    <string name="species_jenahak">Mangrove jack</string>
+    <string name="species_kerapu">Grouper</string>
+    <string name="species_tenggiri">Tenggiri</string>
+    <string name="species_pari">Stingray</string>
+    <string name="species_talang">Queenfish</string>
+    <string name="species_ikan_merah">Red snapper</string>
+    <string name="species_belukang">Catfish</string>
+</resources>

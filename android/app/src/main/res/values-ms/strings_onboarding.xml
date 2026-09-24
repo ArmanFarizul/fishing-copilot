@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Context for every string is in values/strings_onboarding.xml. Keep keys and format arguments identical to that file. -->
+<resources>
+    <string name="onboarding_step">Langkah %1$d daripada %2$d</string>
+    <string name="onboarding_next">Seterusnya</string>
+    <string name="onboarding_back">Kembali</string>
+    <string name="onboarding_finish">Jom mula</string>
+
+    <string name="onboarding_identity_title">Kenalkan diri dulu</string>
+    <string name="onboarding_identity_subtitle">Nama panggilan dan avatar ini akan terpapar di skrin utama.</string>
+    <string name="onboarding_nickname_label">Nama panggilan</string>
+    <string name="onboarding_avatar_label">Pilih avatar</string>
+
+    <string name="onboarding_style_title">Biasa memancing di mana?</string>
+    <string name="onboarding_style_subtitle">Pilih satu yang paling kerap.</string>
+
+    <string name="onboarding_species_title">Ikan apa yang jadi target?</string>
+    <string name="onboarding_species_subtitle">Boleh pilih lebih daripada satu.</string>
+</resources>

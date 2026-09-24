@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Onboarding navigation. onboarding_step shows "Step 1 of 3": %1$d is the current step, %2$d the total. onboarding_finish is the last button and takes the user into the app. -->
+    <string name="onboarding_step">Step %1$d of %2$d</string>
+    <string name="onboarding_next">Next</string>
+    <string name="onboarding_back">Back</string>
+    <string name="onboarding_finish">Let\'s go</string>
+
+    <!-- Onboarding step 1: nickname and avatar. -->
+    <string name="onboarding_identity_title">Who\'s fishing?</string>
+    <string name="onboarding_identity_subtitle">Your nickname and avatar will show on the home screen.</string>
+    <string name="onboarding_nickname_label">Nickname</string>
+    <string name="onboarding_avatar_label">Pick an avatar</string>
+
+    <!-- Onboarding step 2: where the user fishes most. Single choice; option labels live in strings_profile_options.xml. -->
+    <string name="onboarding_style_title">Where do you fish most?</string>
+    <string name="onboarding_style_subtitle">Pick the one you do most often.</string>
+
+    <!-- Onboarding step 3: target species. Multiple choice; chip labels live in strings_profile_options.xml. -->
+    <string name="onboarding_species_title">What are you chasing?</string>
+    <string name="onboarding_species_subtitle">Pick as many as you like.</string>
+</resources>

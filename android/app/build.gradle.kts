@@ -32,6 +32,16 @@ android {
     buildFeatures {
         compose = true
     }
+
+    // Lists every values-xx folder as a selectable app language in Android 13+ settings.
+    // The default locale for values/ is declared in res/resources.properties.
+    androidResources {
+        generateLocaleConfig = true
+    }
+
+    lint {
+        error += listOf("MissingTranslation", "ExtraTranslation")
+    }
 }
 
 room {

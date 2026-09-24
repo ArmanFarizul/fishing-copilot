@@ -1,54 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- App identity. Not translated. -->
     <string name="app_name" translatable="false">Fishing Copilot</string>
+
+    <!-- Home screen. Placeholder body text shown under the greeting until the tide module ships. -->
     <string name="home_placeholder">Tides, bite score and marine weather are on the way.</string>
 
+    <!-- Home screen greeting, a small label above the user's nickname. Chosen by hour: morning 05-11, midday 12-13, afternoon 14-18, night 19-04. Languages without a separate midday period may repeat the afternoon wording. -->
     <string name="greeting_morning">Good morning</string>
     <string name="greeting_midday">Good afternoon</string>
     <string name="greeting_afternoon">Good afternoon</string>
     <string name="greeting_night">Good evening</string>
-
-    <string name="onboarding_step">Step %1$d of %2$d</string>
-    <string name="onboarding_next">Next</string>
-    <string name="onboarding_back">Back</string>
-    <string name="onboarding_finish">Let\'s go</string>
-
-    <string name="onboarding_identity_title">Who\'s fishing?</string>
-    <string name="onboarding_identity_subtitle">Your nickname and avatar will show on the home screen.</string>
-    <string name="onboarding_nickname_label">Nickname</string>
-    <string name="onboarding_avatar_label">Pick an avatar</string>
-    <string name="avatar_jetty">Jetty</string>
-    <string name="avatar_kelong">Kelong</string>
-    <string name="avatar_raft_house">Raft house</string>
-    <string name="avatar_boat">Boat</string>
-    <string name="avatar_kayak">Kayak</string>
-    <string name="avatar_rod">Rod</string>
-    <string name="avatar_fish">Fish</string>
-    <string name="avatar_anchor">Anchor</string>
-
-    <string name="onboarding_style_title">Where do you fish most?</string>
-    <string name="onboarding_style_subtitle">Pick the one you do most often.</string>
-    <string name="style_shore">Shore</string>
-    <string name="style_shore_description">Beach, breakwater or jetty</string>
-    <string name="style_kelong">Kelong</string>
-    <string name="style_kelong_description">Wooden platforms on stilts at sea</string>
-    <string name="style_raft">Raft house</string>
-    <string name="style_raft_description">Floating houses on lakes and calm waters</string>
-    <string name="style_boat">Boat</string>
-    <string name="style_boat_description">Offshore, unjam and around the islands</string>
-    <string name="style_estuary">Estuary</string>
-    <string name="style_estuary_description">Mangroves and river mouths</string>
-    <string name="style_kayak">Kayak</string>
-    <string name="style_kayak_description">Paddling the coast and estuaries</string>
-
-    <string name="onboarding_species_title">What are you chasing?</string>
-    <string name="onboarding_species_subtitle">Pick as many as you like.</string>
-    <string name="species_siakap">Siakap</string>
-    <string name="species_jenahak">Mangrove jack</string>
-    <string name="species_kerapu">Grouper</string>
-    <string name="species_tenggiri">Tenggiri</string>
-    <string name="species_pari">Stingray</string>
-    <string name="species_talang">Queenfish</string>
-    <string name="species_ikan_merah">Red snapper</string>
-    <string name="species_belukang">Catfish</string>
 </resources>

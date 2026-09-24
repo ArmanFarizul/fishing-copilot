@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Context for every string is in values/strings.xml. Keep keys and format arguments identical to that file. -->
 <resources>
     <string name="home_placeholder">Jadual pasang surut, skor ikan makan dan cuaca laut akan menyusul tidak lama lagi.</string>
 
@@ -6,48 +7,4 @@
     <string name="greeting_midday">Selamat tengah hari</string>
     <string name="greeting_afternoon">Selamat petang</string>
     <string name="greeting_night">Selamat malam</string>
-
-    <string name="onboarding_step">Langkah %1$d daripada %2$d</string>
-    <string name="onboarding_next">Seterusnya</string>
-    <string name="onboarding_back">Kembali</string>
-    <string name="onboarding_finish">Jom mula</string>
-
-    <string name="onboarding_identity_title">Kenalkan diri dulu</string>
-    <string name="onboarding_identity_subtitle">Nama panggilan dan avatar ini akan terpapar di skrin utama.</string>
-    <string name="onboarding_nickname_label">Nama panggilan</string>
-    <string name="onboarding_avatar_label">Pilih avatar</string>
-    <string name="avatar_jetty">Jeti</string>
-    <string name="avatar_kelong">Kelong</string>
-    <string name="avatar_raft_house">Rakit</string>
-    <string name="avatar_boat">Bot</string>
-    <string name="avatar_kayak">Kayak</string>
-    <string name="avatar_rod">Joran</string>
-    <string name="avatar_fish">Ikan</string>
-    <string name="avatar_anchor">Sauh</string>
-
-    <string name="onboarding_style_title">Biasa memancing di mana?</string>
-    <string name="onboarding_style_subtitle">Pilih satu yang paling kerap.</string>
-    <string name="style_shore">Darat</string>
-    <string name="style_shore_description">Pantai, tembok batu atau jeti</string>
-    <string name="style_kelong">Kelong</string>
-    <string name="style_kelong_description">Pelantar kayu bertiang di laut</string>
-    <string name="style_raft">Rakit</string>
-    <string name="style_raft_description">Rumah terapung di tasik dan perairan tenang</string>
-    <string name="style_boat">Bot</string>
-    <string name="style_boat_description">Laut dalam, unjam dan pulau</string>
-    <string name="style_estuary">Muara</string>
-    <string name="style_estuary_description">Celah bakau dan kuala sungai</string>
-    <string name="style_kayak">Kayak</string>
-    <string name="style_kayak_description">Berkayuh menyusur pantai dan muara</string>
-
-    <string name="onboarding_species_title">Ikan apa yang jadi target?</string>
-    <string name="onboarding_species_subtitle">Boleh pilih lebih daripada satu.</string>
-    <string name="species_siakap">Siakap</string>
-    <string name="species_jenahak">Jenahak</string>
-    <string name="species_kerapu">Kerapu</string>
-    <string name="species_tenggiri">Tenggiri</string>
-    <string name="species_pari">Pari</string>
-    <string name="species_talang">Talang</string>
-    <string name="species_ikan_merah">Ikan merah</string>
-    <string name="species_belukang">Belukang</string>
 </resources>
