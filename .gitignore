@@ -1,2 +1,8 @@
 .DS_Store
 .idea/
+
+# Python
+__pycache__/
+.venv/
+.pytest_cache/
+/daily_marine_fronts.json

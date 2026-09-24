@@ -1,0 +1,5 @@
+# Pinned to the versions the pipeline was tested with (Python 3.12).
+copernicusmarine==2.4.1
+numpy==2.5.3
+xarray==2026.7.0
+pytest==9.1.1
