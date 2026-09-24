@@ -21,7 +21,8 @@ Status pada 2026-09-25. MVP yang dipersetujui: pasang surut, Bite Score, cuaca l
 
 | Ciri | Keperluan / sebab tertangguh |
 |---|---|
-| Pipeline satelit klorofil-a dan SST (GitHub Actions) | Menunggu GitHub Secrets Copernicus daripada pemilik |
+| Pipeline satelit: larian sebenar | Pipeline sudah dibina dan diuji di GitHub (`pipeline/`); menunggu GitHub Secrets Copernicus untuk muat turun pertama |
+| Paparan data satelit dalam aplikasi | Klorofil-a, tubir suhu dan kejernihan air daripada `daily_marine_fronts.json`; belum dibina |
 | Peta luar talian (MBTiles) dan carta nautika (OpenSeaMap, GEBCO) | Peta kini perlukan internet; OpenFreeMap menyediakan MBTiles mingguan |
 | Jadual pasang surut JUPEM | Belum diperoleh; akan digunakan untuk menyelaras ketepatan dan datum |
 | Tackle Advisor penuh | Saiz ladung sudah dipaparkan pada baris arus; skrin khusus belum |
