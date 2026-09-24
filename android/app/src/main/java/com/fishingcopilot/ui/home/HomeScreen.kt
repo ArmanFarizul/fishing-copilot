@@ -1,5 +1,6 @@
 package com.fishingcopilot.ui.home
 
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -8,9 +9,11 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -18,6 +21,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalUriHandler
@@ -36,6 +42,7 @@ import com.fishingcopilot.data.profile.UserProfile
 import com.fishingcopilot.ui.components.AvatarBadge
 import com.fishingcopilot.ui.theme.NauticalCyan
 import com.fishingcopilot.ui.theme.OceanMidnight
+import com.fishingcopilot.ui.theme.TextMuted
 import java.time.LocalTime
 
 @Composable
@@ -45,7 +52,8 @@ fun HomeScreen(
     marineViewModel: MarineViewModel?,
     sunMoonViewModel: SunMoonViewModel?,
     biteViewModel: BiteViewModel?,
-    onStrike: (CatchConditions) -> Unit
+    onStrike: (CatchConditions) -> Unit,
+    onOpenSettings: () -> Unit
 ) {
     val period = remember { DayPeriod.fromHour(LocalTime.now().hour) }
     val tideState = homeViewModel?.uiState?.collectAsStateWithLifecycle()?.value
@@ -83,7 +91,7 @@ fun HomeScreen(
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 AvatarBadge(avatar = profile.avatar, size = 56.dp)
-                Column {
+                Column(modifier = Modifier.weight(1f)) {
                     Text(
                         text = stringResource(period.greeting),
                         style = MaterialTheme.typography.labelMedium,
@@ -93,6 +101,10 @@ fun HomeScreen(
                         text = profile.nickname,
                         style = MaterialTheme.typography.headlineMedium
                     )
+                }
+                val settingsLabel = stringResource(R.string.settings_open)
+                IconButton(onClick = onOpenSettings, modifier = Modifier.semantics { contentDescription = settingsLabel }) {
+                    GearIcon()
                 }
             }
             if (biteViewModel != null) {
@@ -155,3 +167,27 @@ private fun strikeConditions(
         biteScore = bite?.now?.score?.score
     )
 }
+
+/** Settings gear drawn in code; the app ships no icon library. */
+@Composable
+private fun GearIcon() {
+    Canvas(modifier = Modifier.size(24.dp)) {
+        val stroke = Stroke(width = 2.dp.toPx())
+        val center = Offset(size.width / 2, size.height / 2)
+        drawCircle(TextMuted, radius = size.minDimension * 0.28f, center = center, style = stroke)
+        drawCircle(TextMuted, radius = size.minDimension * 0.1f, center = center, style = stroke)
+        repeat(8) { i ->
+            val angle = Math.toRadians(i * 45.0)
+            val inner = size.minDimension * 0.3f
+            val outer = size.minDimension * 0.45f
+            drawLine(
+                TextMuted,
+                Offset(center.x + inner * kotlin.math.cos(angle).toFloat(), center.y + inner * kotlin.math.sin(angle).toFloat()),
+                Offset(center.x + outer * kotlin.math.cos(angle).toFloat(), center.y + outer * kotlin.math.sin(angle).toFloat()),
+                strokeWidth = 3.dp.toPx(),
+                cap = StrokeCap.Round
+            )
+        }
+    }
+}
+

@@ -15,6 +15,7 @@ Status pada 2026-09-25. MVP yang dipersetujui: pasang surut, Bite Score, cuaca l
 | Log tangkapan | Butang Strike!, isian automatik keadaan, gambar, ringkasan umpan dan air |
 | Lubuk | Tambah pada peta, namakan semula, jadikan utama, padam |
 | Bahasa | BM dan English; lihat `i18n.md` |
+| Peringatan waktu emas | 45 minit sebelum setiap waktu emas; bunyi loceng dan getaran; tetapan hidup/mati, bunyi, getaran dan ujian |
 
 ## Belum dibuat (daripada spesifikasi)
 
@@ -24,7 +25,6 @@ Status pada 2026-09-25. MVP yang dipersetujui: pasang surut, Bite Score, cuaca l
 | Peta luar talian (MBTiles) dan carta nautika (OpenSeaMap, GEBCO) | Peta kini perlukan internet; OpenFreeMap menyediakan MBTiles mingguan |
 | Jadual pasang surut JUPEM | Belum diperoleh; akan digunakan untuk menyelaras ketepatan dan datum |
 | Tackle Advisor penuh | Saiz ladung sudah dipaparkan pada baris arus; skrin khusus belum |
-| Garis masa 24 jam dengan notifikasi 45 minit sebelum waktu emas | Graf sudah ada; notifikasi belum |
 | Keselamatan marin: penggera sauh hanyut, tersadai, tebing tenggelam | Perlukan servis GPS latar belakang |
 | Amaran MetMalaysia | API diuji (`sumber-data.md`); belum dipaparkan |
 | Widget skrin utama (Glance) | Belum |

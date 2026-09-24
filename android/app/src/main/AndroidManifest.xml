@@ -5,6 +5,10 @@
     <!-- Fine is optional: Android 12+ lets the user grant approximate only, which is enough for area tides. -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- Prime-time alerts: notifications, the optional exact alarm, and rescheduling after a reboot. -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:name=".FishingCopilotApp"
@@ -22,6 +26,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <receiver
+            android:name=".alerts.GoldenAlarmReceiver"
+            android:exported="false" />
+        <!-- Enabled only while alerts are on (GoldenAlerts.setBootReceiverEnabled). -->
+        <receiver
+            android:name=".alerts.AlertsRescheduleReceiver"
+            android:enabled="false"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.app.action.SCHEDULE_EXACT_ALARM_PERMISSION_STATE_CHANGED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

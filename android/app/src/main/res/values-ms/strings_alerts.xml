@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Context for every string is in values/strings_alerts.xml. Keep keys and format arguments identical to that file. -->
+<resources>
+    <string name="settings_title">Tetapan</string>
+    <string name="settings_open">Tetapan</string>
+    <string name="settings_back">Kembali</string>
+
+    <string name="alerts_section">Peringatan</string>
+    <string name="alerts_golden_title">Peringatan waktu emas</string>
+    <string name="alerts_golden_body">Peringatan 45 minit sebelum waktu emas di lubuk utama, berdasarkan skor ikan makan.</string>
+    <string name="alerts_sound">Bunyi</string>
+    <string name="alerts_vibration">Getaran</string>
+
+    <string name="alerts_next">Peringatan seterusnya %1$s, untuk waktu emas %2$s – %3$s</string>
+    <string name="alerts_none_scheduled">Tiada waktu emas dalam 24 jam akan datang. Aplikasi akan semak semula nanti.</string>
+
+    <string name="alerts_exact_title">Masa peringatan tidak tepat</string>
+    <string name="alerts_exact_body">Telefon belum membenarkan penggera tepat, jadi peringatan boleh sampai antara 35 hingga 55 minit sebelum waktu emas, atau lebih lewat ketika telefon menjimatkan bateri.</string>
+    <string name="alerts_exact_button">Benarkan penggera tepat</string>
+    <string name="alerts_test_button">Hantar peringatan ujian</string>
+    <string name="alerts_permission_denied">Pemberitahuan disekat, jadi peringatan dimatikan. Untuk menghidupkannya, benarkan pemberitahuan untuk Fishing Copilot dalam tetapan telefon.</string>
+
+    <string name="channel_golden_full_name">Waktu emas: bunyi dan getaran</string>
+    <string name="channel_golden_full_description">Peringatan sebelum waktu emas di lubuk utama, dengan bunyi dan getaran.</string>
+    <string name="channel_golden_sound_name">Waktu emas: bunyi sahaja</string>
+    <string name="channel_golden_sound_description">Peringatan sebelum waktu emas di lubuk utama, dengan bunyi sahaja.</string>
+    <string name="channel_golden_vibrate_name">Waktu emas: getaran sahaja</string>
+    <string name="channel_golden_vibrate_description">Peringatan sebelum waktu emas di lubuk utama, dengan getaran tanpa bunyi.</string>
+
+    <string name="notif_golden_title">%1$d minit lagi waktu emas</string>
+    <string name="notif_golden_text">%1$s: %2$s – %3$s, puncak %4$s</string>
+
+    <string name="notif_test_title">Peringatan ujian</string>
+    <string name="notif_test_text">Ini hanya ujian. Peringatan waktu emas akan kelihatan begini.</string>
+</resources>

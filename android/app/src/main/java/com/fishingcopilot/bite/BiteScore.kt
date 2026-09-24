@@ -128,3 +128,20 @@ fun bestWindow(points: List<ScorePoint>, threshold: Double): ScoreWindow? {
     while (last < points.lastIndex && points[last + 1].score >= threshold) last++
     return ScoreWindow(points[first].epochMillis, points[last].epochMillis, points[peakIndex].score, points[peakIndex].epochMillis)
 }
+
+/** Every separate run of points at or above [threshold], in time order. */
+fun primeWindows(points: List<ScorePoint>, threshold: Double): List<ScoreWindow> {
+    val windows = mutableListOf<ScoreWindow>()
+    var runStart = -1
+    for (i in 0..points.size) {
+        val inside = i < points.size && points[i].score >= threshold
+        if (inside && runStart < 0) runStart = i
+        if (!inside && runStart >= 0) {
+            val run = points.subList(runStart, i)
+            val peak = run.maxBy { it.score }
+            windows += ScoreWindow(run.first().epochMillis, run.last().epochMillis, peak.score, peak.epochMillis)
+            runStart = -1
+        }
+    }
+    return windows
+}

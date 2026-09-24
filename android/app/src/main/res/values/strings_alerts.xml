@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Title of the Settings screen, opened from the gear icon on the home screen. Keep under 20 characters. -->
+    <string name="settings_title">Settings</string>
+    <!-- TalkBack label for the gear icon on the home screen that opens Settings. -->
+    <string name="settings_open">Settings</string>
+    <!-- Label of the back button at the top of the Settings screen. Keep under 12 characters. -->
+    <string name="settings_back">Back</string>
+
+    <!-- Section heading on the Settings screen above the prime-time alert options. Keep under 20 characters. -->
+    <string name="alerts_section">Alerts</string>
+    <!-- Master switch that turns prime-time alerts on or off; prime time is when the Bite Score reaches 7.5 or more (bite_band_prime). Keep under 28 characters. -->
+    <string name="alerts_golden_title">Prime time alerts</string>
+    <!-- One or two short lines under the master switch explaining what it does. Keep under 100 characters. -->
+    <string name="alerts_golden_body">A heads-up 45 minutes before prime time at your home spot, based on the Bite Score.</string>
+    <!-- Switch labels under the master switch: play the soft bell sound, and vibrate the phone. Keep under 20 characters. -->
+    <string name="alerts_sound">Sound</string>
+    <string name="alerts_vibration">Vibration</string>
+
+    <!-- Line showing the next scheduled alert; %1$s is when the alert fires, %2$s and %3$s are the start and end of the prime window, all formatted clock times that may include the day, such as "Sat 5:40 AM". Keep under 70 characters with times filled in. -->
+    <string name="alerts_next">Next alert %1$s, for prime time %2$s – %3$s</string>
+    <!-- Shown instead of alerts_next when no prime time is found in the next 24 hours; the app checks the forecast again later on its own. Keep under 80 characters. -->
+    <string name="alerts_none_scheduled">No prime time in the next 24 hours. The app will check again later.</string>
+
+    <!-- Heading shown when the phone has not allowed precise alarms for the app. Keep under 30 characters. -->
+    <string name="alerts_exact_title">Alert timing is approximate</string>
+    <!-- Explanation under alerts_exact_title: without precise alarms, the alert can arrive anywhere from about 35 to 55 minutes before prime time, and later still in deep battery saving. Modest wording only. Keep under 180 characters. -->
+    <string name="alerts_exact_body">Your phone hasn\'t allowed precise alarms, so an alert may arrive anywhere from 35 to 55 minutes before prime time, or later when the phone is saving battery.</string>
+    <!-- Button that opens the system "Alarms &amp; reminders" setting for this app. Keep under 24 characters. -->
+    <string name="alerts_exact_button">Allow precise alarms</string>
+    <!-- Button that sends a test notification right away. Keep under 24 characters. -->
+    <string name="alerts_test_button">Send a test alert</string>
+    <!-- Shown when the user refused notification permission (Android 13 and later); alerts stay off until they allow notifications in the phone's settings. Keep under 140 characters. -->
+    <string name="alerts_permission_denied">Notifications are blocked, so alerts are off. To turn them on, allow notifications for Fishing Copilot in your phone\'s settings.</string>
+
+    <!-- Notification channel names and descriptions, shown in the phone's system notification settings. Only one channel is used at a time, matching the sound and vibration switches. Names under 40 characters, descriptions under 100. -->
+    <string name="channel_golden_full_name">Prime time: sound and vibration</string>
+    <string name="channel_golden_full_description">Alerts before prime time at your home spot, with sound and vibration.</string>
+    <string name="channel_golden_sound_name">Prime time: sound only</string>
+    <string name="channel_golden_sound_description">Alerts before prime time at your home spot, with sound only.</string>
+    <string name="channel_golden_vibrate_name">Prime time: vibration only</string>
+    <string name="channel_golden_vibrate_description">Alerts before prime time at your home spot, with vibration and no sound.</string>
+
+    <!-- Title of the prime-time notification; %1$d is the minutes until prime time starts, normally 45. Keep under 40 characters. -->
+    <string name="notif_golden_title">Prime time in %1$d min</string>
+    <!-- Body of the prime-time notification; %1$s is the spot name, %2$s and %3$s the start and end clock times, %4$s the highest score in the window, such as "8.6". Keep under 80 characters with values filled in. -->
+    <string name="notif_golden_text">%1$s: %2$s – %3$s, peaks at %4$s</string>
+
+    <!-- Title and body of the notification sent by alerts_test_button; it must say this is a test and that real alerts look like this. Title under 40 characters, body under 80. -->
+    <string name="notif_test_title">Test alert</string>
+    <string name="notif_test_text">This is only a test. Prime time alerts will look like this.</string>
+</resources>

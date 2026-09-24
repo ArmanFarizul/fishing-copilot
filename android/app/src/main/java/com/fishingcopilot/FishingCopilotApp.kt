@@ -1,6 +1,9 @@
 package com.fishingcopilot
 
 import android.app.Application
+import com.fishingcopilot.alerts.AlertSettingsRepository
+import com.fishingcopilot.alerts.GoldenAlerts
+import com.fishingcopilot.bite.BiteForecaster
 import com.fishingcopilot.catchlog.AppPhotoStore
 import com.fishingcopilot.catchlog.PhotoStore
 import com.fishingcopilot.data.hijri.HijriRepository
@@ -18,6 +21,7 @@ class FishingCopilotApp : Application() {
     override fun onCreate() {
         super.onCreate()
         MapLibre.getInstance(this)
+        goldenAlerts.createChannels()
     }
 
     val profileRepository: ProfileRepository by lazy { DataStoreProfileRepository(this) }
@@ -26,4 +30,9 @@ class FishingCopilotApp : Application() {
     val marineRepository: MarineRepository by lazy { MarineRepository(database.marineDao(), OpenMeteoWeatherClient()) }
     val hijriRepository: HijriRepository by lazy { HijriRepository(database.hijriDao(), JakimTakwimClient()) }
     val photoStore: PhotoStore by lazy { AppPhotoStore(this) }
+    val alertSettings: AlertSettingsRepository by lazy { AlertSettingsRepository(this) }
+    val biteForecaster: BiteForecaster by lazy {
+        BiteForecaster(database.fishingDao(), tideRepository, marineRepository, hijriRepository)
+    }
+    val goldenAlerts: GoldenAlerts by lazy { GoldenAlerts(this) }
 }

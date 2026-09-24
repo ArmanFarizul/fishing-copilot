@@ -1,6 +1,10 @@
 package com.fishingcopilot.ui
 
 import androidx.activity.compose.BackHandler
+import com.fishingcopilot.ui.settings.SettingsScreen
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.background
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.consumeWindowInsets
@@ -77,6 +81,17 @@ fun AppShell(app: FishingCopilotApp, profile: UserProfile) {
     val logState by log.uiState.collectAsStateWithLifecycle()
 
     var strike by remember { mutableStateOf<CatchConditions?>(null) }
+    var showSettings by rememberSaveable { mutableStateOf(false) }
+
+    // Re-plan prime-time alerts on launch and whenever the home spot changes.
+    LaunchedEffect(spotId) { app.goldenAlerts.reschedule() }
+
+    if (showSettings) {
+        Box(modifier = Modifier.fillMaxSize().background(OceanMidnight).systemBarsPadding()) {
+            SettingsScreen(app, onBack = { showSettings = false })
+        }
+        return
+    }
     val snackbar = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
     val savedMessage = stringResource(R.string.catch_saved)
@@ -106,7 +121,11 @@ fun AppShell(app: FishingCopilotApp, profile: UserProfile) {
     ) { padding ->
         Box(modifier = Modifier.fillMaxSize().padding(padding).consumeWindowInsets(padding)) {
             when (Tab.entries[tab]) {
-                Tab.HOME -> HomeScreen(profile, home, marine, sunMoon, bite, onStrike = { strike = it })
+                Tab.HOME -> HomeScreen(
+                    profile, home, marine, sunMoon, bite,
+                    onStrike = { strike = it },
+                    onOpenSettings = { showSettings = true }
+                )
                 Tab.LOG -> LogScreen(logState, onDelete = log::delete)
                 Tab.SPOTS -> SpotsScreen(spots, homeSpotId = spotId, snackbar = snackbar)
             }
