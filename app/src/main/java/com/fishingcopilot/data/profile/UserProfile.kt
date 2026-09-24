@@ -7,7 +7,7 @@ data class UserProfile(
     val targetSpecies: Set<Species>
 )
 
-enum class Avatar { JETTY, BOAT, KAYAK, ROD, FISH, ANCHOR }
+enum class Avatar { JETTY, KELONG, RAFT_HOUSE, BOAT, KAYAK, ROD, FISH, ANCHOR }
 
 enum class FishingStyle { SHORE, BOAT, ESTUARY, KAYAK }
 

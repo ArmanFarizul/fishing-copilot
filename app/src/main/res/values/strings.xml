@@ -18,6 +18,8 @@
     <string name="onboarding_nickname_label">Nickname</string>
     <string name="onboarding_avatar_label">Pick an avatar</string>
     <string name="avatar_jetty">Jetty</string>
+    <string name="avatar_kelong">Kelong</string>
+    <string name="avatar_raft_house">Raft house</string>
     <string name="avatar_boat">Boat</string>
     <string name="avatar_kayak">Kayak</string>
     <string name="avatar_rod">Rod</string>

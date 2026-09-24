@@ -12,6 +12,8 @@ import com.fishingcopilot.data.profile.Species
 val Avatar.icon: Int
     get() = when (this) {
         Avatar.JETTY -> R.drawable.ic_avatar_jetty
+        Avatar.KELONG -> R.drawable.ic_avatar_kelong
+        Avatar.RAFT_HOUSE -> R.drawable.ic_avatar_raft_house
         Avatar.BOAT -> R.drawable.ic_avatar_boat
         Avatar.KAYAK -> R.drawable.ic_avatar_kayak
         Avatar.ROD -> R.drawable.ic_avatar_rod
@@ -22,6 +24,8 @@ val Avatar.icon: Int
 val Avatar.accent: Color
     get() = when (this) {
         Avatar.JETTY -> Color(0xFF00E5FF)
+        Avatar.KELONG -> Color(0xFFFF80AB)
+        Avatar.RAFT_HOUSE -> Color(0xFFFFAB40)
         Avatar.BOAT -> Color(0xFF00E676)
         Avatar.KAYAK -> Color(0xFFFFD600)
         Avatar.ROD -> Color(0xFFFF8A65)
@@ -33,6 +37,8 @@ val Avatar.accent: Color
 val Avatar.label: Int
     get() = when (this) {
         Avatar.JETTY -> R.string.avatar_jetty
+        Avatar.KELONG -> R.string.avatar_kelong
+        Avatar.RAFT_HOUSE -> R.string.avatar_raft_house
         Avatar.BOAT -> R.string.avatar_boat
         Avatar.KAYAK -> R.string.avatar_kayak
         Avatar.ROD -> R.string.avatar_rod

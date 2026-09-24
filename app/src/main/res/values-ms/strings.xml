@@ -17,6 +17,8 @@
     <string name="onboarding_nickname_label">Nama panggilan</string>
     <string name="onboarding_avatar_label">Pilih avatar</string>
     <string name="avatar_jetty">Jeti</string>
+    <string name="avatar_kelong">Kelong</string>
+    <string name="avatar_raft_house">Rakit</string>
     <string name="avatar_boat">Bot</string>
     <string name="avatar_kayak">Kayak</string>
     <string name="avatar_rod">Joran</string>

@@ -185,7 +185,7 @@ private fun IdentityStep(
     FlowRow(
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
-        maxItemsInEachRow = 3,
+        maxItemsInEachRow = 4,
         modifier = Modifier
             .fillMaxWidth()
             .selectableGroup()
@@ -202,7 +202,7 @@ private fun IdentityStep(
                         role = Role.RadioButton
                     )
             ) {
-                AvatarBadge(avatar = option, size = 72.dp, selected = option == avatar)
+                AvatarBadge(avatar = option, size = 64.dp, selected = option == avatar)
                 Spacer(Modifier.height(6.dp))
                 Text(
                     text = label,
