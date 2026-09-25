@@ -97,6 +97,9 @@ fun SettingsScreen(app: FishingCopilotApp, onBack: () -> Unit) {
         onDispose { lifecycle.removeObserver(observer) }
     }
 
+    // Which switch asked for the notification permission, so the answer turns that one on.
+    var pendingChime by remember { mutableStateOf(false) }
+
     fun setAlerts(enabled: Boolean) {
         scope.launch {
             app.alertSettings.setGoldenAlerts(enabled)
@@ -104,9 +107,28 @@ fun SettingsScreen(app: FishingCopilotApp, onBack: () -> Unit) {
         }
     }
 
+    fun setChime(enabled: Boolean) {
+        scope.launch {
+            app.alertSettings.setTideChime(enabled)
+            app.goldenAlerts.reschedule()
+        }
+    }
+
     val notificationPermission = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
         permissionDenied = !granted
-        setAlerts(granted)
+        if (pendingChime) setChime(granted) else setAlerts(granted)
+    }
+
+    fun switchOn(chime: Boolean, enabled: Boolean) {
+        val needsPermission = Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+            ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED
+        if (enabled && needsPermission) {
+            pendingChime = chime
+            notificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
+        } else {
+            permissionDenied = false
+            if (chime) setChime(enabled) else setAlerts(enabled)
+        }
     }
 
     val current = settings ?: return
@@ -128,27 +150,41 @@ fun SettingsScreen(app: FishingCopilotApp, onBack: () -> Unit) {
                     title = stringResource(R.string.alerts_golden_title),
                     body = stringResource(R.string.alerts_golden_body),
                     checked = current.goldenAlerts,
-                    onChange = { enabled ->
-                        val needsPermission = Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
-                            ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED
-                        if (enabled && needsPermission) {
-                            notificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
-                        } else {
-                            permissionDenied = false
-                            setAlerts(enabled)
-                        }
-                    }
+                    onChange = { switchOn(chime = false, enabled = it) }
                 )
                 if (permissionDenied) {
                     Text(stringResource(R.string.alerts_permission_denied), style = MaterialTheme.typography.bodySmall, color = CautionYellow)
                 }
-                if (current.goldenAlerts) {
+                SwitchRow(
+                    title = stringResource(R.string.alerts_chime_title),
+                    body = stringResource(R.string.alerts_chime_body),
+                    checked = current.tideChime,
+                    onChange = { switchOn(chime = true, enabled = it) }
+                )
+                if (current.tideChime) {
+                    val turn = current.nextChimeAt
+                    Text(
+                        text = if (turn != null) {
+                            stringResource(
+                                if (current.nextChimeHigh == true) R.string.alerts_chime_next_high else R.string.alerts_chime_next_low,
+                                dayAndTime(turn)
+                            )
+                        } else {
+                            stringResource(R.string.alerts_chime_none)
+                        },
+                        style = MaterialTheme.typography.bodySmall,
+                        color = TextHighContrast
+                    )
+                }
+                if (current.anyAlert) {
                     SwitchRow(stringResource(R.string.alerts_sound), null, current.sound) {
                         scope.launch { app.alertSettings.setSound(it) }
                     }
                     SwitchRow(stringResource(R.string.alerts_vibration), null, current.vibration) {
                         scope.launch { app.alertSettings.setVibration(it) }
                     }
+                }
+                if (current.goldenAlerts) {
                     val next = current.nextAlertAt
                     val start = current.nextWindowStart
                     val end = current.nextWindowEnd

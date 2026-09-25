@@ -32,4 +32,19 @@
 
     <string name="notif_test_title">Peringatan ujian</string>
     <string name="notif_test_text">Ini hanya ujian. Peringatan waktu emas akan kelihatan begini.</string>
+
+    <string name="alerts_chime_title">Loceng air bertukar</string>
+    <string name="alerts_chime_body">Loceng lembut 15 minit sebelum pasang penuh atau surut penuh di lubuk utama.</string>
+    <string name="alerts_chime_next_high">Loceng seterusnya: pasang penuh, %1$s</string>
+    <string name="alerts_chime_next_low">Loceng seterusnya: surut penuh, %1$s</string>
+    <string name="alerts_chime_none">Waktu pasang surut lubuk utama belum ada. Aplikasi akan cuba semula nanti.</string>
+
+    <string name="notif_chime_high_title">%1$d minit lagi pasang penuh</string>
+    <string name="notif_chime_low_title">%1$d minit lagi surut penuh</string>
+    <string name="notif_chime_text">%1$s: air bertukar pukul %2$s. Arus reda sekitar waktu itu.</string>
+
+    <string name="channel_chime_full_name">Air bertukar: bunyi dan getaran</string>
+    <string name="channel_chime_sound_name">Air bertukar: bunyi sahaja</string>
+    <string name="channel_chime_vibrate_name">Air bertukar: getaran sahaja</string>
+    <string name="channel_chime_description">Loceng lembut 15 minit sebelum pasang penuh atau surut penuh di lubuk utama.</string>
 </resources>

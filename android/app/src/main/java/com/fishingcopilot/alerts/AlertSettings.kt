@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import com.fishingcopilot.tide.TideEventType
 import java.io.IOException
 
 data class AlertSettings(
@@ -23,8 +24,16 @@ data class AlertSettings(
     val nextWindowStart: Long? = null,
     val nextWindowEnd: Long? = null,
     /** Start of the last window announced, so a window is never announced twice. */
-    val lastNotifiedStart: Long? = null
-)
+    val lastNotifiedStart: Long? = null,
+    val tideChime: Boolean = false,
+    /** The next tide turn chimed for, for the settings screen. */
+    val nextChimeAt: Long? = null,
+    val nextChimeHigh: Boolean? = null,
+    /** Time of the last turn chimed for, so a turn is never chimed twice. */
+    val lastChimedTurn: Long? = null
+) {
+    val anyAlert get() = goldenAlerts || tideChime
+}
 
 // One store per file: DataStore allows only one instance for "settings", so display settings share it.
 internal val Context.settingsDataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
@@ -42,7 +51,11 @@ class AlertSettingsRepository(context: Context) {
                 nextAlertAt = it[NEXT_ALERT],
                 nextWindowStart = it[NEXT_START],
                 nextWindowEnd = it[NEXT_END],
-                lastNotifiedStart = it[LAST_NOTIFIED]
+                lastNotifiedStart = it[LAST_NOTIFIED],
+                tideChime = it[TIDE_CHIME] ?: false,
+                nextChimeAt = it[NEXT_CHIME],
+                nextChimeHigh = it[NEXT_CHIME_HIGH],
+                lastChimedTurn = it[LAST_CHIMED]
             )
         }
 
@@ -62,6 +75,18 @@ class AlertSettingsRepository(context: Context) {
 
     suspend fun setLastNotified(start: Long) = store.edit { it[LAST_NOTIFIED] = start }
 
+    suspend fun setTideChime(enabled: Boolean) = store.edit { it[TIDE_CHIME] = enabled }
+
+    suspend fun setChimeScheduled(plan: PlannedChime?) = store.edit {
+        if (plan == null) {
+            it.remove(NEXT_CHIME); it.remove(NEXT_CHIME_HIGH)
+        } else {
+            it[NEXT_CHIME] = plan.event.epochMillis; it[NEXT_CHIME_HIGH] = plan.event.type == TideEventType.HIGH
+        }
+    }
+
+    suspend fun setLastChimed(turn: Long) = store.edit { it[LAST_CHIMED] = turn }
+
     private companion object {
         val GOLDEN = booleanPreferencesKey("golden_alerts")
         val SOUND = booleanPreferencesKey("golden_sound")
@@ -70,5 +95,9 @@ class AlertSettingsRepository(context: Context) {
         val NEXT_START = longPreferencesKey("next_window_start")
         val NEXT_END = longPreferencesKey("next_window_end")
         val LAST_NOTIFIED = longPreferencesKey("last_notified_start")
+        val TIDE_CHIME = booleanPreferencesKey("tide_chime")
+        val NEXT_CHIME = longPreferencesKey("next_chime_turn")
+        val NEXT_CHIME_HIGH = booleanPreferencesKey("next_chime_high")
+        val LAST_CHIMED = longPreferencesKey("last_chimed_turn")
     }
 }

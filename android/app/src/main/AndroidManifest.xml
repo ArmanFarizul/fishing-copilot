@@ -30,6 +30,9 @@
         <receiver
             android:name=".alerts.GoldenAlarmReceiver"
             android:exported="false" />
+        <receiver
+            android:name=".alerts.TideChimeReceiver"
+            android:exported="false" />
         <!-- Enabled only while alerts are on (GoldenAlerts.setBootReceiverEnabled). -->
         <receiver
             android:name=".alerts.AlertsRescheduleReceiver"

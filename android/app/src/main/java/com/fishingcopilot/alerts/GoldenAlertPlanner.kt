@@ -5,12 +5,12 @@ import com.fishingcopilot.bite.ScoreWindow
 data class PlannedAlert(val alertAt: Long, val window: ScoreWindow)
 
 /** Which notification channel matches the user's sound and vibration switches (channel sound is fixed once created). */
-enum class AlertChannel(val id: String) {
-    FULL("golden_time_full"),
-    SOUND("golden_time_sound"),
-    VIBRATE("golden_time_vibrate"),
+enum class AlertChannel(val id: String, val chimeId: String) {
+    FULL("golden_time_full", "tide_chime_full"),
+    SOUND("golden_time_sound", "tide_chime_sound"),
+    VIBRATE("golden_time_vibrate", "tide_chime_vibrate"),
     /** Posted on the vibrate channel with the notification marked silent. */
-    SILENT("golden_time_vibrate");
+    SILENT("golden_time_vibrate", "tide_chime_vibrate");
 
     companion object {
         fun of(sound: Boolean, vibrate: Boolean): AlertChannel = when {

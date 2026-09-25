@@ -21,6 +21,8 @@ import com.fishingcopilot.MainActivity
 import com.fishingcopilot.R
 import com.fishingcopilot.bite.BiteTimeline
 import com.fishingcopilot.bite.primeWindows
+import com.fishingcopilot.tide.TideEvent
+import com.fishingcopilot.tide.TideEventType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
@@ -31,7 +33,8 @@ import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 
 /**
- * Prime-time alerts: an alarm 45 minutes before each prime window at the home spot. Uses an exact
+ * Prime-time alerts (45 minutes before each prime window) and the tide chime (15 minutes before each
+ * high or low water) at the main spot. Uses an exact
  * alarm when the user allowed "Alarms & reminders"; otherwise a 10-minute window, the tightest the
  * system allows without that permission (docs: developer.android.com/develop/background-work/services/alarms/schedule).
  */
@@ -41,31 +44,86 @@ class GoldenAlerts(private val app: FishingCopilotApp) {
     fun canScheduleExact(): Boolean =
         Build.VERSION.SDK_INT < Build.VERSION_CODES.S || alarms.canScheduleExactAlarms()
 
-    /** Recomputes the next alert from stored data and (re)sets the alarm; cancels it when alerts are off. */
+    /** Replans both alerts from stored data; each is cancelled when switched off. */
     suspend fun reschedule() {
         val settings = app.alertSettings.current()
+        setBootReceiverEnabled(settings.anyAlert)
+        rescheduleGolden(settings)
+        rescheduleChime(settings)
+    }
+
+    private suspend fun rescheduleGolden(settings: AlertSettings) {
         val spotId = app.profileRepository.profile.first()?.homeSpotId
         if (!settings.goldenAlerts || spotId == null) {
             alarms.cancel(alarmIntent())
             app.alertSettings.setScheduled(null)
-            setBootReceiverEnabled(false)
             return
         }
-        setBootReceiverEnabled(true)
         val now = System.currentTimeMillis()
         val (_, forecast) = app.biteForecaster.forecast(spotId, now) ?: return
         val plan = GoldenAlertPlanner.next(primeWindows(forecast.points, BiteTimeline.PRIME_THRESHOLD), now, settings.lastNotifiedStart)
         app.alertSettings.setScheduled(plan)
         // With no prime time in the next 24 hours, look again in 6 hours.
         val triggerAt = plan?.alertAt ?: (now + RECHECK_MILLIS)
+        setAlarm(triggerAt, alarmIntent())
+    }
+
+    private suspend fun rescheduleChime(settings: AlertSettings) {
+        val events = if (settings.tideChime) upcomingTurns(System.currentTimeMillis())?.second else null
+        if (events == null) {
+            alarms.cancel(chimeIntent())
+            app.alertSettings.setChimeScheduled(null)
+            return
+        }
+        val now = System.currentTimeMillis()
+        val plan = TideChimePlanner.next(events, now, settings.lastChimedTurn)
+        app.alertSettings.setChimeScheduled(plan)
+        setAlarm(plan?.alertAt ?: (now + RECHECK_MILLIS), chimeIntent())
+    }
+
+    /** Called when the chime alarm fires: ring for a turn that is close, then plan the next one. */
+    suspend fun onChimeAlarm() {
+        val settings = app.alertSettings.current()
+        val now = System.currentTimeMillis()
+        if (settings.tideChime) {
+            upcomingTurns(now - 30 * 60_000L)?.let { (spotName, events) ->
+                TideChimePlanner.due(events, now, settings.lastChimedTurn)?.let { turn ->
+                    val high = turn.type == TideEventType.HIGH
+                    notify(
+                        title = app.getString(
+                            if (high) R.string.notif_chime_high_title else R.string.notif_chime_low_title,
+                            ((turn.epochMillis - now) / 60_000).toInt().coerceAtLeast(0)
+                        ),
+                        text = app.getString(R.string.notif_chime_text, spotName, clock(turn.epochMillis)),
+                        settings = settings,
+                        id = CHIME_NOTIFICATION_ID,
+                        chime = true
+                    )
+                    app.alertSettings.setLastChimed(turn.epochMillis)
+                }
+            }
+        }
+        rescheduleChime(app.alertSettings.current())
+    }
+
+    /** The main spot's name and its high and low water over the next day, with the spot's timing shift applied. */
+    private suspend fun upcomingTurns(from: Long): Pair<String, List<TideEvent>>? {
+        val spotId = app.profileRepository.profile.first()?.homeSpotId ?: return null
+        val spot = app.database.fishingDao().spotFlow(spotId).first() ?: return null
+        val model = app.tideRepository.model(spotId).first() ?: return null
+        val shifted = model.copy(epochMillis = model.epochMillis + spot.tideOffsetMinutes * 60_000L)
+        return spot.name to shifted.events(from, from + 26 * 60 * 60_000L)
+    }
+
+    private fun setAlarm(triggerAt: Long, intent: PendingIntent) {
         if (canScheduleExact()) {
-            alarms.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerAt, alarmIntent())
+            alarms.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerAt, intent)
         } else {
-            alarms.setWindow(AlarmManager.RTC_WAKEUP, triggerAt - WINDOW_MILLIS / 2, WINDOW_MILLIS, alarmIntent())
+            alarms.setWindow(AlarmManager.RTC_WAKEUP, triggerAt - WINDOW_MILLIS / 2, WINDOW_MILLIS, intent)
         }
     }
 
-    /** Called when the alarm fires: announce the window if it is still coming, then plan the next one. */
+    /** Called when the prime-time alarm fires: announce the window if it is still coming, then plan the next one. */
     suspend fun onAlarm() {
         val settings = app.alertSettings.current()
         val spotId = app.profileRepository.profile.first()?.homeSpotId
@@ -87,7 +145,7 @@ class GoldenAlerts(private val app: FishingCopilotApp) {
                 }
             }
         }
-        reschedule()
+        rescheduleGolden(app.alertSettings.current())
     }
 
     fun sendTest(settings: AlertSettings) {
@@ -113,12 +171,16 @@ class GoldenAlerts(private val app: FishingCopilotApp) {
             listOf(
                 channel(AlertChannel.FULL.id, R.string.channel_golden_full_name, R.string.channel_golden_full_description, true, true),
                 channel(AlertChannel.SOUND.id, R.string.channel_golden_sound_name, R.string.channel_golden_sound_description, true, false),
-                channel(AlertChannel.VIBRATE.id, R.string.channel_golden_vibrate_name, R.string.channel_golden_vibrate_description, false, true)
+                channel(AlertChannel.VIBRATE.id, R.string.channel_golden_vibrate_name, R.string.channel_golden_vibrate_description, false, true),
+                // Separate channels so anglers can mute the tide bell in system settings without losing prime time.
+                channel(AlertChannel.FULL.chimeId, R.string.channel_chime_full_name, R.string.channel_chime_description, true, true),
+                channel(AlertChannel.SOUND.chimeId, R.string.channel_chime_sound_name, R.string.channel_chime_description, true, false),
+                channel(AlertChannel.VIBRATE.chimeId, R.string.channel_chime_vibrate_name, R.string.channel_chime_description, false, true)
             )
         )
     }
 
-    private fun notify(title: String, text: String, settings: AlertSettings, id: Int) {
+    private fun notify(title: String, text: String, settings: AlertSettings, id: Int, chime: Boolean = false) {
         if (ContextCompat.checkSelfPermission(app, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED &&
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
         ) return
@@ -127,7 +189,7 @@ class GoldenAlerts(private val app: FishingCopilotApp) {
             app, 0, Intent(app, MainActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP),
             PendingIntent.FLAG_IMMUTABLE
         )
-        val notification = NotificationCompat.Builder(app, channel.id)
+        val notification = NotificationCompat.Builder(app, if (chime) channel.chimeId else channel.id)
             .setSmallIcon(R.drawable.ic_notification)
             .setContentTitle(title)
             .setContentText(text)
@@ -145,6 +207,10 @@ class GoldenAlerts(private val app: FishingCopilotApp) {
         app, 0, Intent(app, GoldenAlarmReceiver::class.java), PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
     )
 
+    private fun chimeIntent(): PendingIntent = PendingIntent.getBroadcast(
+        app, CHIME_REQUEST, Intent(app, TideChimeReceiver::class.java), PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+    )
+
     private fun setBootReceiverEnabled(enabled: Boolean) {
         app.packageManager.setComponentEnabledSetting(
             ComponentName(app, AlertsRescheduleReceiver::class.java),
@@ -159,6 +225,8 @@ class GoldenAlerts(private val app: FishingCopilotApp) {
     companion object {
         private const val NOTIFICATION_ID = 45
         private const val TEST_NOTIFICATION_ID = 46
+        private const val CHIME_NOTIFICATION_ID = 47
+        private const val CHIME_REQUEST = 1
         private const val WINDOW_MILLIS = 10 * 60_000L
         private const val RECHECK_MILLIS = 6 * 60 * 60_000L
         private val VIBRATION_PATTERN = longArrayOf(0, 400, 200, 400)
@@ -173,6 +241,21 @@ class GoldenAlarmReceiver : BroadcastReceiver() {
         CoroutineScope(Dispatchers.Default).launch {
             try {
                 app.goldenAlerts.onAlarm()
+            } finally {
+                pending.finish()
+            }
+        }
+    }
+}
+
+/** Fires 15 minutes before high or low water. */
+class TideChimeReceiver : BroadcastReceiver() {
+    override fun onReceive(context: Context, intent: Intent) {
+        val app = context.applicationContext as FishingCopilotApp
+        val pending = goAsync()
+        CoroutineScope(Dispatchers.Default).launch {
+            try {
+                app.goldenAlerts.onChimeAlarm()
             } finally {
                 pending.finish()
             }

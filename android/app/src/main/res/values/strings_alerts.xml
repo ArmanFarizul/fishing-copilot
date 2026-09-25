@@ -49,4 +49,25 @@
     <!-- Title and body of the notification sent by alerts_test_button; it must say this is a test and that real alerts look like this. Title under 40 characters, body under 80. -->
     <string name="notif_test_title">Test alert</string>
     <string name="notif_test_text">This is only a test. Prime time alerts will look like this.</string>
+
+    <!-- Tide change chime: a second switch under the prime-time alerts, sharing the Sound and Vibration switches. It rings a soft bell 15 minutes before each predicted high or low water at the main spot, including the spot's timing adjustment (tide_offset_label). Title under 28 characters, body under 90. -->
+    <string name="alerts_chime_title">Tide change chime</string>
+    <string name="alerts_chime_body">A soft bell 15 minutes before high or low tide at your main spot.</string>
+    <!-- Line under the chime switch naming the next turn the chime is set for; %1$s is the day and clock time of that turn, such as "Fri 3:14 PM". Keep under 50 characters with the value filled in. -->
+    <string name="alerts_chime_next_high">Next chime: high tide, %1$s</string>
+    <string name="alerts_chime_next_low">Next chime: low tide, %1$s</string>
+    <!-- Shown instead of alerts_chime_next_* when there are no tide times for the main spot yet, for example the phone was offline when the spot was added; the app tries again on its own. Keep under 80 characters. -->
+    <string name="alerts_chime_none">No tide times for your main spot yet. The app will try again later.</string>
+
+    <!-- Tide chime notification titles, read at a glance on the lock screen; %1$d is the minutes until the turn, normally 15. Keep under 36 characters. -->
+    <string name="notif_chime_high_title">High tide in %1$d min</string>
+    <string name="notif_chime_low_title">Low tide in %1$d min</string>
+    <!-- Body of the tide chime notification; %1$s is the spot name, %2$s the clock time of the turn, such as "3:14 PM". Keep under 90 characters with values filled in. -->
+    <string name="notif_chime_text">%1$s: the tide turns at %2$s. The current slows around the turn.</string>
+
+    <!-- Tide chime notification channels, shown in the phone's system notification settings; like channel_golden_*, only one is used at a time, matching the sound and vibration switches. Names under 40 characters; one shared description under 90. -->
+    <string name="channel_chime_full_name">Tide turn: sound and vibration</string>
+    <string name="channel_chime_sound_name">Tide turn: sound only</string>
+    <string name="channel_chime_vibrate_name">Tide turn: vibration only</string>
+    <string name="channel_chime_description">A soft bell 15 minutes before high or low tide at your main spot.</string>
 </resources>
