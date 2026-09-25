@@ -7,16 +7,34 @@
     <!-- Screen reader description for the pin button over the map; it moves the map back to the angler's main spot. Keep under 30 characters. -->
     <string name="map_my_spot">Back to your main spot</string>
 
-    <!-- Short label on a small button in the map's top-left corner; opens a dialog to type in a GPS coordinate. Keep under 16 characters. -->
-    <string name="map_go_to">Coordinates</string>
-    <!-- Title of the dialog where the angler types a GPS coordinate to move the map to. Keep under 28 characters. -->
-    <string name="map_go_to_title">Go to a GPS point</string>
-    <!-- One line under the text field: accepted formats. Decimal degrees, or degrees and minutes as a GPS or fish finder shows them, with N/S/E/W (English) or U/S/T/B (Malay) letters. The field's placeholder already shows 5°21.0'N 103°10.2'E. Keep the numbers and letters as plain text. Keep under 90 characters. -->
-    <string name="map_go_to_hint">Decimal (5.35, 103.17) or degrees and minutes as your GPS shows. N/S/E/W or U/S/T/B.</string>
-    <!-- Error under the text field, replacing map_go_to_hint, when the text could not be read as a coordinate. Keep under 70 characters. -->
-    <string name="map_go_to_invalid">Couldn\'t read that as a coordinate. Check the numbers and letters.</string>
-    <!-- Confirm button in the dialog; moves the map to the typed coordinate (in the spot picker it also sets that point as the spot). Keep under 12 characters. -->
-    <string name="map_go_to_confirm">Go there</string>
+    <!-- Screen reader description for the anchor button under zoom in/out while the nautical chart is off. Turns on the chart layer: sea depth shading and seamarks (buoys, lights, beacons). Needs internet. Keep under 30 characters. -->
+    <string name="map_chart_show">Show nautical chart</string>
+    <!-- Screen reader description for the same anchor button while the nautical chart is on. Turns the chart layer off. Keep under 30 characters. -->
+    <string name="map_chart_hide">Hide nautical chart</string>
+    <!-- Small credit line on the map while the nautical chart is on. Required by the data licences: keep "GEBCO Compilation Group", "OpenSeaMap contributors" and the not-for-navigation warning. Not translated. -->
+    <string name="map_chart_attribution" translatable="false">Depth: GEBCO grid © GEBCO Compilation Group. Seamarks © OpenSeaMap contributors. Not for navigation.</string>
+
+    <!-- Short label on a small button in the map's top-left corner; opens a dialog to search for a place name or type in a GPS coordinate. Keep under 16 characters. -->
+    <string name="map_go_to">Search</string>
+    <!-- Title of the dialog where the angler searches for a place by name or types a GPS coordinate to move the map to. Keep under 28 characters. -->
+    <string name="map_go_to_title">Find a place or GPS point</string>
+    <!-- One line under the text field before searching: what can be typed. A place name, or a coordinate in decimal degrees (5.35, 103.17) or in degrees and minutes as a GPS or fish finder shows it. Keep the numbers as plain text. Keep under 90 characters. -->
+    <string name="map_go_to_hint">Type a place name, or a coordinate like 5.35, 103.17 or as your GPS shows it.</string>
+    <!-- Error under the text field, replacing map_go_to_hint, when the text is too short to search for as a place and is not a coordinate either. Keep under 70 characters. -->
+    <string name="map_go_to_invalid">Type a few more letters, or a full coordinate.</string>
+    <!-- Confirm button in the dialog. For a place name it searches online and lists matches; for a coordinate it moves the map there (in the spot picker it also sets that point as the spot). Keep under 12 characters. -->
+    <string name="map_go_to_confirm">Search</string>
     <!-- Cancel button in the dialog; closes it without moving the map. Keep under 12 characters. -->
     <string name="map_go_to_cancel">Cancel</string>
+
+    <!-- Placeholder in the dialog's empty text field: one example place name and one example coordinate. Keep "Pulau Redang" and the numbers as they are. Keep under 32 characters. -->
+    <string name="map_search_placeholder">Pulau Redang or 5.35, 103.17</string>
+    <!-- Shown next to a small spinner while the place search is running online. Keep under 24 characters. -->
+    <string name="map_search_searching">Searching…</string>
+    <!-- Shown under the field when the online place search found nothing. Suggests another spelling or a coordinate. Keep under 70 characters. -->
+    <string name="map_search_none">No places found. Try another spelling or a coordinate.</string>
+    <!-- Error under the field when the place search could not reach the internet. Coordinates still work without a connection. Keep under 80 characters. -->
+    <string name="map_search_failed">Place search needs internet. Coordinates still work offline.</string>
+    <!-- Small credit line at the bottom of the dialog, required by the OpenStreetMap data licence. Keep "OpenStreetMap contributors" exact. Not translated. -->
+    <string name="map_search_attribution" translatable="false">Place search © OpenStreetMap contributors</string>
 </resources>

@@ -62,6 +62,7 @@ import com.fishingcopilot.maps.rememberMapController
 import com.fishingcopilot.ui.components.GoToCoordinateButton
 import com.fishingcopilot.ui.components.GoToCoordinateDialog
 import com.fishingcopilot.ui.components.MapZoomControls
+import com.fishingcopilot.ui.components.NauticalAttribution
 import com.fishingcopilot.satellite.ClarityLevel
 import com.fishingcopilot.satellite.FrontStrength
 import com.fishingcopilot.satellite.MapCell
@@ -156,6 +157,8 @@ fun SatelliteMapPanel(
                 modifier = Modifier.fillMaxSize()
             )
             GoToCoordinateButton(onClick = { goTo = true }, modifier = Modifier.align(Alignment.TopStart).padding(10.dp))
+            // Left gap keeps clear of MapLibre's own attribution button; right gap of the zoom buttons.
+            NauticalAttribution(controller, modifier = Modifier.align(Alignment.BottomStart).padding(start = 40.dp, end = 72.dp, bottom = 8.dp))
             MapZoomControls(
                 controller,
                 modifier = Modifier.align(Alignment.BottomEnd).padding(10.dp),

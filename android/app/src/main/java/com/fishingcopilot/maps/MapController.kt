@@ -1,7 +1,10 @@
 package com.fishingcopilot.maps
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import org.maplibre.android.camera.CameraUpdateFactory
 import org.maplibre.android.geometry.LatLng
 import org.maplibre.android.maps.MapLibreMap
@@ -9,6 +12,19 @@ import org.maplibre.android.maps.MapLibreMap
 /** Lets buttons drawn over a map move its camera; the map view attaches itself once it is ready. */
 class MapController {
     internal var map: MapLibreMap? = null
+        set(value) {
+            field = value
+            // A map that attaches after the chart was switched on shows it straight away.
+            value?.style?.setNautical(nautical)
+        }
+
+    var nautical by mutableStateOf(false)
+        private set
+
+    fun toggleNautical() {
+        nautical = !nautical
+        map?.style?.setNautical(nautical)
+    }
 
     fun zoomIn() {
         map?.animateCamera(CameraUpdateFactory.zoomIn())

@@ -32,6 +32,8 @@ android {
 
     buildFeatures {
         compose = true
+        // VERSION_NAME identifies the app to Nominatim, whose policy requires a real User-Agent.
+        buildConfig = true
     }
 
     // Lists every values-xx folder as a selectable app language in Android 13+ settings.

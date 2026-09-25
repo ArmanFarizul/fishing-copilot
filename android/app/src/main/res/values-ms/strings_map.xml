@@ -5,10 +5,18 @@
     <string name="map_zoom_out">Kecilkan peta</string>
     <string name="map_my_spot">Balik ke lubuk utama</string>
 
-    <string name="map_go_to">Koordinat</string>
-    <string name="map_go_to_title">Pergi ke titik GPS</string>
-    <string name="map_go_to_hint">Perpuluhan (5.35, 103.17) atau darjah dan minit ikut paparan GPS. U/S/T/B atau N/S/E/W.</string>
-    <string name="map_go_to_invalid">Koordinat tak dapat dibaca. Semak semula nombor dan hurufnya.</string>
-    <string name="map_go_to_confirm">Pergi</string>
+    <string name="map_chart_show">Tunjuk carta laut</string>
+    <string name="map_chart_hide">Sorok carta laut</string>
+
+    <string name="map_go_to">Cari</string>
+    <string name="map_go_to_title">Cari tempat atau titik GPS</string>
+    <string name="map_go_to_hint">Taip nama tempat, atau koordinat macam 5.35, 103.17 atau ikut paparan GPS.</string>
+    <string name="map_go_to_invalid">Taip beberapa huruf lagi, atau koordinat penuh.</string>
+    <string name="map_go_to_confirm">Cari</string>
     <string name="map_go_to_cancel">Batal</string>
+
+    <string name="map_search_placeholder">Pulau Redang atau 5.35, 103.17</string>
+    <string name="map_search_searching">Sedang cari…</string>
+    <string name="map_search_none">Tempat tak dijumpai. Cuba ejaan lain atau guna koordinat.</string>
+    <string name="map_search_failed">Carian tempat perlukan internet. Koordinat tetap boleh guna tanpa talian.</string>
 </resources>

@@ -17,6 +17,7 @@ import com.fishingcopilot.data.remote.JakimTakwimClient
 import com.fishingcopilot.data.remote.MetWarningClient
 import com.fishingcopilot.data.remote.OpenMeteoMarineClient
 import com.fishingcopilot.data.remote.OpenMeteoWeatherClient
+import com.fishingcopilot.data.remote.PlaceSearchClient
 import com.fishingcopilot.data.remote.PrayerZoneClient
 import com.fishingcopilot.data.remote.SatelliteClient
 import com.fishingcopilot.data.satellite.SatelliteRepository
@@ -52,6 +53,7 @@ class FishingCopilotApp : Application() {
     val prayerRepository: PrayerRepository by lazy {
         PrayerRepository(File(filesDir, "prayer/month.json"), PrayerZoneClient(), JakimTakwimClient())
     }
+    val placeSearch: PlaceSearchClient by lazy { PlaceSearchClient() }
     val photoStore: PhotoStore by lazy { AppPhotoStore(this) }
     val alertSettings: AlertSettingsRepository by lazy { AlertSettingsRepository(this) }
     val biteForecaster: BiteForecaster by lazy {

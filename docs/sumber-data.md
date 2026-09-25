@@ -186,3 +186,12 @@ Diuji pada 2026-09-25.
 - **Zon JAKIM daripada koordinat:** JAKIM tiada carian ini, jadi aplikasi guna `api.waktusolat.app/zones/{lat}/{lon}` (projek komuniti). Di laut ia tiada zon, jadi aplikasi guna zon pekan pantai terdekat (`CoastalArea.prayerZone`, disemak 2026-09-25). Lebih 400 km dari pantai Malaysia, waktu solat tidak dipaparkan.
 - **Waktu solat:** terus daripada JAKIM e-Solat (`esolatApi/TakwimSolat&period=month&zone=`), sebulan setiap muat turun, disimpan untuk luar talian.
 - **Nama tempat:** `Geocoder` Android (perlukan internet pada kebanyakan telefon); jika tiada, "Berhampiran" kawasan pesisir terdekat.
+
+## 7. Carta nautika dan carian tempat
+
+Diuji pada 2026-09-25.
+
+- **Kedalaman:** GEBCO WMS `https://wms.gebco.net/mapserv`, lapisan `gebco_latest_2`, `CRS=EPSG:3857` (disokong mengikut GetCapabilities). Syarat: bukan untuk navigasi; atribusi "GEBCO Compilation Group". Grid kira-kira 450 m, jadi lorekan kasar di pesisir dan turut mewarnakan darat.
+- **Tanda laut:** OpenSeaMap `https://tiles.openseamap.org/seamark/{z}/{x}/{y}.png` (zum 9 ke atas). Data daripada OpenStreetMap (ODbL). Halaman syarat penggunaan jubin tidak ditemui; atribusi "OpenSeaMap contributors".
+- **Carian tempat:** Nominatim `nominatim.openstreetmap.org/search`. Polisi (operations.osmfoundation.org/policies/nominatim): maksimum 1 permintaan sesaat, User-Agent sendiri, hasil disimpan dalam cache, **tiada autocomplete**. Aplikasi hanya mencari apabila butang ditekan.
+- Kedua-dua lapisan carta tidak dimasukkan dalam muat turun peta luar talian; MapLibre hanya menyimpan jubin yang pernah dipaparkan.
