@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Screen reader description for the plus button over the map (spot picker and the satellite map on the Spots tab). Zooms the map in one step. Keep under 30 characters. -->
+    <string name="map_zoom_in">Zoom in</string>
+    <!-- Screen reader description for the minus button over the map. Zooms the map out one step. Keep under 30 characters. -->
+    <string name="map_zoom_out">Zoom out</string>
+    <!-- Screen reader description for the pin button over the map; it moves the map back to the angler's home spot. Keep under 30 characters. -->
+    <string name="map_my_spot">Back to your home spot</string>
+
+    <!-- Short label on a small button in the map's top-left corner; opens a dialog to type in a GPS coordinate. Keep under 16 characters. -->
+    <string name="map_go_to">Coordinates</string>
+    <!-- Title of the dialog where the angler types a GPS coordinate to move the map to. Keep under 28 characters. -->
+    <string name="map_go_to_title">Go to a GPS point</string>
+    <!-- One line under the text field: accepted formats. Decimal degrees, or degrees and minutes as a GPS or fish finder shows them, with N/S/E/W (English) or U/S/T/B (Malay) letters. The field's placeholder already shows 5°21.0'N 103°10.2'E. Keep the numbers and letters as plain text. Keep under 90 characters. -->
+    <string name="map_go_to_hint">Decimal (5.35, 103.17) or degrees and minutes as your GPS shows. N/S/E/W or U/S/T/B.</string>
+    <!-- Error under the text field, replacing map_go_to_hint, when the text could not be read as a coordinate. Keep under 70 characters. -->
+    <string name="map_go_to_invalid">Couldn\'t read that as a coordinate. Check the numbers and letters.</string>
+    <!-- Confirm button in the dialog; moves the map to the typed coordinate (in the spot picker it also sets that point as the spot). Keep under 12 characters. -->
+    <string name="map_go_to_confirm">Go there</string>
+    <!-- Cancel button in the dialog; closes it without moving the map. Keep under 12 characters. -->
+    <string name="map_go_to_cancel">Cancel</string>
+</resources>

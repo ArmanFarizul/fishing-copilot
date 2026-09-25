@@ -58,6 +58,10 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.unit.dp
 import com.fishingcopilot.R
+import com.fishingcopilot.maps.rememberMapController
+import com.fishingcopilot.ui.components.GoToCoordinateButton
+import com.fishingcopilot.ui.components.GoToCoordinateDialog
+import com.fishingcopilot.ui.components.MapZoomControls
 import com.fishingcopilot.data.spots.CoastalArea
 import com.fishingcopilot.ui.components.GlowCheckIndicator
 import com.fishingcopilot.ui.components.icon
@@ -116,6 +120,8 @@ fun ColumnScope.SpotPicker(
     }
 
     val areaNames = CoastalArea.entries.associateWith { stringResource(it.label) }
+    val mapController = rememberMapController()
+    var goTo by rememberSaveable { mutableStateOf(false) }
     val mapDescription = stringResource(R.string.onboarding_spot_map_description)
 
     Box(
@@ -135,9 +141,12 @@ fun ColumnScope.SpotPicker(
             onPointPicked = ::selectPoint,
             modifier = Modifier
                 .fillMaxSize()
-                .semantics { contentDescription = mapDescription }
+                .semantics { contentDescription = mapDescription },
+            controller = mapController
         )
         MapCrosshair(Modifier.align(Alignment.Center))
+        GoToCoordinateButton(onClick = { goTo = true }, modifier = Modifier.align(Alignment.TopStart).padding(10.dp))
+        MapZoomControls(mapController, modifier = Modifier.align(Alignment.BottomEnd).padding(10.dp))
         SmallFloatingActionButton(
             onClick = {
                 if (hasLocationPermission(context)) locate()
@@ -154,6 +163,11 @@ fun ColumnScope.SpotPicker(
         ) {
             LocateIcon(contentDescription = stringResource(R.string.onboarding_spot_use_location))
         }
+    }
+
+    if (goTo) {
+        // A typed coordinate becomes the spot, and the map follows the selection there.
+        GoToCoordinateDialog(onGo = { selectPoint(it.latitude, it.longitude); goTo = false }, onDismiss = { goTo = false })
     }
 
     TextButton(

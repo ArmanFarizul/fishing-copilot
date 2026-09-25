@@ -20,6 +20,7 @@ import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.fishingcopilot.data.spots.CoastalArea
 import com.fishingcopilot.maps.MAP_STYLE_URL
+import com.fishingcopilot.maps.MapController
 import com.fishingcopilot.data.spots.haversineKm
 import com.fishingcopilot.ui.theme.NauticalCyan
 import com.fishingcopilot.ui.theme.OceanMidnight
@@ -58,7 +59,8 @@ fun SpotMap(
     selection: SpotSelection?,
     onAreaTap: (CoastalArea) -> Unit,
     onPointPicked: (latitude: Double, longitude: Double) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    controller: MapController? = null
 ) {
     val context = LocalContext.current
     val lifecycle = LocalLifecycleOwner.current.lifecycle
@@ -99,6 +101,7 @@ fun SpotMap(
                         )
                     )
                     map = libreMap
+                    controller?.map = libreMap
                 }
 
                 libreMap.addOnMapClickListener { latLng ->

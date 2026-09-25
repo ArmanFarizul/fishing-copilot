@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Context for every string is in values/strings_map.xml. Keep keys and format arguments identical to that file. -->
+<resources>
+    <string name="map_zoom_in">Besarkan peta</string>
+    <string name="map_zoom_out">Kecilkan peta</string>
+    <string name="map_my_spot">Balik ke lubuk utama</string>
+
+    <string name="map_go_to">Koordinat</string>
+    <string name="map_go_to_title">Pergi ke titik GPS</string>
+    <string name="map_go_to_hint">Perpuluhan (5.35, 103.17) atau darjah dan minit ikut paparan GPS. U/S/T/B atau N/S/E/W.</string>
+    <string name="map_go_to_invalid">Koordinat tak dapat dibaca. Semak semula nombor dan hurufnya.</string>
+    <string name="map_go_to_confirm">Pergi</string>
+    <string name="map_go_to_cancel">Batal</string>
+</resources>

@@ -19,7 +19,8 @@ Status pada 2026-09-25. MVP yang dipersetujui: pasang surut, Bite Score, cuaca l
 | Pipeline satelit | Larian harian di GitHub (`pipeline/`); suhu, tubir suhu, klorofil-a dan kejernihan air diterbitkan ke release `latest-data` (~49 KB) |
 | Kad satelit | Suhu, plankton, kejernihan dan tubir suhu terdekat bagi lubuk utama; berfungsi tanpa internet; lihat `satelit.md` |
 | Peta luar talian | Tetapan: muat turun peta asas OpenFreeMap (zoom 0–10 seluruh kawasan, zoom 11–14 kira-kira 40 km sekeliling setiap lubuk) ke pangkalan data luar talian MapLibre |
-| Peta satelit | Tab Lubuk, paparan Peta: petak berwarna bagi plankton, suhu, tubir suhu atau kejernihan; ketik petak untuk nilai; pin lubuk sendiri |
+| Peta satelit | Tab Lubuk, paparan Peta: petak berwarna bagi plankton, suhu, tubir suhu atau kejernihan; ketik petak untuk nilai dan koordinat (darjah-minit dan perpuluhan); pin lubuk sendiri |
+| Kawalan peta | Butang + / −, butang ke lubuk utama, dan pergi ke koordinat (perpuluhan, darjah-minit atau darjah-minit-saat; huruf N/S/E/W atau U/S/T/B) pada kedua-dua peta; berfungsi tanpa internet |
 | Amaran MetMalaysia | Skrin sendiri, dibuka daripada satu baris di skrin utama (merah jika ada amaran untuk kawasan lubuk); teks rasmi BM/EN; dipadankan dengan negeri lubuk; lihat `sumber-data.md` bahagian 5 |
 
 ## Belum dibuat (daripada spesifikasi)
@@ -43,6 +44,7 @@ Status pada 2026-09-25. MVP yang dipersetujui: pasang surut, Bite Score, cuaca l
 | Peraturan memancing / zon larangan (Taman Laut) | Sumber sempadan belum dikaji |
 | Rakam laluan | Perlukan servis GPS latar belakang |
 | Ukur jarak pada peta | Mudah dibina di atas peta sedia ada |
+| Carian nama tempat | Perlukan internet dan servis luar (Nominatim, had 1 carian sesaat); ditangguh |
 | Pemilih bahasa dalam aplikasi (Android 12 ke bawah) | Android 13+ sudah boleh pilih melalui Settings |
 
 ## Nilai yang perlu disemak oleh pemilik

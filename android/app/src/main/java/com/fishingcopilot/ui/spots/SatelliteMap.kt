@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
@@ -32,6 +33,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -51,7 +53,15 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.fishingcopilot.R
+import com.fishingcopilot.maps.LatLon
 import com.fishingcopilot.maps.MAP_STYLE_URL
+import com.fishingcopilot.maps.MapController
+import com.fishingcopilot.maps.formatDecimal
+import com.fishingcopilot.maps.formatDegreesMinutes
+import com.fishingcopilot.maps.rememberMapController
+import com.fishingcopilot.ui.components.GoToCoordinateButton
+import com.fishingcopilot.ui.components.GoToCoordinateDialog
+import com.fishingcopilot.ui.components.MapZoomControls
 import com.fishingcopilot.satellite.ClarityLevel
 import com.fishingcopilot.satellite.FrontStrength
 import com.fishingcopilot.satellite.MapCell
@@ -118,6 +128,10 @@ fun SatelliteMapPanel(
     val locale = LocalConfiguration.current.locales[0]
     val cells = (state as? SatelliteMapState.Ready)?.cells
     var tapped by remember(state.layer, cells) { mutableStateOf<MapCell?>(null) }
+    var tappedAt by remember { mutableStateOf<LatLon?>(null) }
+    var goTo by rememberSaveable { mutableStateOf(false) }
+    val controller = rememberMapController()
+    val home = spots.firstOrNull { it.isHome }?.spot
 
     Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(8.dp)) {
         FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -134,7 +148,19 @@ fun SatelliteMapPanel(
             }
         }
         Box(modifier = Modifier.weight(1f).fillMaxWidth().clip(RoundedCornerShape(18.dp))) {
-            SatelliteMapView(cells?.cells.orEmpty(), spots, onCellTap = { tapped = it }, modifier = Modifier.fillMaxSize())
+            SatelliteMapView(
+                cells?.cells.orEmpty(),
+                spots,
+                controller,
+                onTap = { cell, point -> tapped = cell; tappedAt = point },
+                modifier = Modifier.fillMaxSize()
+            )
+            GoToCoordinateButton(onClick = { goTo = true }, modifier = Modifier.align(Alignment.TopStart).padding(10.dp))
+            MapZoomControls(
+                controller,
+                modifier = Modifier.align(Alignment.BottomEnd).padding(10.dp),
+                onMySpot = home?.let { spot -> { controller.moveTo(spot.latitude, spot.longitude) } }
+            )
             when (state) {
                 is SatelliteMapState.Loading -> Status {
                     CircularProgressIndicator(color = NauticalCyan, strokeWidth = 2.dp, modifier = Modifier.size(18.dp))
@@ -160,7 +186,28 @@ fun SatelliteMapPanel(
             fontWeight = if (tapped != null) FontWeight.Bold else FontWeight.Normal,
             color = tapped?.let { levelColor(it.level) } ?: TextMuted
         )
+        tappedAt?.let { point ->
+            // Selectable, so the numbers can be copied into a GPS or fish finder.
+            SelectionContainer {
+                Text(
+                    formatDegreesMinutes(point.latitude, point.longitude) + "  ·  " + formatDecimal(point.latitude, point.longitude),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = TextHighContrast
+                )
+            }
+        }
         Legend(state.layer)
+        if (goTo) {
+            GoToCoordinateDialog(
+                onGo = { point ->
+                    controller.moveTo(point.latitude, point.longitude)
+                    tappedAt = point
+                    tapped = cells?.cells?.firstOrNull { point.latitude in it.south..it.north && point.longitude in it.west..it.east }
+                    goTo = false
+                },
+                onDismiss = { goTo = false }
+            )
+        }
         if (cells != null) {
             val uriHandler = LocalUriHandler.current
             Text(
@@ -220,11 +267,17 @@ private fun cellText(layer: SatelliteMapLayer, cell: MapCell, locale: Locale): S
 
 /** MapLibre map with the chosen layer's squares and the angler's own spots on top. */
 @Composable
-private fun SatelliteMapView(cells: List<MapCell>, spots: List<SpotItem>, onCellTap: (MapCell?) -> Unit, modifier: Modifier) {
+private fun SatelliteMapView(
+    cells: List<MapCell>,
+    spots: List<SpotItem>,
+    controller: MapController,
+    onTap: (MapCell?, LatLon) -> Unit,
+    modifier: Modifier
+) {
     val context = LocalContext.current
     val lifecycle = LocalLifecycleOwner.current.lifecycle
     val currentCells by rememberUpdatedState(cells)
-    val currentOnCellTap by rememberUpdatedState(onCellTap)
+    val currentOnTap by rememberUpdatedState(onTap)
     var map by remember { mutableStateOf<MapLibreMap?>(null) }
 
     val mapView = remember {
@@ -266,12 +319,13 @@ private fun SatelliteMapView(cells: List<MapCell>, spots: List<SpotItem>, onCell
                         )
                     )
                     map = libreMap
+                    controller.map = libreMap
                 }
                 libreMap.addOnMapClickListener { latLng ->
                     val point: PointF = libreMap.projection.toScreenLocation(latLng)
                     val index = libreMap.queryRenderedFeatures(point, CELLS_LAYER).firstOrNull()
                         ?.getNumberProperty(CELL_INDEX)?.toInt()
-                    currentOnCellTap(index?.let { currentCells.getOrNull(it) })
+                    currentOnTap(index?.let { currentCells.getOrNull(it) }, LatLon(latLng.latitude, latLng.longitude))
                     true
                 }
             }
