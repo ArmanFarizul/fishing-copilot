@@ -54,7 +54,7 @@ class HereViewModelTest {
     private val kt = SpotEntity(id = 1, name = "Kuala Terengganu", latitude = 5.35, longitude = 103.17)
     private val redang = SpotEntity(id = 2, name = "Redang", latitude = 5.78, longitude = 103.02)
 
-    private fun TestScope.viewModel(permission: Boolean, at: LatLon?): HereViewModel {
+    private fun TestScope.viewModel(permission: Boolean, at: LatLon?, manual: MutableStateFlow<String?> = MutableStateFlow(null)): HereViewModel {
         val weather = WeatherRepository(File(folder.root, "w.json"), ForecastClient { forecastBody }, { now }, Dispatchers.Unconfined)
         val prayers = PrayerRepository(
             File(folder.root, "p.json"),
@@ -66,6 +66,7 @@ class HereViewModelTest {
         val vm = HereViewModel(
             FakeSpots(listOf(kt, redang)), weather, prayers,
             hasPermission = { permission }, locate = { at }, placeName = { "Kuala Terengganu" },
+            manualZone = manual, saveZone = { manual.value = it },
             clock = { now }, ticks = flowOf(now)
         )
         backgroundScope.launch { vm.uiState.collect {} }
@@ -101,5 +102,32 @@ class HereViewModelTest {
     @Test
     fun `no fix says so`() = runTest {
         assertEquals(HereLocation.Unavailable, viewModel(permission = true, at = null).uiState.value.location)
+    }
+
+    @Test
+    fun `a zone picked by hand wins, works without location, and can go back to auto`() = runTest {
+        val manual = MutableStateFlow<String?>(null)
+        val vm = viewModel(permission = false, at = null, manual = manual)
+        assertNull(vm.uiState.value.prayers)
+
+        vm.pickZone("JHR02")
+        advanceUntilIdle()
+        val picked = vm.uiState.value.prayers!!
+        assertEquals("JHR02", picked.zone)
+        assertTrue(picked.manual)
+        assertEquals("Johor Bahru, Kota Tinggi, Mersing, Kulai", picked.district)
+    }
+
+    @Test
+    fun `going back to auto uses the location's zone again`() = runTest {
+        val manual = MutableStateFlow<String?>("JHR02")
+        val vm = viewModel(permission = true, at = LatLon(5.35, 103.17), manual = manual)
+        assertEquals("JHR02", vm.uiState.value.prayers!!.zone)
+
+        vm.pickZone(null)
+        advanceUntilIdle()
+        val auto = vm.uiState.value.prayers!!
+        assertEquals("TRG01", auto.zone)
+        assertEquals(false, auto.manual)
     }
 }

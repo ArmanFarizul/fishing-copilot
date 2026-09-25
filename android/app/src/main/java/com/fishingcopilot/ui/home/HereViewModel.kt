@@ -23,7 +23,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.io.IOException
@@ -64,6 +66,8 @@ class HereViewModel(
     private val hasPermission: () -> Boolean,
     private val locate: suspend () -> LatLon?,
     private val placeName: suspend (LatLon) -> String? = { null },
+    private val manualZone: Flow<String?> = flowOf(null),
+    private val saveZone: suspend (String?) -> Unit = {},
     private val clock: () -> Long = System::currentTimeMillis,
     ticks: Flow<Long>? = null
 ) : ViewModel() {
@@ -102,8 +106,11 @@ class HereViewModel(
     /** Finds the phone again and refreshes what is stale; cheap to call on every screen visit. */
     fun refresh() {
         viewModelScope.launch {
+            val manual = manualZone.first()
             if (!hasPermission()) {
                 location.value = HereLocation.NoPermission
+                // A zone picked by hand still gives prayer times without location.
+                if (manual != null) refreshPrayers(null, manual)
                 return@launch
             }
             if (location.value !is HereLocation.Found) location.value = HereLocation.Locating
@@ -111,6 +118,7 @@ class HereViewModel(
             if (point == null) {
                 // Keep a fix we already have rather than blanking the card.
                 if (location.value !is HereLocation.Found) location.value = HereLocation.Unavailable
+                if (manual != null) refreshPrayers(null, manual)
                 return@launch
             }
             location.value = HereLocation.Found(point)
@@ -123,14 +131,24 @@ class HereViewModel(
                     true
                 }
             }
-            launch {
-                // Prayer times fall back to the saved month; a failed refresh needs no message.
-                try {
-                    prayers.refresh(point.latitude, point.longitude)
-                } catch (e: IOException) {
-                    Unit
-                }
-            }
+            launch { refreshPrayers(point, manual) }
+        }
+    }
+
+    /** [code] null goes back to following the phone's location. */
+    fun pickZone(code: String?) {
+        viewModelScope.launch {
+            saveZone(code)
+            refresh()
+        }
+    }
+
+    // Prayer times fall back to the saved month; a failed refresh needs no message.
+    private suspend fun refreshPrayers(point: LatLon?, manual: String?) {
+        try {
+            prayers.refresh(point?.latitude, point?.longitude, manual)
+        } catch (e: IOException) {
+            Unit
         }
     }
 
@@ -148,9 +166,11 @@ class HereViewModel(
             prayers: PrayerRepository,
             hasPermission: () -> Boolean,
             locate: suspend () -> LatLon?,
-            placeName: suspend (LatLon) -> String?
+            placeName: suspend (LatLon) -> String?,
+            manualZone: Flow<String?>,
+            saveZone: suspend (String?) -> Unit
         ) = viewModelFactory {
-            initializer { HereViewModel(spots, weather, prayers, hasPermission, locate, placeName) }
+            initializer { HereViewModel(spots, weather, prayers, hasPermission, locate, placeName, manualZone, saveZone) }
         }
     }
 }

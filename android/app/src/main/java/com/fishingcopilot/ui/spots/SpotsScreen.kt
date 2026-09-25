@@ -45,6 +45,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fishingcopilot.R
+import com.fishingcopilot.ui.components.rememberSpotPlace
 import com.fishingcopilot.data.local.SpotEntity
 import com.fishingcopilot.ui.onboarding.SpotSelection
 import com.fishingcopilot.ui.theme.AlertRed
@@ -207,6 +208,11 @@ private fun SpotCard(item: SpotItem, locale: Locale, onSetHome: () -> Unit, onRe
                     }
                 }
             }
+            Text(
+                rememberSpotPlace(item.spot.latitude, item.spot.longitude),
+                style = MaterialTheme.typography.bodyMedium,
+                color = TextHighContrast
+            )
             Text(
                 String.format(Locale.ROOT, "%.4f, %.4f", item.spot.latitude, item.spot.longitude),
                 style = MaterialTheme.typography.bodySmall,

@@ -8,6 +8,7 @@ import com.fishingcopilot.data.spots.haversineKm
 import com.fishingcopilot.prayer.MALAYSIA
 import com.fishingcopilot.prayer.Prayer
 import com.fishingcopilot.prayer.PrayerDay
+import com.fishingcopilot.prayer.jakimZone
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -26,8 +27,11 @@ import java.time.YearMonth
 // The farthest Malaysian waters (Layang-Layang, Sulu Sea edge) are within about 350 km of a listed coastal town.
 private const val MALAYSIA_REACH_KM = 400.0
 
-/** [district] is null when the zone is the nearest coastal town's, used because the angler is at sea. */
-data class PrayerMonth(val zone: String, val district: String?, val month: YearMonth, val days: List<PrayerDay>)
+/**
+ * [district] is null when the zone is the nearest coastal town's, used because the angler is at sea.
+ * [manual] is true when the angler picked the zone by hand.
+ */
+data class PrayerMonth(val zone: String, val district: String?, val month: YearMonth, val days: List<PrayerDay>, val manual: Boolean = false)
 
 /**
  * JAKIM prayer times for the zone the angler is in, one month per download, kept for offline use.
@@ -47,19 +51,27 @@ class PrayerRepository(
 
     val data: Flow<PrayerMonth?> = cached.onStart { if (cached.value == null) loadCache() }
 
-    suspend fun refresh(latitude: Double, longitude: Double) = lock.withLock {
+    /** A [manualZone] wins over the location, which may then be null. */
+    suspend fun refresh(latitude: Double?, longitude: Double?, manualZone: String? = null) = lock.withLock {
         if (cached.value == null) loadCache()
-        // JAKIM zones only cover Malaysia; far from its coast any fallback zone would give wrong times.
-        if (CoastalArea.nearest(latitude, longitude).second > MALAYSIA_REACH_KM) {
-            cached.value = null
-            return@withLock
+        val zone = when {
+            manualZone != null -> PrayerZone(manualZone, jakimZone(manualZone)?.districts)
+            latitude == null || longitude == null -> return@withLock
+            // JAKIM zones only cover Malaysia; far from its coast any fallback zone would give wrong times.
+            CoastalArea.nearest(latitude, longitude).second > MALAYSIA_REACH_KM -> {
+                cached.value = null
+                return@withLock
+            }
+            else -> zoneFor(latitude, longitude)
         }
-        val zone = zoneFor(latitude, longitude)
+        val manual = manualZone != null
         val month = YearMonth.from(today())
         val copy = cached.value
-        if (copy != null && copy.zone == zone.code && copy.district == zone.district && copy.month == month) return@withLock
+        if (copy != null && copy.zone == zone.code && copy.district == zone.district && copy.month == month && copy.manual == manual) {
+            return@withLock
+        }
         val days = if (copy != null && copy.zone == zone.code && copy.month == month) copy.days else jakim.prayerMonth(zone.code)
-        val fresh = PrayerMonth(zone.code, zone.district, month, days)
+        val fresh = PrayerMonth(zone.code, zone.district, month, days, manual)
         withContext(io) {
             cacheFile.parentFile?.mkdirs()
             cacheFile.writeText(json.encodeToString(StoredMonth.serializer(), StoredMonth.of(fresh)))
@@ -90,13 +102,19 @@ class PrayerRepository(
 }
 
 @Serializable
-private data class StoredMonth(val zone: String, val district: String? = null, val month: String, val days: List<StoredDay>) {
-    fun toMonth() = PrayerMonth(zone, district, YearMonth.parse(month), days.map { d ->
+private data class StoredMonth(
+    val zone: String,
+    val district: String? = null,
+    val month: String,
+    val days: List<StoredDay>,
+    val manual: Boolean = false
+) {
+    fun toMonth() = PrayerMonth(zone, district, YearMonth.parse(month), manual = manual, days = days.map { d ->
         PrayerDay(LocalDate.parse(d.date), d.times.mapKeys { Prayer.valueOf(it.key) }.mapValues { LocalTime.parse(it.value) })
     })
 
     companion object {
-        fun of(m: PrayerMonth) = StoredMonth(m.zone, m.district, m.month.toString(), m.days.map { d ->
+        fun of(m: PrayerMonth) = StoredMonth(m.zone, m.district, m.month.toString(), manual = m.manual, days = m.days.map { d ->
             StoredDay(d.date.toString(), d.times.mapKeys { it.key.name }.mapValues { it.value.toString() })
         })
     }

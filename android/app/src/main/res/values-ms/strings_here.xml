@@ -51,6 +51,11 @@
     <string name="here_prayer_zone">Zon %1$s · %2$s</string>
     <string name="here_prayer_zone_sea">Zon %1$s · pekan pantai terdekat</string>
     <string name="here_prayer_source">Waktu rasmi JAKIM e-Solat.</string>
+    <string name="here_zone_change">Tukar</string>
+    <string name="here_zone_auto">Ikut lokasi anda</string>
+    <string name="here_zone_manual">Dipilih sendiri, tidak ikut lokasi</string>
+    <string name="here_zone_pick_title">Zon waktu solat</string>
+    <string name="here_zone_auto_option">Ikut lokasi saya</string>
     <string name="prayer_fajr">Subuh</string>
     <string name="prayer_syuruk">Syuruk</string>
     <string name="prayer_dhuhr">Zohor</string>

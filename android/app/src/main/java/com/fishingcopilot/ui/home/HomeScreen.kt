@@ -41,6 +41,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fishingcopilot.R
+import com.fishingcopilot.ui.components.rememberSpotPlace
 import com.fishingcopilot.bite.BiteForecast
 import com.fishingcopilot.catchlog.CatchConditions
 import com.fishingcopilot.data.local.SpotEntity
@@ -112,7 +113,7 @@ fun HomeScreen(
             }
         }
         Spacer(Modifier.height(24.dp))
-        HereSection(hereState, viewedSpot, onRefresh = hereViewModel::refresh, now = System.currentTimeMillis())
+        HereSection(hereState, viewedSpot, onRefresh = hereViewModel::refresh, onPickZone = hereViewModel::pickZone, now = System.currentTimeMillis())
 
         Spacer(Modifier.height(28.dp))
         SectionLabel(R.string.spot_section)
@@ -202,7 +203,8 @@ private fun SpotSwitcher(spots: List<SpotEntity>, viewed: SpotEntity?, homeSpotI
     }
     val tags = listOfNotNull(
         stringResource(R.string.spot_home_tag).takeIf { viewed?.id == homeSpotId },
-        stringResource(R.string.spot_nearby_tag).takeIf { viewed != null && viewed.id == nearbySpotId }
+        stringResource(R.string.spot_nearby_tag).takeIf { viewed != null && viewed.id == nearbySpotId },
+        viewed?.let { rememberSpotPlace(it.latitude, it.longitude) }
     )
     if (tags.isNotEmpty()) Text(tags.joinToString(" · "), style = MaterialTheme.typography.labelMedium, color = TextMuted)
 }

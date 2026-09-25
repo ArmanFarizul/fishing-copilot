@@ -20,8 +20,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
@@ -60,6 +63,7 @@ import com.fishingcopilot.data.spots.CoastalArea
 import com.fishingcopilot.data.spots.bearingDeg
 import com.fishingcopilot.data.spots.haversineKm
 import com.fishingcopilot.maps.formatDegreesMinutes
+import com.fishingcopilot.prayer.JAKIM_ZONES
 import com.fishingcopilot.prayer.MALAYSIA
 import com.fishingcopilot.prayer.Prayer
 import com.fishingcopilot.ui.components.label
@@ -92,7 +96,14 @@ private const val STALE_AFTER_MS = 3 * 60 * 60 * 1000L
 
 /** Everything about where the phone is: weather, storm warning, prayer times and the way to the spot. */
 @Composable
-fun HereSection(state: HereUiState, spot: SpotEntity?, onRefresh: () -> Unit, now: Long, modifier: Modifier = Modifier) {
+fun HereSection(
+    state: HereUiState,
+    spot: SpotEntity?,
+    onRefresh: () -> Unit,
+    onPickZone: (String?) -> Unit,
+    now: Long,
+    modifier: Modifier = Modifier
+) {
     val locale = LocalConfiguration.current.locales[0]
     val permission = rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { onRefresh() }
 
@@ -113,10 +124,11 @@ fun HereSection(state: HereUiState, spot: SpotEntity?, onRefresh: () -> Unit, no
                     state.weatherFailed -> PromptCard(R.string.here_weather_failed, R.string.here_retry, onRefresh)
                     else -> Note(stringResource(R.string.here_weather_loading))
                 }
-                state.prayers?.let { PrayerCard(state, it.zone, it.district, locale) }
                 spot?.let { DistanceLine(location.point.latitude, location.point.longitude, it) }
             }
         }
+        // Outside the location states: a zone picked by hand still has times without a fix.
+        state.prayers?.let { PrayerCard(state, it.zone, it.district, it.manual, locale, onPickZone) }
     }
 }
 
@@ -287,7 +299,15 @@ private fun Stat(label: String, value: String, valueColor: Color = TextHighContr
 }
 
 @Composable
-private fun PrayerCard(state: HereUiState, zone: String, district: String?, locale: Locale) {
+private fun PrayerCard(
+    state: HereUiState,
+    zone: String,
+    district: String?,
+    manual: Boolean,
+    locale: Locale,
+    onPickZone: (String?) -> Unit
+) {
+    var picking by rememberSaveable { mutableStateOf(false) }
     val today = LocalDate.now(MALAYSIA)
     val day = state.prayers?.days?.firstOrNull { it.date == today } ?: return
     val next = state.nextPrayer
@@ -298,12 +318,28 @@ private fun PrayerCard(state: HereUiState, zone: String, district: String?, loca
                 style = MaterialTheme.typography.labelMedium,
                 color = NauticalCyan
             )
-            Text(
-                if (district != null) stringResource(R.string.here_prayer_zone, zone, district)
-                else stringResource(R.string.here_prayer_zone_sea, zone),
-                style = MaterialTheme.typography.bodySmall,
-                color = TextMuted
-            )
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(min = 48.dp)
+                    .clickable(role = Role.Button, onClickLabel = stringResource(R.string.here_zone_change)) { picking = true }
+            ) {
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(
+                        if (district != null) stringResource(R.string.here_prayer_zone, zone, district)
+                        else stringResource(R.string.here_prayer_zone_sea, zone),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = TextHighContrast
+                    )
+                    Text(
+                        stringResource(if (manual) R.string.here_zone_manual else R.string.here_zone_auto),
+                        style = MaterialTheme.typography.labelSmall,
+                        color = if (manual) CautionYellow else TextMuted
+                    )
+                }
+                Text(stringResource(R.string.here_zone_change), style = MaterialTheme.typography.labelLarge, color = NauticalCyan)
+            }
             next?.let {
                 Spacer(Modifier.height(6.dp))
                 Text(
@@ -332,6 +368,60 @@ private fun PrayerCard(state: HereUiState, zone: String, district: String?, loca
             Spacer(Modifier.height(6.dp))
             Text(stringResource(R.string.here_prayer_source), style = MaterialTheme.typography.labelSmall, color = TextMuted)
         }
+    }
+    if (picking) {
+        ZonePicker(current = zone.takeIf { manual }, onPick = { onPickZone(it); picking = false }, onDismiss = { picking = false })
+    }
+}
+
+/** "Follow my location" first, then every JAKIM zone grouped by state. */
+@Composable
+private fun ZonePicker(current: String?, onPick: (String?) -> Unit, onDismiss: () -> Unit) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(stringResource(R.string.here_zone_pick_title)) },
+        text = {
+            LazyColumn(modifier = Modifier.heightIn(max = 420.dp)) {
+                item {
+                    ZoneRow(stringResource(R.string.here_zone_auto_option), null, selected = current == null) { onPick(null) }
+                }
+                JAKIM_ZONES.groupBy { it.state }.forEach { (state, zones) ->
+                    item(key = state) {
+                        Text(
+                            state.uppercase(),
+                            style = MaterialTheme.typography.labelMedium,
+                            color = NauticalCyan,
+                            modifier = Modifier.padding(top = 14.dp, bottom = 4.dp)
+                        )
+                    }
+                    items(zones, key = { it.code }) { z ->
+                        ZoneRow(z.code, z.districts, selected = current == z.code) { onPick(z.code) }
+                    }
+                }
+            }
+        },
+        confirmButton = {},
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.map_go_to_cancel)) } },
+        containerColor = OceanSurface
+    )
+}
+
+@Composable
+private fun ZoneRow(title: String, subtitle: String?, selected: Boolean, onClick: () -> Unit) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .heightIn(min = 48.dp)
+            .clickable(role = Role.Button, onClick = onClick)
+            .padding(vertical = 8.dp)
+    ) {
+        Text(
+            title,
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = if (selected) FontWeight.Bold else FontWeight.Normal,
+            color = if (selected) NauticalCyan else TextHighContrast
+        )
+        subtitle?.let { Text(it, style = MaterialTheme.typography.bodySmall, color = TextMuted) }
     }
 }
 

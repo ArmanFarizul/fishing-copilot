@@ -1,0 +1,73 @@
+package com.fishingcopilot.prayer
+
+/** A JAKIM e-Solat zone: its code, state and the districts it covers, as JAKIM names them (not translated). */
+data class JakimZone(val code: String, val state: String, val districts: String)
+
+/**
+ * Every JAKIM zone, so the angler can pick one by hand without a connection.
+ * From api.waktusolat.app/zones on 2026-09-25, which mirrors JAKIM's zone list.
+ */
+val JAKIM_ZONES: List<JakimZone> = listOf(
+    JakimZone("JHR01", "Johor", "Pulau Aur dan Pulau Pemanggil"),
+    JakimZone("JHR02", "Johor", "Johor Bahru, Kota Tinggi, Mersing, Kulai"),
+    JakimZone("JHR03", "Johor", "Kluang, Pontian"),
+    JakimZone("JHR04", "Johor", "Batu Pahat, Muar, Segamat, Gemas Johor, Tangkak"),
+    JakimZone("KDH01", "Kedah", "Kota Setar, Kubang Pasu, Pokok Sena (Daerah Kecil)"),
+    JakimZone("KDH02", "Kedah", "Kuala Muda, Yan, Pendang"),
+    JakimZone("KDH03", "Kedah", "Padang Terap, Sik"),
+    JakimZone("KDH04", "Kedah", "Baling"),
+    JakimZone("KDH05", "Kedah", "Bandar Baharu, Kulim"),
+    JakimZone("KDH06", "Kedah", "Langkawi"),
+    JakimZone("KDH07", "Kedah", "Puncak Gunung Jerai"),
+    JakimZone("KTN01", "Kelantan", "Bachok, Kota Bharu, Machang, Pasir Mas, Pasir Puteh, Tanah Merah, Tumpat, Kuala Krai, Mukim Chiku"),
+    JakimZone("KTN02", "Kelantan", "Gua Musang (Daerah Galas Dan Bertam), Jeli, Jajahan Kecil Lojing"),
+    JakimZone("MLK01", "Melaka", "SELURUH NEGERI MELAKA"),
+    JakimZone("NGS01", "Negeri Sembilan", "Tampin, Jempol"),
+    JakimZone("NGS02", "Negeri Sembilan", "Jelebu, Kuala Pilah, Rembau"),
+    JakimZone("NGS03", "Negeri Sembilan", "Port Dickson, Seremban"),
+    JakimZone("PHG01", "Pahang", "Pulau Tioman"),
+    JakimZone("PHG02", "Pahang", "Kuantan, Pekan, Muadzam Shah"),
+    JakimZone("PHG03", "Pahang", "Jerantut, Temerloh, Maran, Bera, Chenor, Jengka"),
+    JakimZone("PHG04", "Pahang", "Bentong, Lipis, Raub"),
+    JakimZone("PHG05", "Pahang", "Genting Sempah, Janda Baik, Bukit Tinggi"),
+    JakimZone("PHG06", "Pahang", "Cameron Highlands, Genting Higlands, Bukit Fraser"),
+    JakimZone("PHG07", "Pahang", "Zon Khas Daerah Rompin, (Mukim Rompin, Mukim Endau, Mukim Pontian)"),
+    JakimZone("PRK01", "Perak", "Tapah, Slim River, Tanjung Malim"),
+    JakimZone("PRK02", "Perak", "Kuala Kangsar, Sg. Siput , Ipoh, Batu Gajah, Kampar"),
+    JakimZone("PRK03", "Perak", "Lenggong, Pengkalan Hulu, Grik"),
+    JakimZone("PRK04", "Perak", "Temengor, Belum"),
+    JakimZone("PRK05", "Perak", "Kg Gajah, Teluk Intan, Bagan Datuk, Seri Iskandar, Beruas, Parit, Lumut, Sitiawan, Pulau Pangkor"),
+    JakimZone("PRK06", "Perak", "Selama, Taiping, Bagan Serai, Parit Buntar"),
+    JakimZone("PRK07", "Perak", "Bukit Larut"),
+    JakimZone("PLS01", "Perlis", "SELURUH NEGERI PERLIS"),
+    JakimZone("PNG01", "Pulau Pinang", "SELURUH NEGERI PULAU PINANG"),
+    JakimZone("SBH01", "Sabah", "Bahagian Sandakan (Timur), Bukit Garam, Semawang, Temanggong, Tambisan, Bandar Sandakan, Sukau"),
+    JakimZone("SBH02", "Sabah", "Beluran, Telupid, Pinangah, Terusan, Kuamut, Bahagian Sandakan (Barat)"),
+    JakimZone("SBH03", "Sabah", "Lahad Datu, Silabukan, Kunak, Sahabat, Semporna, Tungku, Bahagian Tawau (Timur)"),
+    JakimZone("SBH04", "Sabah", "Bandar Tawau, Balong, Merotai, Kalabakan, Bahagian Tawau (Barat)"),
+    JakimZone("SBH05", "Sabah", "Kudat, Kota Marudu, Pitas, Pulau Banggi, Bahagian Kudat"),
+    JakimZone("SBH06", "Sabah", "Gunung Kinabalu"),
+    JakimZone("SBH07", "Sabah", "Kota Kinabalu, Ranau, Kota Belud, Tuaran, Penampang, Papar, Putatan, Bahagian Pantai Barat"),
+    JakimZone("SBH08", "Sabah", "Pensiangan, Keningau, Tambunan, Nabawan, Bahagian Pendalaman (Atas)"),
+    JakimZone("SBH09", "Sabah", "Beaufort, Kuala Penyu, Sipitang, Tenom, Long Pasia, Membakut, Weston, Bahagian Pendalaman (Bawah)"),
+    JakimZone("SWK01", "Sarawak", "Limbang, Lawas, Sundar, Trusan"),
+    JakimZone("SWK02", "Sarawak", "Miri, Niah, Bekenu, Sibuti, Marudi"),
+    JakimZone("SWK03", "Sarawak", "Pandan, Belaga, Suai, Tatau, Sebauh, Bintulu"),
+    JakimZone("SWK04", "Sarawak", "Sibu, Mukah, Dalat, Song, Igan, Oya, Balingian, Kanowit, Kapit"),
+    JakimZone("SWK05", "Sarawak", "Sarikei, Matu, Julau, Rajang, Daro, Bintangor, Belawai"),
+    JakimZone("SWK06", "Sarawak", "Lubok Antu, Sri Aman, Roban, Debak, Kabong, Lingga, Engkelili, Betong, Spaoh, Pusa, Saratok"),
+    JakimZone("SWK07", "Sarawak", "Serian, Simunjan, Samarahan, Sebuyau, Meludam"),
+    JakimZone("SWK08", "Sarawak", "Kuching, Bau, Lundu, Sematan"),
+    JakimZone("SWK09", "Sarawak", "Zon Khas (Kampung Patarikan)"),
+    JakimZone("SGR01", "Selangor", "Gombak, Petaling, Sepang, Hulu Langat, Hulu Selangor, Shah Alam"),
+    JakimZone("SGR02", "Selangor", "Kuala Selangor, Sabak Bernam"),
+    JakimZone("SGR03", "Selangor", "Klang, Kuala Langat"),
+    JakimZone("TRG01", "Terengganu", "Kuala Terengganu, Marang, Kuala Nerus"),
+    JakimZone("TRG02", "Terengganu", "Besut, Setiu"),
+    JakimZone("TRG03", "Terengganu", "Hulu Terengganu"),
+    JakimZone("TRG04", "Terengganu", "Dungun, Kemaman"),
+    JakimZone("WLY01", "Wilayah Persekutuan", "Kuala Lumpur, Putrajaya"),
+    JakimZone("WLY02", "Wilayah Persekutuan", "Labuan"),
+)
+
+fun jakimZone(code: String): JakimZone? = JAKIM_ZONES.firstOrNull { it.code == code }

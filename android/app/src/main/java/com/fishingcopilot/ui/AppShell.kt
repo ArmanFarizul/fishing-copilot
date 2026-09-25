@@ -90,7 +90,9 @@ fun AppShell(app: FishingCopilotApp, profile: UserProfile) {
             db.fishingDao(), app.weatherRepository, app.prayerRepository,
             hasPermission = { hasLocationPermission(context) },
             locate = { awaitCurrentLocation(context)?.let { LatLon(it.latitude, it.longitude) } },
-            placeName = { placeName(context, it.latitude, it.longitude) }
+            placeName = { placeName(context, it.latitude, it.longitude) },
+            manualZone = app.displaySettings.prayerZone,
+            saveZone = { app.displaySettings.setPrayerZone(it) }
         )
     )
     // The spot the home cards follow. Starts on the home spot; standing at another saved spot switches to it.

@@ -80,6 +80,16 @@
     <string name="here_prayer_zone_sea">Zone %1$s · nearest coastal town</string>
     <!-- Small source line at the bottom of the prayer card. Must say the times are official JAKIM e-Solat times. Keep under 50 characters. -->
     <string name="here_prayer_source">Official JAKIM e-Solat times.</string>
+    <!-- Small tappable action at the right end of the zone line; also the screen-reader click label for that line. Opens the zone picker. Keep under 10 characters. -->
+    <string name="here_zone_change">Change</string>
+    <!-- Small grey line under the zone line when the zone is chosen from the user's GPS location and updates as they move. Keep under 36 characters. -->
+    <string name="here_zone_auto">Follows your location</string>
+    <!-- Same line as here_zone_auto, in amber, when the user picked the zone by hand; it stays fixed even if they move to another district. Keep under 40 characters. -->
+    <string name="here_zone_manual">Set by you. Won\'t change as you move.</string>
+    <!-- Title of the dialog listing JAKIM prayer time zones to choose from. Keep under 24 characters. -->
+    <string name="here_zone_pick_title">Prayer time zone</string>
+    <!-- First option in the zone dialog; goes back to picking the zone from the user's GPS location. Keep under 30 characters. -->
+    <string name="here_zone_auto_option">Follow my location</string>
     <!-- Short column labels for today's prayer times, using the names JAKIM e-Solat uses in English. Keep under 8 characters each. -->
     <string name="prayer_fajr">Fajr</string>
     <string name="prayer_syuruk">Syuruk</string>
