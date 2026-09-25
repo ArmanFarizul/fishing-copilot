@@ -206,4 +206,30 @@ class LogViewModelTest {
         advanceUntilIdle()
         assertEquals(com.fishingcopilot.catchlog.LogPeriod.LastYear, vm.uiState.value.period)
     }
+
+    @Test
+    fun `a species filter narrows the list, summary and baits, and resets when absent`() = runTest {
+        val dao = FakeCatchDao()
+        val vm = LogViewModel(dao, FakeSpots(), FakePhotos())
+        backgroundScope.launch { vm.uiState.collect {} }
+        vm.show(com.fishingcopilot.catchlog.LogPeriod.All)
+        vm.save(conditions, "SIAKAP", "udang", 2.0, null, null, null)
+        vm.save(conditions, "SIAKAP", "sotong", 1.0, null, null, null)
+        vm.save(conditions, "PARI", "sotong", 5.0, null, null, null)
+        advanceUntilIdle()
+
+        assertEquals(listOf("SIAKAP" to 2, "PARI" to 1), vm.uiState.value.speciesOptions)
+        vm.showSpecies("PARI")
+        advanceUntilIdle()
+        val state = vm.uiState.value
+        assertEquals("PARI", state.species)
+        assertEquals(1, state.catches.size)
+        assertEquals(1, state.summary!!.count)
+        assertEquals(listOf("sotong"), state.baits.map { it.bait })
+
+        vm.showSpecies("KERAPU")
+        advanceUntilIdle()
+        assertNull(vm.uiState.value.species)
+        assertEquals(3, vm.uiState.value.catches.size)
+    }
 }

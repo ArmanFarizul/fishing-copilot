@@ -12,7 +12,7 @@ Status pada 2026-09-25. MVP yang dipersetujui: pasang surut, Bite Score, cuaca l
 | Matahari dan bulan | Waktu disahkan dengan USNO; waktu solunar; kalendar fasa bulan 30 hari |
 | Tarikh Hijrah | Takwim rasmi JAKIM; anggaran MABIMS untuk hari yang belum diterbitkan |
 | Bite Score | Formula spesifikasi; graf 24 jam; waktu emas; lihat `bite-score.md` |
-| Log tangkapan | Butang Strike!, isian automatik keadaan, gambar, ringkasan umpan dan air; sunting spesies, umpan, saiz, gambar dan nota (keadaan semasa Strike kekal); penapis tempoh (tahun ini, tahun lepas, semua, tahun lain atau julat tarikh), ringkasan ikut tempoh, pengepala bulan melekat dan pemegang tatal pantas; indeks `timestamp` (pangkalan data v7) |
+| Log tangkapan | Butang Strike!, isian automatik keadaan, gambar, ringkasan umpan dan air; sunting spesies, umpan, saiz, gambar dan nota (keadaan semasa Strike kekal); penapis tempoh (tahun ini, tahun lepas, semua, tahun lain atau julat tarikh), ringkasan ikut tempoh, pengepala bulan melekat dan pemegang tatal pantas; indeks `timestamp` (pangkalan data v7); penapis spesies dan Bait Tracker (umpan disusun ikut bilangan tangkapan, purata dan berat terbesar) |
 | Lubuk | Tambah pada peta, namakan semula, jadikan utama, padam |
 | Bahasa | BM dan English; lihat `i18n.md` |
 | Peringatan waktu emas | 45 minit sebelum setiap waktu emas; bunyi loceng dan getaran; tetapan hidup/mati, bunyi, getaran dan ujian |
@@ -34,7 +34,6 @@ Status pada 2026-09-25. MVP yang dipersetujui: pasang surut, Bite Score, cuaca l
 | Tackle Advisor penuh | Saiz ladung sudah dipaparkan pada baris arus; skrin khusus belum |
 | Keselamatan marin: penggera sauh hanyut, tersadai, tebing tenggelam | Perlukan servis GPS latar belakang |
 | Widget skrin utama (Glance) | Belum |
-| Penapis spesies dan Bait Tracker | Belum |
 
 ## Di luar spesifikasi (ditanya oleh pemilik)
 

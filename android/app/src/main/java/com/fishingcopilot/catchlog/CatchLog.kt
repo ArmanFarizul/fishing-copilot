@@ -73,9 +73,8 @@ data class LogSummary(
         fun of(logs: List<CatchLogEntity>): LogSummary? {
             if (logs.isEmpty()) return null
 
-            // Baits are free text, so "Udang hidup" and "udang hidup " count as one; show the most recent spelling.
-            val baited = logs.mapNotNull { log -> log.baitUsed?.trim()?.takeIf { it.isNotEmpty() }?.let { it.lowercase() to it } }
-            val topBaitGroup = baited.groupBy({ it.first }, { it.second }).maxByOrNull { it.value.size }
+            // Same ranking as the Bait Tracker card, so the two never name different baits.
+            val topBait = baitStats(logs).firstOrNull()
 
             val rising = logs.count { it.tideState == "RISING" }
             val falling = logs.count { it.tideState == "FALLING" }
@@ -84,8 +83,8 @@ data class LogSummary(
 
             return LogSummary(
                 count = logs.size,
-                topBait = topBaitGroup?.value?.first(),
-                topBaitPercent = topBaitGroup?.let { it.value.size * 100 / baited.size } ?: 0,
+                topBait = topBait?.bait,
+                topBaitPercent = topBait?.sharePercent ?: 0,
                 bestTideRising = when {
                     rising > falling -> true
                     falling > rising -> false

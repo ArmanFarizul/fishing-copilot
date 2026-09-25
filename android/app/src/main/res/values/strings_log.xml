@@ -117,6 +117,25 @@
     <string name="log_summary_best_tide_rising">Most catches on a rising tide</string>
     <string name="log_summary_best_tide_falling">Most catches on a falling tide</string>
 
+    <!-- First chip in the species filter row under the period chips; shows catches of every species. The other chips are the app's own "species name · count", such as "Siakap · 7". Keep under 14 characters. -->
+    <string name="log_species_all">All species</string>
+
+    <!-- Title of the card under the summary that ranks baits by how many logged catches were on each. It is a record of the user's own catches, not a success rate or a promise, so keep it plain. The app uppercases it. Keep under 24 characters. -->
+    <string name="log_bait_tracker_title">Bait Tracker</string>
+    <!-- Same card title when one species chip is chosen; %1$s is the species name, such as "Siakap". The app uppercases it. Keep under 28 characters with the name. -->
+    <string name="log_bait_tracker_title_species">Baits for %1$s</string>
+    <!-- Under each bait's bar, first part of a line joined with dots: "4 catches · avg 2.3 kg · biggest 3.1 kg". %1$d is how many logged catches were on that bait. Keep under 14 characters. -->
+    <plurals name="log_bait_catches">
+        <item quantity="one">%1$d catch</item>
+        <item quantity="other">%1$d catches</item>
+    </plurals>
+    <!-- Second part of that line: average weight of the catches on that bait that have a weight. %1$s is the number already formatted, such as "2.3". Lowercase start, it sits mid-line. Keep under 14 characters. -->
+    <string name="log_bait_average">avg %1$s kg</string>
+    <!-- Last part of that line: weight of the biggest fish caught on that bait. %1$s is the number already formatted, such as "3.1". Lowercase start, it sits mid-line. Keep under 16 characters. -->
+    <string name="log_bait_biggest">biggest %1$s kg</string>
+    <!-- One small line at the bottom of the card explaining the percent beside each bait: its share of the user's catches where a bait was noted (catches without a bait are left out). Not a bite or success rate. Keep under 70 characters. -->
+    <string name="log_bait_note">Percentages count only catches where you noted a bait.</string>
+
     <!-- Small uppercase label over the box on each catch card that shows the tide, water level, moon and Bite Score the app recorded by itself when the user tapped strike_button. The app uppercases it. Keep under 26 characters. -->
     <string name="log_strike_conditions_label">Conditions at Strike</string>
     <!-- Small hint on the empty Log tab, next to a lightning icon. Keep the button name identical to strike_button. Keep under 40 characters. -->

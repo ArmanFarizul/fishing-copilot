@@ -188,7 +188,7 @@ fun AppShell(app: FishingCopilotApp, profile: UserProfile) {
                     homeSpotId = homeSpotId,
                     onSelectSpot = { viewedSpotId = it }
                 )
-                Tab.LOG -> LogScreen(logState, onEdit = { editing = it }, onDelete = log::delete, onPeriod = log::show)
+                Tab.LOG -> LogScreen(logState, onEdit = { editing = it }, onDelete = log::delete, onPeriod = log::show, onSpecies = log::showSpecies)
                 Tab.SPOTS -> SpotsScreen(
                     spots, satelliteMap,
                     showMap = spotsShowMap,

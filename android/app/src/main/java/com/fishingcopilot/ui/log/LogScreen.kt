@@ -5,6 +5,7 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,9 +21,12 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.FilterChip
+import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -57,19 +61,21 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.fishingcopilot.R
 import com.fishingcopilot.astro.MoonPhaseName
+import com.fishingcopilot.catchlog.BaitStat
 import com.fishingcopilot.catchlog.LogPeriod
 import com.fishingcopilot.catchlog.LogSummary
 import com.fishingcopilot.data.local.CatchLogEntity
 import com.fishingcopilot.data.profile.Species
+import com.fishingcopilot.ui.components.biteBandColor
 import com.fishingcopilot.ui.components.imageRes
 import com.fishingcopilot.ui.components.label
-import com.fishingcopilot.ui.components.biteBandColor
 import com.fishingcopilot.ui.components.signedMeters
 import com.fishingcopilot.ui.theme.AlertRed
 import com.fishingcopilot.ui.theme.CardBorder
 import com.fishingcopilot.ui.theme.CautionYellow
 import com.fishingcopilot.ui.theme.InsetBorder
 import com.fishingcopilot.ui.theme.NauticalCyan
+import com.fishingcopilot.ui.theme.OceanCardBorder
 import com.fishingcopilot.ui.theme.OceanMidnight
 import com.fishingcopilot.ui.theme.OceanSurface
 import com.fishingcopilot.ui.theme.PrimeGreen
@@ -89,15 +95,17 @@ fun LogScreen(
     onEdit: (LoggedCatch) -> Unit,
     onDelete: (CatchLogEntity) -> Unit,
     onPeriod: (LogPeriod) -> Unit,
+    onSpecies: (String?) -> Unit,
     modifier: Modifier = Modifier,
     today: LocalDate = LocalDate.now()
 ) {
     val locale = LocalConfiguration.current.locales[0]
     var pendingDelete by remember { mutableStateOf<CatchLogEntity?>(null) }
     val listState = rememberLazyListState()
-    // Fixed rows before the months: title, chips, summary. Each month adds a header before its catches.
+    // Fixed rows before the months: title, period chips, species chips, summary, bait tracker.
+    // Each month adds a header before its catches.
     val anchors = remember(state.months) {
-        var index = 3
+        var index = 5
         state.months.flatMap { group ->
             index++ // the month header
             group.items.map { (index++) to group.month }
@@ -136,7 +144,9 @@ fun LogScreen(
                     EmptyPeriod(periodLabel(state.period, today, locale), onShowAll = { onPeriod(LogPeriod.All) })
                 }
                 else -> {
-                    item { SummaryCard(summary, periodTitle(state.period, today, locale)) }
+                    item(key = "species") { SpeciesChips(state.species, state.speciesOptions, onSpecies) }
+                    item(key = "summary") { SummaryCard(summary, periodTitle(state.period, today, locale)) }
+                    item(key = "baits") { BaitTrackerCard(state.baits, state.species) }
                     state.months.forEach { group ->
                         stickyHeader(key = "month-${group.month}") { MonthHeader(group.month, group.items.size) }
                         items(group.items, key = { it.entity.id }) { logged ->
@@ -879,6 +889,86 @@ private fun CatchThumbnail(log: CatchLogEntity, name: String, modifier: Modifier
         }
     }
 }
+
+/** "All species" plus one chip per species caught in the period; hidden when there is only one. */
+@Composable
+private fun SpeciesChips(selected: String?, options: List<Pair<String, Int>>, onPick: (String?) -> Unit) {
+    if (options.size < 2 && selected == null) return
+    Row(
+        modifier = Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        FilterChip(
+            selected = selected == null,
+            onClick = { onPick(null) },
+            label = { Text(stringResource(R.string.log_species_all)) },
+            colors = FilterChipDefaults.filterChipColors(selectedContainerColor = SelectedContainer, selectedLabelColor = NauticalCyan)
+        )
+        options.forEach { (species, count) ->
+            FilterChip(
+                selected = selected == species,
+                onClick = { onPick(if (selected == species) null else species) },
+                label = { Text("${speciesName(species)} · $count") },
+                colors = FilterChipDefaults.filterChipColors(selectedContainerColor = SelectedContainer, selectedLabelColor = NauticalCyan)
+            )
+        }
+    }
+}
+
+/** Which baits have caught fish, best first, for the period and species on screen. */
+@Composable
+private fun BaitTrackerCard(baits: List<BaitStat>, species: String?) {
+    if (baits.isEmpty()) return
+    val locale = LocalConfiguration.current.locales[0]
+    Surface(shape = RoundedCornerShape(22.dp), color = OceanSurface, border = CardBorder) {
+        Column(modifier = Modifier.fillMaxWidth().padding(18.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                BaitIcon(color = NauticalCyan, modifier = Modifier.size(16.dp))
+                Spacer(Modifier.width(8.dp))
+                Text(
+                    text = (if (species == null) stringResource(R.string.log_bait_tracker_title)
+                    else stringResource(R.string.log_bait_tracker_title_species, speciesName(species))).uppercase(),
+                    style = MaterialTheme.typography.labelMedium,
+                    color = NauticalCyan
+                )
+            }
+            baits.take(BAITS_SHOWN).forEachIndexed { i, bait ->
+                Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Text(
+                            bait.bait,
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = if (i == 0) FontWeight.Bold else FontWeight.Normal,
+                            color = TextHighContrast,
+                            modifier = Modifier.weight(1f)
+                        )
+                        Text("${bait.sharePercent}%", style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.Bold, color = if (i == 0) PrimeGreen else NauticalCyan)
+                    }
+                    Canvas(modifier = Modifier.fillMaxWidth().height(6.dp)) {
+                        drawRoundRect(OceanCardBorder, cornerRadius = CornerRadius(3.dp.toPx()))
+                        drawRoundRect(
+                            if (i == 0) PrimeGreen else NauticalCyan,
+                            size = Size(size.width * bait.sharePercent / 100f, size.height),
+                            cornerRadius = CornerRadius(3.dp.toPx())
+                        )
+                    }
+                    Text(
+                        listOfNotNull(
+                            pluralStringResource(R.plurals.log_bait_catches, bait.catches, bait.catches),
+                            bait.averageKg?.let { stringResource(R.string.log_bait_average, String.format(locale, "%.1f", it)) },
+                            bait.biggestKg?.takeIf { bait.catches > 1 }?.let { stringResource(R.string.log_bait_biggest, String.format(locale, "%.1f", it)) }
+                        ).joinToString(" · "),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = TextMuted
+                    )
+                }
+            }
+            Text(stringResource(R.string.log_bait_note), style = MaterialTheme.typography.labelSmall, color = TextMuted)
+        }
+    }
+}
+
+private const val BAITS_SHOWN = 5
 
 /** Picked species are stored as the enum name and shown in the user's language; typed ones as written. */
 @Composable

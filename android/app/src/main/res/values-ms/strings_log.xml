@@ -74,6 +74,17 @@
     <string name="log_summary_best_tide_rising">Kebanyakan tangkapan masa air naik</string>
     <string name="log_summary_best_tide_falling">Kebanyakan tangkapan masa air turun</string>
 
+    <string name="log_species_all">Semua ikan</string>
+
+    <string name="log_bait_tracker_title">Rekod umpan</string>
+    <string name="log_bait_tracker_title_species">Rekod umpan: %1$s</string>
+    <plurals name="log_bait_catches">
+        <item quantity="other">%1$d ekor</item>
+    </plurals>
+    <string name="log_bait_average">purata %1$s kg</string>
+    <string name="log_bait_biggest">terbesar %1$s kg</string>
+    <string name="log_bait_note">Peratus dikira daripada tangkapan yang ada rekod umpan.</string>
+
     <string name="log_strike_conditions_label">Keadaan masa Strike</string>
     <string name="log_empty_hint">Ikan makan? Ketik Strike!</string>
 

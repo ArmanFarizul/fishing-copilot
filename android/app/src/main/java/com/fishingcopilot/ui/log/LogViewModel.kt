@@ -4,13 +4,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import com.fishingcopilot.catchlog.BaitStat
 import com.fishingcopilot.catchlog.CatchConditions
 import com.fishingcopilot.catchlog.LogPeriod
 import com.fishingcopilot.catchlog.LogSummary
 import com.fishingcopilot.catchlog.MonthGroup
 import com.fishingcopilot.catchlog.PhotoStore
+import com.fishingcopilot.catchlog.baitStats
 import com.fishingcopilot.catchlog.edited
 import com.fishingcopilot.catchlog.groupByMonth
+import com.fishingcopilot.catchlog.speciesCounts
 import com.fishingcopilot.data.local.CatchDao
 import com.fishingcopilot.data.local.CatchLogEntity
 import com.fishingcopilot.data.local.FishingDao
@@ -36,8 +39,14 @@ data class LogUiState(
     val catches: List<LoggedCatch> = emptyList(),
     /** The same catches grouped by month, for the list's month headers. */
     val months: List<MonthGroup<LoggedCatch>> = emptyList(),
-    /** Summary of [period] only. */
+    /** Species the angler narrowed to, or null for every species. */
+    val species: String? = null,
+    /** Species caught in [period] with counts, most caught first, for the filter chips. */
+    val speciesOptions: List<Pair<String, Int>> = emptyList(),
+    /** Summary of [period] and [species] only. */
     val summary: LogSummary? = null,
+    /** Baits ranked for [period] and [species]. */
+    val baits: List<BaitStat> = emptyList(),
     /** Years that have catches, for the year picker. */
     val years: List<Int> = emptyList(),
     /** Whether the log has any catch at all, so an empty period can offer "all catches". */
@@ -54,6 +63,7 @@ class LogViewModel(
 ) : ViewModel() {
     // Starts on this year: after a few seasons "all" mixes old patterns into the summary.
     private val period = MutableStateFlow<LogPeriod>(LogPeriod.ThisYear)
+    private val species = MutableStateFlow<String?>(null)
 
     @OptIn(ExperimentalCoroutinesApi::class)
     private val periodCatches: Flow<List<CatchLogEntity>> = period.flatMapLatest { p ->
@@ -62,19 +72,26 @@ class LogViewModel(
     }
 
     val uiState: StateFlow<LogUiState> = combine(
-        combine(period, periodCatches, ::Pair),
+        combine(period, periodCatches, species, ::Triple),
         spots.getAllSpotsFlow(),
         catches.yearsFlow(),
         catches.recentBaitsFlow(RECENT_BAITS)
-    ) { (period, logs), spots, years, baits ->
+    ) { (period, periodLogs, picked), spots, years, baits ->
         val names = spots.associate { it.id to it.name }
+        val options = speciesCounts(periodLogs)
+        // A species with no catches in the new period drops back to all species.
+        val species = picked?.takeIf { p -> options.any { it.first == p } }
+        val logs = if (species == null) periodLogs else periodLogs.filter { it.species == species }
         val logged = logs.map { LoggedCatch(it, it.spotId?.let(names::get)) }
         LogUiState(
             loaded = true,
             period = period,
             catches = logged,
             months = groupByMonth(logged, zone()) { it.entity.timestamp },
+            species = species,
+            speciesOptions = options,
             summary = LogSummary.of(logs),
+            baits = baitStats(logs),
             years = years,
             hasAnyCatch = years.isNotEmpty(),
             recentBaits = baits
@@ -89,6 +106,11 @@ class LogViewModel(
             LogPeriod.Year(year - 1) -> LogPeriod.LastYear
             else -> next
         }
+    }
+
+    /** Null shows every species. */
+    fun showSpecies(next: String?) {
+        species.value = next
     }
 
     fun save(
