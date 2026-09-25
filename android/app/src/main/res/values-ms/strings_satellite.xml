@@ -10,6 +10,7 @@
     <string name="satellite_no_data">Tiada bacaan satelit dekat lubuk ini. Mungkin di luar perairan Malaysia, terlalu rapat dengan darat, atau dilitupi awan.</string>
     <string name="satellite_stale">Data %1$s, mungkin tidak terkini</string>
     <string name="satellite_note">Bacaan permukaan laut sehari sekali, lewat 1–2 hari, meliputi kira-kira 25 km.</string>
+    <string name="satellite_map_hint">Tekan petak untuk lihat bacaan kawasan 25 km itu.</string>
 
     <string name="satellite_temp">Suhu laut</string>
     <string name="satellite_temp_value">%1$s °C</string>

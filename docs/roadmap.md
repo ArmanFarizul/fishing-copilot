@@ -18,6 +18,7 @@ Status pada 2026-09-25. MVP yang dipersetujui: pasang surut, Bite Score, cuaca l
 | Peringatan waktu emas | 45 minit sebelum setiap waktu emas; bunyi loceng dan getaran; tetapan hidup/mati, bunyi, getaran dan ujian |
 | Pipeline satelit | Larian harian di GitHub (`pipeline/`); suhu, tubir suhu, klorofil-a dan kejernihan air diterbitkan ke release `latest-data` (~49 KB) |
 | Kad satelit | Suhu, plankton, kejernihan dan tubir suhu terdekat bagi lubuk utama; berfungsi tanpa internet; lihat `satelit.md` |
+| Peta satelit | Tab Lubuk, paparan Peta: petak berwarna bagi plankton, suhu, tubir suhu atau kejernihan; ketik petak untuk nilai; pin lubuk sendiri |
 | Amaran MetMalaysia | Skrin sendiri, dibuka daripada satu baris di skrin utama (merah jika ada amaran untuk kawasan lubuk); teks rasmi BM/EN; dipadankan dengan negeri lubuk; lihat `sumber-data.md` bahagian 5 |
 
 ## Belum dibuat (daripada spesifikasi)

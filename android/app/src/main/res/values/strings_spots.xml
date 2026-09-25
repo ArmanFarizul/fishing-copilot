@@ -11,6 +11,10 @@
     <string name="spots_add_save">Save</string>
     <string name="spots_add_cancel">Cancel</string>
 
+    <!-- Two toggle chips under the Spots title: spots_view_list shows saved spots as a list, spots_view_map shows them on a map with a satellite layer (plankton, sea temperature, fronts, water clarity). Keep each under 10 characters. -->
+    <string name="spots_view_list">List</string>
+    <string name="spots_view_map">Map</string>
+
     <!-- Actions on each spot. Keep each under 18 characters. -->
     <string name="spots_set_home">Set as home</string>
     <string name="spots_rename">Rename</string>

@@ -10,6 +10,10 @@ Kad "Satelit" di skrin utama membaca `daily_marine_fronts.json` daripada release
 - Tarikh yang dipaparkan ialah tarikh lapisan paling lama antara yang ditunjukkan.
 - Amaran "mungkin lapuk" muncul jika data lebih 4 hari. Kelewatan biasa ialah 1 hingga 2 hari.
 
+## Peta satelit
+
+Tab Lubuk, paparan Peta. Satu lapisan dipaparkan pada satu masa: plankton, suhu laut, tubir suhu atau kejernihan. Setiap petak grid diwarnakan mengikut tahap yang sama seperti kad di skrin utama (jadual di bawah). Petak darat dan awan tidak diwarnakan. Bagi tubir suhu, hanya petak yang mencapai tahap lemah atau kuat dipaparkan. Ketik petak untuk melihat nilai dan tahapnya. Peta asas (OpenFreeMap) perlukan internet; data satelit dibaca daripada salinan dalam telefon.
+
 ## Nilai ambang
 
 | Lapisan | Rendah | Sasaran | Tinggi | Sumber |

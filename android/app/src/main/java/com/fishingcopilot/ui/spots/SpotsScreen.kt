@@ -19,6 +19,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.FilterChip
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.SnackbarHostState
@@ -54,7 +55,14 @@ import kotlinx.coroutines.launch
 import java.util.Locale
 
 @Composable
-fun SpotsScreen(viewModel: SpotsViewModel, homeSpotId: Long?, snackbar: SnackbarHostState) {
+fun SpotsScreen(
+    viewModel: SpotsViewModel,
+    satelliteMap: SatelliteMapViewModel,
+    showMap: Boolean,
+    onShowMap: (Boolean) -> Unit,
+    homeSpotId: Long?,
+    snackbar: SnackbarHostState
+) {
     val items by viewModel.uiState.collectAsStateWithLifecycle()
     val locale = LocalConfiguration.current.locales[0]
     val scope = rememberCoroutineScope()
@@ -75,40 +83,57 @@ fun SpotsScreen(viewModel: SpotsViewModel, homeSpotId: Long?, snackbar: Snackbar
         return
     }
 
-    LazyColumn(
-        contentPadding = PaddingValues(horizontal = 20.dp, vertical = 24.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp),
-        modifier = Modifier.fillMaxSize()
-    ) {
-        item {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(
-                    stringResource(R.string.spots_title),
-                    style = MaterialTheme.typography.headlineMedium,
-                    color = TextHighContrast,
-                    modifier = Modifier.weight(1f)
-                )
-                Button(
-                    onClick = { adding = true },
-                    colors = ButtonDefaults.buttonColors(containerColor = NauticalCyan, contentColor = OceanMidnight),
-                    shape = RoundedCornerShape(12.dp)
-                ) { Text(stringResource(R.string.spots_add), fontWeight = FontWeight.Bold) }
-            }
-        }
-        items(items, key = { it.spot.id }) { item ->
-            SpotCard(
-                item = item,
-                locale = locale,
-                onSetHome = {
-                    viewModel.setHome(item.spot)
-                    scope.launch { snackbar.showSnackbar(String.format(homeChangedTemplate, item.spot.name)) }
-                },
-                onRename = { renaming = item.spot },
-                onDelete = {
-                    if (item.isHome || item.spot.id == homeSpotId) scope.launch { snackbar.showSnackbar(blockedMessage) }
-                    else deleting = item
-                }
+    Column(modifier = Modifier.fillMaxSize().padding(horizontal = 20.dp).padding(top = 24.dp, bottom = 12.dp)) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                stringResource(R.string.spots_title),
+                style = MaterialTheme.typography.headlineMedium,
+                color = TextHighContrast,
+                modifier = Modifier.weight(1f)
             )
+            Button(
+                onClick = { adding = true },
+                colors = ButtonDefaults.buttonColors(containerColor = NauticalCyan, contentColor = OceanMidnight),
+                shape = RoundedCornerShape(12.dp)
+            ) { Text(stringResource(R.string.spots_add), fontWeight = FontWeight.Bold) }
+        }
+        Spacer(Modifier.height(8.dp))
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            FilterChip(selected = !showMap, onClick = { onShowMap(false) }, label = { Text(stringResource(R.string.spots_view_list)) })
+            FilterChip(selected = showMap, onClick = { onShowMap(true) }, label = { Text(stringResource(R.string.spots_view_map)) })
+        }
+        Spacer(Modifier.height(8.dp))
+        if (showMap) {
+            val mapState by satelliteMap.uiState.collectAsStateWithLifecycle()
+            SatelliteMapPanel(
+                state = mapState,
+                spots = items,
+                onLayer = satelliteMap::show,
+                onRetry = satelliteMap::retry,
+                modifier = Modifier.weight(1f)
+            )
+        } else {
+            LazyColumn(
+                contentPadding = PaddingValues(vertical = 8.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+                modifier = Modifier.weight(1f)
+            ) {
+                items(items, key = { it.spot.id }) { item ->
+                    SpotCard(
+                        item = item,
+                        locale = locale,
+                        onSetHome = {
+                            viewModel.setHome(item.spot)
+                            scope.launch { snackbar.showSnackbar(String.format(homeChangedTemplate, item.spot.name)) }
+                        },
+                        onRename = { renaming = item.spot },
+                        onDelete = {
+                            if (item.isHome || item.spot.id == homeSpotId) scope.launch { snackbar.showSnackbar(blockedMessage) }
+                            else deleting = item
+                        }
+                    )
+                }
+            }
         }
     }
 

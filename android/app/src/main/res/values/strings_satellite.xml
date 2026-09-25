@@ -16,6 +16,8 @@
     <string name="satellite_stale">From %1$s, may be out of date</string>
     <!-- One small line under the rows: the satellite reads the sea surface once a day, about 1 to 2 days behind, and one reading covers an area about 25 km across. Keep under 90 characters. -->
     <string name="satellite_note">Surface reading once a day, 1–2 days behind, covering about 25 km across.</string>
+    <!-- One line under the satellite map before the user taps anything: tap a coloured square to read that area's value. Each square covers about 25 km across. Keep under 50 characters. -->
+    <string name="satellite_map_hint">Tap a square to see that 25 km area\'s reading.</string>
 
     <!-- Row label for sea surface temperature; keep under 16 characters. -->
     <string name="satellite_temp">Sea temperature</string>

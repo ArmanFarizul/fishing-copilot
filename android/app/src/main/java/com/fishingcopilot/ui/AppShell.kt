@@ -54,6 +54,7 @@ import com.fishingcopilot.ui.log.LogScreen
 import com.fishingcopilot.ui.log.LogViewModel
 import com.fishingcopilot.ui.log.LoggedCatch
 import com.fishingcopilot.ui.spots.SpotsScreen
+import com.fishingcopilot.ui.spots.SatelliteMapViewModel
 import com.fishingcopilot.ui.spots.SpotsViewModel
 import com.fishingcopilot.ui.theme.NauticalCyan
 import com.fishingcopilot.ui.theme.OceanMidnight
@@ -87,6 +88,7 @@ fun AppShell(app: FishingCopilotApp, profile: UserProfile) {
         )
     }
     val log = viewModel<LogViewModel>(key = "log", factory = LogViewModel.factory(db.catchDao(), db.fishingDao(), app.photoStore))
+    val satelliteMap = viewModel<SatelliteMapViewModel>(key = "satellite-map", factory = SatelliteMapViewModel.factory(app.satelliteRepository))
     val spots = viewModel<SpotsViewModel>(key = "spots", factory = SpotsViewModel.factory(db.fishingDao(), db.catchDao(), app.profileRepository))
     val logState by log.uiState.collectAsStateWithLifecycle()
 
@@ -94,6 +96,8 @@ fun AppShell(app: FishingCopilotApp, profile: UserProfile) {
     var editing by remember { mutableStateOf<LoggedCatch?>(null) }
     var showSettings by rememberSaveable { mutableStateOf(false) }
     var showWarnings by rememberSaveable { mutableStateOf(false) }
+    // Kept here so the spots tab reopens on the map after visiting other tabs.
+    var spotsShowMap by rememberSaveable { mutableStateOf(false) }
 
     // Re-plan prime-time alerts on launch and whenever the home spot changes.
     LaunchedEffect(spotId) { app.goldenAlerts.reschedule() }
@@ -148,7 +152,13 @@ fun AppShell(app: FishingCopilotApp, profile: UserProfile) {
                     onOpenWarnings = { showWarnings = true }
                 )
                 Tab.LOG -> LogScreen(logState, onEdit = { editing = it }, onDelete = log::delete)
-                Tab.SPOTS -> SpotsScreen(spots, homeSpotId = spotId, snackbar = snackbar)
+                Tab.SPOTS -> SpotsScreen(
+                    spots, satelliteMap,
+                    showMap = spotsShowMap,
+                    onShowMap = { spotsShowMap = it },
+                    homeSpotId = spotId,
+                    snackbar = snackbar
+                )
             }
         }
     }
