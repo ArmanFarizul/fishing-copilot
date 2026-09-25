@@ -42,4 +42,13 @@
     <string name="bite_score_description">Skor ikan makan %1$s daripada 10, %2$s</string>
 
     <string name="bite_disclaimer">Panduan daripada pasang surut, cahaya, bulan dan tekanan udara, bukan jaminan.</string>
+
+    <string name="bite_advice_prime">Peluang cerah. Cuba di tubir, karang dan kuala sungai.</string>
+    <string name="bite_advice_good">Ikan mungkin sedang makan. Sesuai untuk mengilat, jig atau hanyut umpan.</string>
+    <string name="bite_advice_fair">Makan agak perlahan. Cuba pancing dasar dekat unjam atau karang.</string>
+    <string name="bite_advice_poor">Ikan kurang aktif. Cuba di tempat lebih dalam atau tunggu air bertukar.</string>
+
+    <string name="bite_timeline_now">Kini</string>
+    <string name="bite_timeline_scrub_hint">Ketik atau leret graf untuk semak waktu lain</string>
+    <string name="bite_timeline_scrub_selected">%1$s · Skor %2$s · %3$s</string>
 </resources>

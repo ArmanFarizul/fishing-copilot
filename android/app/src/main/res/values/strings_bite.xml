@@ -56,4 +56,17 @@
 
     <!-- One-line footer on the card: the score is a guide from tide, light, moon and pressure, not a promise of fish. Keep under 80 characters. -->
     <string name="bite_disclaimer">A guide from tide, light, moon and pressure. Not a promise of fish.</string>
+
+    <!-- One short tip under the band label, picked by the same bands as bite_band_* (prime 7.5 and above, good 6 to 7.5, fair 4 to 6, poor below 4). A likelihood, never a promise of fish; plain practical advice. Keep under 75 characters. -->
+    <string name="bite_advice_prime">Good odds now. Work drop-offs, reefs and river mouths.</string>
+    <string name="bite_advice_good">Fish likely feeding. A good time to cast, jig or drift bait.</string>
+    <string name="bite_advice_fair">Slower bites. Try bottom rigs close to structure.</string>
+    <string name="bite_advice_poor">Quiet spell. Fish deeper, or wait for the next tide turn.</string>
+
+    <!-- Tiny label on the chart's marker for the current time. Keep under 8 characters. -->
+    <string name="bite_timeline_now">Now</string>
+    <!-- Small hint on its own line under bite_timeline_title: tapping or dragging across the chart shows the score at another hour. Keep under 45 characters. -->
+    <string name="bite_timeline_scrub_hint">Tap or drag the chart to check another time</string>
+    <!-- Chip shown after the user picks a time on the chart; %1$s is the time, such as "11:00 PM" or "23:00"; %2$s the score, such as "6.8"; %3$s the band label (bite_band_*). Keep under 40 characters with values filled in. -->
+    <string name="bite_timeline_scrub_selected">%1$s · Score %2$s · %3$s</string>
 </resources>

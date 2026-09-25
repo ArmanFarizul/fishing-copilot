@@ -48,4 +48,16 @@ class TideSummaryTest {
         assertEquals(24 * 6 + 1, summary.curve.size)
         summary.curve.forEach { assertTrue(it.height in -0.8001..0.8001) }
     }
+
+    @Test
+    fun `slack only near high or low water, not at mid tide`() {
+        assertTrue(pureM2.summarize(now = epoch, offsetMinutes = 0).slack)
+        assertTrue(pureM2.summarize(now = epoch + 25 * minuteMs, offsetMinutes = 0).slack)
+        assertFalse(pureM2.summarize(now = epoch + 40 * minuteMs, offsetMinutes = 0).slack)
+        // Mid tide is where the height crosses the mean and the current runs hardest.
+        val midTide = epoch + (halfPeriodMinutes / 2 * minuteMs).toLong()
+        val summary = pureM2.summarize(now = midTide, offsetMinutes = 0)
+        assertEquals(0.0, summary.heightNow, 0.01)
+        assertFalse(summary.slack)
+    }
 }

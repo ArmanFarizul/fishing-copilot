@@ -6,13 +6,16 @@ data class TideSummary(
     val rising: Boolean,
     val nextHigh: TideEvent?,
     val nextLow: TideEvent?,
-    val curve: List<SeaLevelSample>
+    val curve: List<SeaLevelSample>,
+    /** Within 30 minutes of high or low water, the same slack rule the Bite Score uses. */
+    val slack: Boolean
 )
 
 private const val MINUTE_MS = 60_000L
 private const val HOUR_MS = 60 * MINUTE_MS
 private const val CURVE_STEP_MS = 10 * MINUTE_MS
 private const val LOOK_AHEAD_MS = 30 * HOUR_MS
+private const val SLACK_MS = 30 * MINUTE_MS
 
 /**
  * [offsetMinutes] delays (positive) or advances (negative) the whole prediction, for spots such as
@@ -34,6 +37,7 @@ fun TideModel.summarize(now: Long, offsetMinutes: Int): TideSummary {
         rising = relative(now + MINUTE_MS) > relative(now),
         nextHigh = upcoming.firstOrNull { it.type == TideEventType.HIGH },
         nextLow = upcoming.firstOrNull { it.type == TideEventType.LOW },
-        curve = curve
+        curve = curve,
+        slack = shifted.events(now - SLACK_MS, now + SLACK_MS).isNotEmpty()
     )
 }

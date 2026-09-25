@@ -13,4 +13,7 @@
     <string name="greeting_midday">Good afternoon</string>
     <string name="greeting_afternoon">Good afternoon</string>
     <string name="greeting_night">Good evening</string>
+
+    <!-- Screen-reader label for the small close button on a chart that clears the time the user picked and returns to now. Keep under 30 characters. -->
+    <string name="chart_clear_selection">Clear selected time</string>
 </resources>

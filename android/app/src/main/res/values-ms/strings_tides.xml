@@ -7,8 +7,6 @@
     <string name="tide_falling">Air sedang turun</string>
     <string name="tide_height_relative">%1$s dari paras purata laut</string>
 
-    <string name="tide_next_high">Pasang seterusnya %1$s</string>
-    <string name="tide_next_low">Surut seterusnya %1$s</string>
     <string name="tide_countdown_hours_minutes">lagi %1$d jam %2$d min</string>
     <string name="tide_countdown_minutes">lagi %1$d min</string>
 
@@ -27,4 +25,16 @@
 
     <string name="tide_no_marine_data">Tiada data laut untuk titik ini. Mungkin ia di darat.</string>
     <string name="tide_use_nearest_area">Guna %1$s (%2$d km)</string>
+
+    <string name="tide_advice_rising">Ikan selalunya masuk ke kawasan cetek dan kuala ketika air naik.</string>
+    <string name="tide_advice_falling">Cuba di tubir dan alur kuala, anak ikan hanyut keluar ketika air surut.</string>
+    <string name="tide_advice_slack">Air hampir bertukar. Arus reda seketika sebelum mengalir semula.</string>
+
+    <string name="tide_scrub_hint">Ketik atau leret untuk semak paras air</string>
+    <string name="tide_scrub_selected">%1$s · %2$s · %3$s</string>
+    <string name="tide_event_high">Pasang penuh</string>
+    <string name="tide_event_low">Surut penuh</string>
+    <string name="tide_nearest_event">Seterusnya</string>
+
+    <string name="tide_preset_zero">Asal</string>
 </resources>

@@ -5,4 +5,6 @@
     <string name="greeting_midday">Selamat tengah hari</string>
     <string name="greeting_afternoon">Selamat petang</string>
     <string name="greeting_night">Selamat malam</string>
+
+    <string name="chart_clear_selection">Buang pilihan waktu</string>
 </resources>
