@@ -29,10 +29,10 @@
     <string name="beaufort_4">Bayu sederhana</string>
     <string name="beaufort_5">Bayu segar</string>
     <string name="beaufort_6">Bayu kuat</string>
-    <string name="beaufort_7">Bebadai sendalu</string>
-    <string name="beaufort_8">Bebadai segar</string>
-    <string name="beaufort_9">Bebadai kencang</string>
-    <string name="beaufort_10">Bebadai cekang kelat</string>
+    <string name="beaufort_7">Angin kencang</string>
+    <string name="beaufort_8">Angin amat kencang</string>
+    <string name="beaufort_9">Angin ribut</string>
+    <string name="beaufort_10">Ribut kuat</string>
     <string name="beaufort_11">Ribut ganas</string>
     <string name="beaufort_12">Angin daya hurikan</string>
     <string name="beaufort_sign_0">Laut seperti cermin, asap naik lurus</string>
@@ -48,7 +48,7 @@
     <string name="beaufort_sign_10">Laut memutih, pokok tumbang</string>
     <string name="beaufort_sign_11">Ombak amat tinggi, kerosakan meluas</string>
     <string name="beaufort_sign_12">Laut putih, udara penuh percikan</string>
-    <string name="guide_wind_explainer">Kelajuan ialah angin tetap dalam knot (1 kn lebih kurang 1.85 km/j). Tiupan ialah hembusan paling kuat yang sekejap.</string>
+    <string name="guide_wind_explainer">Kelajuan ialah angin tetap dalam knot (1 kn lebih kurang 1.85 km/j). Gust ialah hembusan paling kuat yang sekejap.</string>
 
     <string name="pressure_meaning_steady">Cuaca biasanya tidak banyak berubah.</string>
     <string name="pressure_meaning_rising">Selalunya tanda cuaca makin baik.</string>

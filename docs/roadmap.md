@@ -49,8 +49,6 @@ Status pada 2026-09-25. MVP yang dipersetujui: pasang surut, Bite Score, cuaca l
 
 ## Nilai yang perlu disemak oleh pemilik
 
-- Bite Score: tiga keadaan yang tidak ditakrif dalam spesifikasi (`bite-score.md`).
-- Nama Beaufort BM tahap 7 hingga 10 menggunakan istilah DBP yang kurang dikenali (`strings_marine_guide.xml`).
-- Istilah "tiupan" untuk gust angin.
-- Amaran MetMalaysia: garis pemisah Johor (103.6° T) dan Sabah (117.2° T), dan kawasan perkapalan yang belum dipadankan (`sumber-data.md`).
-- Data satelit: tahap tubir lemah dan jalur kejernihan air ialah andaian (`satelit.md`).
+- Padanan kawasan perkapalan MetMalaysia dengan lubuk ialah andaian (`sumber-data.md` bahagian 5); sempadan rasmi belum ditemui.
+
+Diputuskan pada 2026-09-25: nilai Bite Score yang tidak ditakrif dikekalkan; nama Beaufort BM tahap 7-10 ditukar kepada istilah harian; garis pemisah Johor dan Sabah dikekalkan; tahap tubir lemah dan jalur kejernihan air dikekalkan; gust angin dalam BM ditulis "gust".

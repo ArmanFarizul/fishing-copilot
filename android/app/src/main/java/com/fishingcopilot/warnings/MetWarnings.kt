@@ -39,6 +39,7 @@ data class WarningSummary(val forSpot: List<ShownWarning>, val elsewhere: List<S
  */
 fun summarizeWarnings(warnings: List<MetWarning>, latitude: Double, longitude: Double, now: Instant): WarningSummary {
     val names = areaNamesFor(latitude, longitude)
+    val shipping = shippingAreasFor(latitude, longitude)
     val shown = warnings
         .filter { !it.titleEn.equals(NO_ADVISORY, ignoreCase = true) }
         // The same bulletin is listed once per validity window; any live window keeps it.
@@ -50,7 +51,10 @@ fun summarizeWarnings(warnings: List<MetWarning>, latitude: Double, longitude: D
         .flatMap(::splitWarning)
         .distinctBy { it.first.textEn }
 
-    val (forSpot, elsewhere) = shown.partition { (_, areas) -> areas.isEmpty() || areas.any { it in names } }
+    // Shipping areas come as "Southern part of Condore" or "Northern Straits Of Melaka", so match by containment.
+    val (forSpot, elsewhere) = shown.partition { (_, areas) ->
+        areas.isEmpty() || areas.any { area -> area in names || shipping.any { it in area } }
+    }
     return WarningSummary(forSpot.map { it.first }, elsewhere.map { it.first })
 }
 
@@ -76,6 +80,35 @@ internal fun areaNamesFor(latitude: Double, longitude: Double): Set<String> =
         MalaysianState.LABUAN -> setOf("labuan", "western sabah")
         MalaysianState.SABAH -> setOf("sabah", if (longitude < SABAH_SPLIT_LON) "western sabah" else "eastern sabah")
     }
+
+/**
+ * MetMalaysia shipping forecast areas whose waters reach a spot. MetMalaysia publishes no boundaries for
+ * them (checked 2026-09-25), so this leans towards showing a warning when an area may be near.
+ * See docs/sumber-data.md section 5.
+ */
+internal fun shippingAreasFor(latitude: Double, longitude: Double): Set<String> =
+    when (CoastalArea.nearest(latitude, longitude).first.state) {
+        MalaysianState.PERLIS, MalaysianState.KEDAH, MalaysianState.PULAU_PINANG -> setOf("phuket", NORTH_STRAITS)
+        MalaysianState.PERAK -> setOf(NORTH_STRAITS)
+        // Where the two Straits areas meet is not published, so both apply here.
+        MalaysianState.SELANGOR, MalaysianState.NEGERI_SEMBILAN -> setOf(NORTH_STRAITS, SOUTH_STRAITS)
+        MalaysianState.MELAKA -> setOf(SOUTH_STRAITS)
+        MalaysianState.JOHOR -> if (longitude < JOHOR_SPLIT_LON) setOf(SOUTH_STRAITS) else setOf("tioman")
+        MalaysianState.PAHANG -> setOf("tioman")
+        MalaysianState.TERENGGANU, MalaysianState.KELANTAN -> setOf("samui")
+        MalaysianState.SARAWAK -> if (longitude < SARAWAK_SPLIT_LON) setOf("bunguran") else setOf("labuan", "reef south")
+        MalaysianState.LABUAN -> setOf("labuan")
+        MalaysianState.SABAH -> when {
+            longitude < SABAH_SPLIT_LON -> setOf("labuan")
+            latitude < SEMPORNA_SPLIT_LAT -> setOf("sulu", "sulawesi")
+            else -> setOf("sulu")
+        }
+    }
+
+private const val NORTH_STRAITS = "northern straits of melaka"
+private const val SOUTH_STRAITS = "southern straits of melaka"
+private const val SARAWAK_SPLIT_LON = 112.0
+private const val SEMPORNA_SPLIT_LAT = 5.0
 
 private const val JOHOR_SPLIT_LON = 103.6
 private const val SABAH_SPLIT_LON = 117.2

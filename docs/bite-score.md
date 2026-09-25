@@ -19,14 +19,14 @@ Skor dikira untuk masa sekarang dan setiap 15 minit bagi 24 jam akan datang. "Wa
 | Cahaya (25%) | Terang tanah hingga sejam selepas matahari terbit; sejam sebelum terbenam hingga akhir senja | 1.0 | Spesifikasi (Subuh dan Maghrib), tempoh sejam ialah tafsiran |
 | | Malam | 0.6 | Spesifikasi |
 | | 11:00 hingga 15:00 | 0.3 | Spesifikasi |
-| | Siang di luar waktu di atas | 0.6 | **Tidak ditakrif dalam spesifikasi**; disamakan dengan malam |
+| | Siang di luar waktu di atas | 0.6 | Tidak ditakrif dalam spesifikasi; disamakan dengan malam (disahkan pemilik 2026-09-25) |
 | Bulan (25%) | Hari Hijrah 1-3 dan 14-16 (air besar) | 1.0 | Spesifikasi |
 | | Hari Hijrah 7-9 dan 21-23 (air mati) | 0.3 | Spesifikasi |
 | | Hari lain | 0.7 | Spesifikasi ("bulan sabit") |
 | Tekanan (15%) | Stabil (berubah kurang 1 hPa dalam 3 jam) pada 1010-1015 hPa | 1.0 | Spesifikasi |
-| | Stabil tetapi di luar 1010-1015 hPa | 0.8 | **Tidak ditakrif**; pilihan pertengahan |
+| | Stabil tetapi di luar 1010-1015 hPa | 0.8 | Tidak ditakrif; pilihan pertengahan (disahkan pemilik 2026-09-25) |
 | | Naik | 0.7 | Spesifikasi |
-| | Turun 1 hingga 3 hPa dalam 3 jam | 0.5 | **Tidak ditakrif**; pilihan pertengahan |
+| | Turun 1 hingga 3 hPa dalam 3 jam | 0.5 | Tidak ditakrif; pilihan pertengahan (disahkan pemilik 2026-09-25) |
 | | Turun lebih 3 hPa dalam 3 jam | 0.2 | Spesifikasi |
 
 ## Data yang tiada
@@ -40,4 +40,4 @@ Jika sesuatu faktor tiada data (contohnya tekanan sebelum ramalan cuaca pertama 
 - Bulan: tarikh Hijrah rasmi JAKIM; anggaran MABIMS untuk hari yang belum diterbitkan.
 - Tekanan: ramalan `pressure_msl` Open-Meteo yang disimpan oleh kad cuaca laut.
 
-Nilai yang ditanda **tidak ditakrif** boleh diubah dalam `BiteScore.kt` tanpa menyentuh bahagian lain.
+Nilai yang tidak ditakrif dalam spesifikasi boleh diubah dalam `BiteScore.kt` tanpa menyentuh bahagian lain.

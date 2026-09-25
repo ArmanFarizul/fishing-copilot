@@ -114,7 +114,22 @@ Struktur yang dilihat pada 2026-09-25:
 Padanan dengan lubuk: negeri lubuk diambil daripada kawasan pesisir terdekat (`CoastalArea`). Johor dibahagi pada 103.6° T (barat/timur), Sabah pada 117.2° T. Labuan turut dipadankan dengan "Western Sabah", kerana versi BM menulis "Sabah Barat dan Labuan". Amaran yang kawasannya tidak dapat dibaca dipaparkan untuk semua lubuk.
 
 Had yang diketahui:
-- Kawasan perkapalan (Tioman, Condore, Selat Melaka Utara/Selatan dan lain-lain) tidak dipadankan dengan lubuk. Ia hanya dipaparkan di bawah "kawasan lain".
+- Kawasan perkapalan dipadankan dengan lubuk (keputusan pemilik 2026-09-25). MetMalaysia tidak menerbitkan sempadannya (disemak 2026-09-25 di met.gov.my/en/forecast/marine/shipping), jadi padanan ini ialah **andaian kami** yang memilih untuk memaparkan amaran jika ragu:
+
+  | Negeri lubuk | Kawasan perkapalan |
+  |---|---|
+  | Perlis, Kedah, Pulau Pinang | Phuket, Selat Melaka Utara |
+  | Perak | Selat Melaka Utara |
+  | Selangor, Negeri Sembilan | Selat Melaka Utara dan Selatan (sempadan kedua-duanya tidak diketahui) |
+  | Melaka, Johor barat | Selat Melaka Selatan |
+  | Johor timur, Pahang | Tioman |
+  | Terengganu, Kelantan | Samui |
+  | Sarawak barat (bawah 112° T) | Bunguran |
+  | Sarawak timur | Labuan, Reef South |
+  | Labuan, Sabah barat | Labuan |
+  | Sabah timur | Sulu; ditambah Sulawesi di selatan 5° U (Semporna) |
+
+  Nama dipadankan secara mengandungi, jadi "Southern part of Condore" atau "Northern part of Phuket" turut dikira. Condore, Reef North, Layang-Layang dan Palawan tidak dipadankan dengan mana-mana lubuk.
 - Tarikh tamat dalam teks item (contohnya "until 9:00 AM") tidak dibaca. Item kekal selagi buletinnya aktif.
 - Lesen data.gov.my belum disahkan. Halaman terma tidak dapat dibuka semasa diuji, jadi aplikasi menyebut sumber sebagai "MetMalaysia via data.gov.my".
 

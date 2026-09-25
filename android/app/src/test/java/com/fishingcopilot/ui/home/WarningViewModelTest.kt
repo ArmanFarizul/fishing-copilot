@@ -72,7 +72,7 @@ class WarningViewModelTest {
     @Test
     fun `shows the warnings for the spot's state`() = runTest {
         val state = viewModel().uiState.value as WarningState.Ready
-        assertEquals(2, state.summary.forSpot.size)
+        assertEquals(3, state.summary.forSpot.size)
         assertFalse(state.stale)
     }
 

@@ -23,7 +23,7 @@ Tab Lubuk, paparan Peta. Satu lapisan dipaparkan pada satu masa: plankton, suhu 
 | Kejernihan (kedalaman Secchi) | < 5 m keruh | 5–15 m sederhana | ≥ 15 m jernih | **Andaian kami** |
 | Tubir suhu | 0.5–1.0 °C per 10 km lemah | ≥ 1.0 °C per 10 km kuat | | Kuat: spesifikasi. Lemah: **andaian kami** |
 
-## Perlu disemak oleh pemilik
+## Keputusan pemilik (2026-09-25)
 
-- **Tubir lemah (0.5 °C per 10 km).** Spesifikasi hanya menyatakan ≥ 1.0 °C. Data SST OSTIA dilicinkan, jadi pada 23 September 2026 tiada satu petak pun mencapai 1.0 (paling tinggi 0.97). Hanya 19 daripada 1,577 petak mencapai 0.5. Tanpa tahap lemah, kad hampir sentiasa menunjukkan "tiada tubir".
-- **Jalur kejernihan air** tiada dalam spesifikasi. Pada data yang sama: 110 petak keruh, 308 sederhana, 1,192 jernih.
+- **Tubir lemah (0.5 °C per 10 km) dikekalkan.** Spesifikasi hanya menyatakan ≥ 1.0 °C. Data SST OSTIA dilicinkan, jadi pada 23 September 2026 tiada satu petak pun mencapai 1.0 (paling tinggi 0.97). Hanya 19 daripada 1,577 petak mencapai 0.5. Tanpa tahap lemah, kad hampir sentiasa menunjukkan "tiada tubir".
+- **Jalur kejernihan air dikekalkan**, walaupun tiada dalam spesifikasi. Pada data yang sama: 110 petak keruh, 308 sederhana, 1,192 jernih.

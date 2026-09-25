@@ -14,7 +14,7 @@
     <string name="marine_waves">Ombak</string>
     <string name="marine_wave_value">%1$s m · %2$d s</string>
     <string name="marine_wind">Angin</string>
-    <string name="marine_wind_value">%1$d kn, tiupan %2$d</string>
+    <string name="marine_wind_value">%1$d kn, gust %2$d</string>
     <string name="marine_pressure">Tekanan udara</string>
     <string name="marine_pressure_value">%1$d hPa</string>
     <string name="marine_pressure_steady">Stabil</string>
