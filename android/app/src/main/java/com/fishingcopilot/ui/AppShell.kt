@@ -45,6 +45,7 @@ import com.fishingcopilot.ui.home.BiteViewModel
 import com.fishingcopilot.ui.home.HomeScreen
 import com.fishingcopilot.ui.home.HomeViewModel
 import com.fishingcopilot.ui.home.MarineViewModel
+import com.fishingcopilot.ui.home.SatelliteViewModel
 import com.fishingcopilot.ui.home.SunMoonViewModel
 import com.fishingcopilot.ui.log.AddCatchSheet
 import com.fishingcopilot.ui.log.LogScreen
@@ -69,6 +70,9 @@ fun AppShell(app: FishingCopilotApp, profile: UserProfile) {
     // Keyed by spot, so choosing another home spot builds fresh cards for it.
     val home = spotId?.let { viewModel<HomeViewModel>(key = "home-$it", factory = HomeViewModel.factory(it, db.fishingDao(), app.tideRepository)) }
     val marine = spotId?.let { viewModel<MarineViewModel>(key = "marine-$it", factory = MarineViewModel.factory(it, db.fishingDao(), app.marineRepository)) }
+    val satellite = spotId?.let {
+        viewModel<SatelliteViewModel>(key = "satellite-$it", factory = SatelliteViewModel.factory(it, db.fishingDao(), app.satelliteRepository))
+    }
     val sunMoon = spotId?.let { viewModel<SunMoonViewModel>(key = "sunmoon-$it", factory = SunMoonViewModel.factory(it, db.fishingDao(), app.hijriRepository)) }
     val bite = spotId?.let {
         viewModel<BiteViewModel>(
@@ -122,7 +126,7 @@ fun AppShell(app: FishingCopilotApp, profile: UserProfile) {
         Box(modifier = Modifier.fillMaxSize().padding(padding).consumeWindowInsets(padding)) {
             when (Tab.entries[tab]) {
                 Tab.HOME -> HomeScreen(
-                    profile, home, marine, sunMoon, bite,
+                    profile, home, marine, satellite, sunMoon, bite,
                     onStrike = { strike = it },
                     onOpenSettings = { showSettings = true }
                 )

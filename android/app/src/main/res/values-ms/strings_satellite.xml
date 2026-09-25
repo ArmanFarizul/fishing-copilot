@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Context for every string is in values/strings_satellite.xml. Keep keys and format arguments identical to that file. -->
+<resources>
+    <string name="satellite_card_title">Satelit</string>
+    <string name="satellite_data_date">Data %1$s</string>
+
+    <string name="satellite_loading">Sedang muat turun data satelit untuk lubuk ini.</string>
+    <string name="satellite_error_offline">Data satelit belum dapat dimuat turun. Semak internet dan cuba lagi.</string>
+    <string name="satellite_retry">Cuba lagi</string>
+    <string name="satellite_no_data">Tiada bacaan satelit dekat lubuk ini. Mungkin di luar perairan Malaysia, terlalu rapat dengan darat, atau dilitupi awan.</string>
+    <string name="satellite_stale">Data %1$s, mungkin tidak terkini</string>
+    <string name="satellite_note">Bacaan permukaan laut sehari sekali, lewat 1–2 hari, meliputi kira-kira 25 km.</string>
+
+    <string name="satellite_temp">Suhu laut</string>
+    <string name="satellite_temp_value">%1$s °C</string>
+    <string name="satellite_temp_cool">Agak sejuk</string>
+    <string name="satellite_temp_ideal">Sesuai</string>
+    <string name="satellite_temp_warm">Agak panas</string>
+    <string name="satellite_temp_cool_meaning">Bawah 28 °C. Ikan mungkin kurang aktif makan.</string>
+    <string name="satellite_temp_ideal_meaning">28–30 °C, suhu yang ikan tropika biasanya suka.</string>
+    <string name="satellite_temp_warm_meaning">Atas 30 °C. Ikan mungkin turun dalam, aktif pagi dan senja.</string>
+
+    <string name="satellite_plankton">Plankton</string>
+    <string name="satellite_plankton_value">%1$s mg/m³</string>
+    <string name="satellite_plankton_low">Kurang</string>
+    <string name="satellite_plankton_ideal">Subur</string>
+    <string name="satellite_plankton_high">Sangat pekat</string>
+    <string name="satellite_plankton_low_meaning">Makanan sikit dalam air, anak ikan mungkin kurang.</string>
+    <string name="satellite_plankton_ideal_meaning">Cukup makanan untuk tarik anak ikan, pemangsa ikut.</string>
+    <string name="satellite_plankton_high_meaning">Mungkin ledakan alga. Selalu hijau keruh dekat kuala.</string>
+
+    <string name="satellite_clarity">Kejernihan air</string>
+    <string name="satellite_clarity_value">Nampak ke %1$d m</string>
+    <string name="satellite_clarity_murky">Keruh</string>
+    <string name="satellite_clarity_moderate">Sederhana</string>
+    <string name="satellite_clarity_clear">Jernih</string>
+    <string name="satellite_clarity_murky_meaning">Gewang warna terang atau berbunyi lebih mudah dikesan.</string>
+    <string name="satellite_clarity_moderate_meaning">Warna gewang biasa sudah memadai. Perambut biasa pun okey.</string>
+    <string name="satellite_clarity_clear_meaning">Ikan nampak jelas. Warna natural, perambut fluoro halus.</string>
+
+    <string name="satellite_front">Tubir suhu</string>
+    <string name="satellite_front_here">Di lubuk anda</string>
+    <string name="satellite_front_away">Kira-kira %1$d km %2$s</string>
+    <string name="satellite_front_weak">Lemah</string>
+    <string name="satellite_front_strong">Kuat</string>
+    <string name="satellite_front_weak_meaning">Beza 0.5–1 °C dalam 10 km. Mungkin ada anak ikan di situ.</string>
+    <string name="satellite_front_strong_meaning">Beza 1 °C ke atas dalam 10 km. Sering jadi port anak ikan.</string>
+    <string name="satellite_front_none">Tiada dalam %1$d km</string>
+    <string name="satellite_front_none_meaning">Suhu laut di sekitar lubuk anda sekata.</string>
+</resources>

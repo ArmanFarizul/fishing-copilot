@@ -12,8 +12,11 @@ import com.fishingcopilot.data.marine.MarineRepository
 import com.fishingcopilot.data.remote.JakimTakwimClient
 import com.fishingcopilot.data.remote.OpenMeteoMarineClient
 import com.fishingcopilot.data.remote.OpenMeteoWeatherClient
+import com.fishingcopilot.data.remote.SatelliteClient
+import com.fishingcopilot.data.satellite.SatelliteRepository
 import com.fishingcopilot.data.tide.TideRepository
 import org.maplibre.android.MapLibre
+import java.io.File
 import com.fishingcopilot.data.profile.DataStoreProfileRepository
 import com.fishingcopilot.data.profile.ProfileRepository
 
@@ -29,6 +32,9 @@ class FishingCopilotApp : Application() {
     val tideRepository: TideRepository by lazy { TideRepository(database.tideDao(), OpenMeteoMarineClient()) }
     val marineRepository: MarineRepository by lazy { MarineRepository(database.marineDao(), OpenMeteoWeatherClient()) }
     val hijriRepository: HijriRepository by lazy { HijriRepository(database.hijriDao(), JakimTakwimClient()) }
+    val satelliteRepository: SatelliteRepository by lazy {
+        SatelliteRepository(File(filesDir, "satellite/daily_marine_fronts.json"), SatelliteClient())
+    }
     val photoStore: PhotoStore by lazy { AppPhotoStore(this) }
     val alertSettings: AlertSettingsRepository by lazy { AlertSettingsRepository(this) }
     val biteForecaster: BiteForecaster by lazy {

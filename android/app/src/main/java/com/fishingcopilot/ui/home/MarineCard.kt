@@ -333,7 +333,7 @@ private val PressureTrend.meaning: Int
     }
 
 @Composable
-private fun compassLabel(degrees: Double): String = stringResource(
+internal fun compassLabel(degrees: Double): String = stringResource(
     when (Compass.of(degrees)) {
         Compass.N -> R.string.direction_n
         Compass.NE -> R.string.direction_ne

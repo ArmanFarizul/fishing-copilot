@@ -120,18 +120,18 @@ Status pada 2026-09-24.
 ### Belum ada
 
 Tindakan anda:
-- [ ] **GitHub Secrets Copernicus:** `COPERNICUSMARINE_SERVICE_USERNAME` dan `COPERNICUSMARINE_SERVICE_PASSWORD` belum dimasukkan ke repo.
+- [x] **GitHub Secrets Copernicus:** `COPERNICUSMARINE_SERVICE_USERNAME` dan `COPERNICUSMARINE_SERVICE_PASSWORD` dimasukkan pada 2026-09-25.
 - [ ] **Jadual pasang surut JUPEM:** belum diperoleh. Format, harga dan syarat penggunaannya juga belum disemak.
 - [ ] **Senarai spot memancing:** nama dan koordinat.
 
 Pembangunan:
-- [ ] **Ujian muat turun Copernicus sebenar** (`copernicusmarine subset`). Menunggu kelayakan di atas.
-- [ ] **Pipeline satelit:** `process_satellite.py` dan workflow GitHub Actions belum ditulis. Cara meringkaskan kira-kira 80,000 titik kepada JSON di bawah 200KB juga belum ditentukan.
+- [x] **Ujian muat turun Copernicus sebenar:** larian pertama pipeline berjaya pada 2026-09-25 (data 23 September).
+- [x] **Pipeline satelit:** `pipeline/` dan `.github/workflows/process_copernicus.yml`; grid 0.25°, kira-kira 49 KB.
 - [ ] **Pemalar harmonik pasang surut** untuk ramalan 365 hari tanpa internet. Sumbernya belum ditentukan. Pilihan: TPXO atau FES (perlu pendaftaran), analisis data IOC (7 stesen sahaja), atau jadual JUPEM.
 - [ ] **Peta luar talian:** sumber peta asas, lapisan OpenSeaMap, grid kedalaman GEBCO, cara menjana MBTiles, dan pustaka peta Android belum dipilih.
 - [ ] **Matahari, bulan dan solunar:** dikira dalam aplikasi, jadi tiada API diperlukan. Pustaka Kotlin belum dipilih.
 - [ ] **Tarikh Hijrah:** dikira dalam aplikasi. Kaedah belum dipilih dan belum disahkan.
-- [ ] **Atribusi Open-Meteo dan Copernicus** dalam aplikasi.
+- [x] **Atribusi Open-Meteo dan Copernicus** dalam aplikasi (Copernicus: "Generated using E.U. Copernicus Marine Service Information", mengikut lesen untuk produk terbitan).
 
 ## Enjin ramalan pasang surut: keputusan pengesahan
 

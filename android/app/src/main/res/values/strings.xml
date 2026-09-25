@@ -5,6 +5,8 @@
 
     <!-- Data attribution required by Open-Meteo (CC BY 4.0, https://open-meteo.com/en/licence). Exact wording, links to open-meteo.com. Not translated. -->
     <string name="attribution_open_meteo" translatable="false">Weather data by Open-Meteo.com</string>
+    <!-- Attribution required by the Copernicus Marine licence for derived products (https://marine.copernicus.eu/user-corner/service-commitments-and-licence). Exact wording. Not translated. -->
+    <string name="attribution_copernicus" translatable="false">Generated using E.U. Copernicus Marine Service Information</string>
 
     <!-- Home screen greeting, a small label above the user's nickname. Chosen by hour: morning 05-11, midday 12-13, afternoon 14-18, night 19-04. Languages without a separate midday period may repeat the afternoon wording. -->
     <string name="greeting_morning">Good morning</string>

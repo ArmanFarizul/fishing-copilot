@@ -16,13 +16,13 @@ Status pada 2026-09-25. MVP yang dipersetujui: pasang surut, Bite Score, cuaca l
 | Lubuk | Tambah pada peta, namakan semula, jadikan utama, padam |
 | Bahasa | BM dan English; lihat `i18n.md` |
 | Peringatan waktu emas | 45 minit sebelum setiap waktu emas; bunyi loceng dan getaran; tetapan hidup/mati, bunyi, getaran dan ujian |
+| Pipeline satelit | Larian harian di GitHub (`pipeline/`); suhu, tubir suhu, klorofil-a dan kejernihan air diterbitkan ke release `latest-data` (~49 KB) |
+| Kad satelit | Suhu, plankton, kejernihan dan tubir suhu terdekat bagi lubuk utama; berfungsi tanpa internet; lihat `satelit.md` |
 
 ## Belum dibuat (daripada spesifikasi)
 
 | Ciri | Keperluan / sebab tertangguh |
 |---|---|
-| Pipeline satelit: larian sebenar | Pipeline sudah dibina dan diuji di GitHub (`pipeline/`); menunggu GitHub Secrets Copernicus untuk muat turun pertama |
-| Paparan data satelit dalam aplikasi | Klorofil-a, tubir suhu dan kejernihan air daripada `daily_marine_fronts.json`; belum dibina |
 | Peta luar talian (MBTiles) dan carta nautika (OpenSeaMap, GEBCO) | Peta kini perlukan internet; OpenFreeMap menyediakan MBTiles mingguan |
 | Jadual pasang surut JUPEM | Belum diperoleh; akan digunakan untuk menyelaras ketepatan dan datum |
 | Tackle Advisor penuh | Saiz ladung sudah dipaparkan pada baris arus; skrin khusus belum |
@@ -49,3 +49,4 @@ Status pada 2026-09-25. MVP yang dipersetujui: pasang surut, Bite Score, cuaca l
 - Bite Score: tiga keadaan yang tidak ditakrif dalam spesifikasi (`bite-score.md`).
 - Nama Beaufort BM tahap 7 hingga 10 menggunakan istilah DBP yang kurang dikenali (`strings_marine_guide.xml`).
 - Istilah "tiupan" untuk gust angin.
+- Data satelit: tahap tubir lemah dan jalur kejernihan air ialah andaian (`satelit.md`).

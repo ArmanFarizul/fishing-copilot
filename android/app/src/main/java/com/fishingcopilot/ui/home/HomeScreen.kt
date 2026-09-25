@@ -50,6 +50,7 @@ fun HomeScreen(
     profile: UserProfile,
     homeViewModel: HomeViewModel?,
     marineViewModel: MarineViewModel?,
+    satelliteViewModel: SatelliteViewModel?,
     sunMoonViewModel: SunMoonViewModel?,
     biteViewModel: BiteViewModel?,
     onStrike: (CatchConditions) -> Unit,
@@ -58,6 +59,7 @@ fun HomeScreen(
     val period = remember { DayPeriod.fromHour(LocalTime.now().hour) }
     val tideState = homeViewModel?.uiState?.collectAsStateWithLifecycle()?.value
     val marineState = marineViewModel?.uiState?.collectAsStateWithLifecycle()?.value
+    val satelliteState = satelliteViewModel?.uiState?.collectAsStateWithLifecycle()?.value
     val sunMoonState = sunMoonViewModel?.uiState?.collectAsStateWithLifecycle()?.value
     val bite = biteViewModel?.uiState?.collectAsStateWithLifecycle()?.value
     val haptics = LocalHapticFeedback.current
@@ -124,6 +126,10 @@ fun HomeScreen(
             if (marineViewModel != null && marineState != null) {
                 Spacer(Modifier.height(16.dp))
                 MarineCard(state = marineState, onRetry = marineViewModel::retry)
+            }
+            if (satelliteViewModel != null && satelliteState != null) {
+                Spacer(Modifier.height(16.dp))
+                SatelliteCard(state = satelliteState, onRetry = satelliteViewModel::retry)
             }
             if (sunMoonViewModel != null) {
                 Spacer(Modifier.height(16.dp))

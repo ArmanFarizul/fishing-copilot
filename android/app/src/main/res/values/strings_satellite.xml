@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Title of the satellite card on the home screen, shown in capitals; keep under 20 characters. -->
+    <string name="satellite_card_title">Satellite</string>
+    <!-- Small line beside the card title; %1$s is the date of the satellite reading, already formatted as a medium date such as "23 Sep 2026". Keep under 24 characters. -->
+    <string name="satellite_data_date">Data from %1$s</string>
+
+    <!-- Shown in the card while satellite data downloads for the first time. -->
+    <string name="satellite_loading">Getting satellite readings for your spot.</string>
+    <!-- Shown when there is no saved data and the download failed; satellite_retry is the button under it (keep under 24 characters). -->
+    <string name="satellite_error_offline">Couldn\'t get satellite data. Check your internet and try again.</string>
+    <string name="satellite_retry">Try again</string>
+    <!-- Shown when the spot is outside the Malaysian coverage area, or every nearby grid cell is land or hidden by cloud. -->
+    <string name="satellite_no_data">No satellite reading near this spot. It may be outside Malaysian waters, too close to land, or under cloud.</string>
+    <!-- Small warning when the data is more than 4 days old; %1$s is the date of that data, such as "23 Sep 2026". Keep under 40 characters. -->
+    <string name="satellite_stale">From %1$s, may be out of date</string>
+    <!-- One small line under the rows: the satellite reads the sea surface once a day, about 1 to 2 days behind, and one reading covers an area about 25 km across. Keep under 90 characters. -->
+    <string name="satellite_note">Surface reading once a day, 1–2 days behind, covering about 25 km across.</string>
+
+    <!-- Row label for sea surface temperature; keep under 16 characters. -->
+    <string name="satellite_temp">Sea temperature</string>
+    <!-- Sea temperature value; %1$s is the temperature in Celsius already formatted, such as "29.7". Keep under 12 characters. -->
+    <string name="satellite_temp_value">%1$s °C</string>
+    <!-- Sea temperature level name in bold: cool under 28 °C, ideal 28 to 30 °C (the tropical optimum), warm above 30 °C. Keep under 20 characters. -->
+    <string name="satellite_temp_cool">Cool</string>
+    <string name="satellite_temp_ideal">Ideal range</string>
+    <string name="satellite_temp_warm">Warm</string>
+    <!-- One line under the sea temperature level saying what it may mean for fish; matches the level above. Likelihood only, never promise fish. Keep under 60 characters. -->
+    <string name="satellite_temp_cool_meaning">Below 28 °C. Fish may feed slower than usual.</string>
+    <string name="satellite_temp_ideal_meaning">28–30 °C, the range tropical fish tend to like.</string>
+    <string name="satellite_temp_warm_meaning">Above 30 °C. Fish may go deeper or bite at dawn and dusk.</string>
+
+    <!-- Row label for plankton, measured as chlorophyll-a; keep under 16 characters. -->
+    <string name="satellite_plankton">Plankton</string>
+    <!-- Plankton value; %1$s is chlorophyll-a in milligrams per cubic metre already formatted, such as "0.45". Keep under 14 characters. -->
+    <string name="satellite_plankton_value">%1$s mg/m³</string>
+    <!-- Plankton level name in bold: low under 0.2 mg/m³ (thin water, few baitfish), ideal 0.2 to 1.5 (healthy plankton that draws baitfish), high above 1.5 (very rich, possibly an algae bloom, often green murky water near river mouths). Keep under 20 characters. -->
+    <string name="satellite_plankton_low">Thin</string>
+    <string name="satellite_plankton_ideal">Healthy</string>
+    <string name="satellite_plankton_high">Very rich</string>
+    <!-- One line under the plankton level saying what it may mean for fish; matches the level above. Likelihood only, never promise fish. Keep under 60 characters. -->
+    <string name="satellite_plankton_low_meaning">Little food in the water, likely fewer baitfish.</string>
+    <string name="satellite_plankton_ideal_meaning">Enough food to draw baitfish, and predators follow.</string>
+    <string name="satellite_plankton_high_meaning">Possible bloom. Often green, murky water near river mouths.</string>
+
+    <!-- Row label for water clarity (Secchi depth); keep under 16 characters. -->
+    <string name="satellite_clarity">Water clarity</string>
+    <!-- Water clarity value: how deep you could see down into the water; %1$d is whole metres. Keep under 18 characters. -->
+    <string name="satellite_clarity_value">Visible to %1$d m</string>
+    <!-- Water clarity level name in bold: murky under 5 m, moderate 5 to 15 m, clear 15 m and deeper. Neither end is better. Keep under 20 characters. -->
+    <string name="satellite_clarity_murky">Murky</string>
+    <string name="satellite_clarity_moderate">Moderate</string>
+    <string name="satellite_clarity_clear">Clear</string>
+    <!-- One practical tip under the water clarity level about lure colour or leader visibility; matches the level above. A general guide, not a rule. Keep under 60 characters. -->
+    <string name="satellite_clarity_murky_meaning">Bright lures or ones with a rattle may stand out more.</string>
+    <string name="satellite_clarity_moderate_meaning">Natural colours usually work. A normal leader is fine.</string>
+    <string name="satellite_clarity_clear_meaning">Fish see well. Natural colours, thinner fluoro leader.</string>
+
+    <!-- Row label for the nearest sea temperature front: a narrow line where sea temperature changes sharply, where baitfish and predators tend to gather. Keep under 18 characters. -->
+    <string name="satellite_front">Temperature front</string>
+    <!-- Front value when the front is at the user's spot; keep under 18 characters. -->
+    <string name="satellite_front_here">At your spot</string>
+    <!-- Front value; %1$d is the distance in whole kilometres (rounded to 5), %2$s is a compass abbreviation (direction_*) giving the direction from the spot TO the front. Keep under 20 characters. -->
+    <string name="satellite_front_away">About %1$d km %2$s</string>
+    <!-- Front level name in bold: weak is a change of 0.5 to 1.0 °C across 10 km, strong is 1.0 °C or more. Keep under 20 characters. -->
+    <string name="satellite_front_weak">Weak</string>
+    <string name="satellite_front_strong">Strong</string>
+    <!-- One line under the front level saying what it is and what it may mean for fish; matches the level above. Likelihood only, never promise fish. Keep under 60 characters. -->
+    <string name="satellite_front_weak_meaning">0.5 to 1 °C across 10 km. Fish may gather along it.</string>
+    <string name="satellite_front_strong_meaning">1 °C or more across 10 km. Bait and predators often gather.</string>
+    <!-- Shown in the level name slot when no front was found; %1$d is the search radius in kilometres, such as 50. Keep under 24 characters. -->
+    <string name="satellite_front_none">None within %1$d km</string>
+    <!-- One line under satellite_front_none. Keep under 60 characters. -->
+    <string name="satellite_front_none_meaning">Sea temperature is even around your spot.</string>
+</resources>
