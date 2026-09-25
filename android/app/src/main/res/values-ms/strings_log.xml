@@ -3,6 +3,8 @@
 <resources>
     <string name="strike_button">Strike!</string>
     <string name="strike_button_description">Rekod tangkapan</string>
+    <string name="strike_move_left">Alihkan ke tepi kiri</string>
+    <string name="strike_move_right">Alihkan ke tepi kanan</string>
 
     <string name="catch_sheet_title">Tangkapan baharu</string>
     <string name="catch_edit_title">Ubah tangkapan</string>

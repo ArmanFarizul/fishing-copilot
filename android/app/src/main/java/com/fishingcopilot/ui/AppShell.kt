@@ -32,6 +32,8 @@ import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.StrokeJoin
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -40,6 +42,7 @@ import com.fishingcopilot.FishingCopilotApp
 import com.fishingcopilot.R
 import com.fishingcopilot.catchlog.CatchConditions
 import com.fishingcopilot.data.profile.UserProfile
+import com.fishingcopilot.ui.components.StrikeBubble
 import com.fishingcopilot.ui.home.BiteViewModel
 import com.fishingcopilot.ui.home.HomeScreen
 import com.fishingcopilot.ui.home.HomeViewModel
@@ -48,6 +51,7 @@ import com.fishingcopilot.ui.home.SatelliteViewModel
 import com.fishingcopilot.ui.home.SunMoonViewModel
 import com.fishingcopilot.ui.home.WarningViewModel
 import com.fishingcopilot.ui.home.WarningsScreen
+import com.fishingcopilot.ui.home.strikeConditions
 import com.fishingcopilot.ui.log.AddCatchSheet
 import com.fishingcopilot.ui.log.LogScreen
 import com.fishingcopilot.ui.log.LogViewModel
@@ -59,6 +63,7 @@ import com.fishingcopilot.ui.spots.SpotsViewModel
 import com.fishingcopilot.ui.theme.NauticalCyan
 import com.fishingcopilot.ui.theme.OceanMidnight
 import com.fishingcopilot.ui.theme.OceanSurface
+import com.fishingcopilot.ui.theme.StrikePosition
 import com.fishingcopilot.ui.theme.TextMuted
 import kotlinx.coroutines.launch
 
@@ -122,6 +127,9 @@ fun AppShell(app: FishingCopilotApp, profile: UserProfile) {
 
     BackHandler(enabled = tab != Tab.HOME.ordinal) { tab = Tab.HOME.ordinal }
 
+    val haptics = LocalHapticFeedback.current
+    val strikePosition by app.displaySettings.strikePosition.collectAsStateWithLifecycle(initialValue = StrikePosition())
+
     Scaffold(
         snackbarHost = { SnackbarHost(snackbar) },
         bottomBar = {
@@ -147,7 +155,6 @@ fun AppShell(app: FishingCopilotApp, profile: UserProfile) {
             when (Tab.entries[tab]) {
                 Tab.HOME -> HomeScreen(
                     profile, home, marine, satellite, warning, sunMoon, bite,
-                    onStrike = { strike = it },
                     onOpenSettings = { showSettings = true },
                     onOpenWarnings = { showWarnings = true }
                 )
@@ -160,6 +167,16 @@ fun AppShell(app: FishingCopilotApp, profile: UserProfile) {
                     snackbar = snackbar
                 )
             }
+            // Over every tab, and draggable, so the angler can park it wherever it hides nothing they need.
+            StrikeBubble(
+                position = strikePosition,
+                onMoved = { scope.launch { app.displaySettings.setStrikePosition(it) } },
+                onStrike = {
+                    // Spec "Quick Strike Snap": a long-press haptic confirms the tap even with wet hands.
+                    haptics.performHapticFeedback(HapticFeedbackType.LongPress)
+                    strike = strikeConditions(profile.homeSpotId, home?.uiState?.value, sunMoon?.uiState?.value, bite?.uiState?.value)
+                }
+            )
         }
     }
 
@@ -230,3 +247,4 @@ private fun NavIcon(tab: Tab, color: Color) {
         }
     }
 }
+

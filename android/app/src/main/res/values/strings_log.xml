@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Prominent button on the home screen that opens the catch bottom sheet. Short and energetic; Malaysian anglers shout "Strike!" when a fish takes the bait, so keep the English word in every language. -->
+    <!-- Small label under the floating fish button that sits over every tab and opens the catch bottom sheet. Malaysian anglers shout "Strike!" when a fish takes the bait, so keep the English word in every language. Under 10 characters. -->
     <string name="strike_button">Strike!</string>
-    <!-- TalkBack description of strike_button. -->
+    <!-- TalkBack label of the floating Strike! button: says what tapping it does (opens the sheet to log a new catch). -->
     <string name="strike_button_description">Log a catch</string>
+    <!-- TalkBack custom action on the floating Strike! button. Screen-reader users cannot drag the button, so this moves it to the left edge of the screen. Under 24 characters. -->
+    <string name="strike_move_left">Move to left edge</string>
+    <!-- TalkBack custom action on the floating Strike! button. Screen-reader users cannot drag the button, so this moves it to the right edge of the screen. Under 24 characters. -->
+    <string name="strike_move_right">Move to right edge</string>
 
     <!-- Title of the bottom sheet for logging a catch. -->
     <string name="catch_sheet_title">New catch</string>
