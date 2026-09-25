@@ -30,6 +30,16 @@
     <!-- Chip beside the phase name, shown only around new and full moon (spring) or around the quarter moons (neap), based on the moon's age. Keep under 14 characters. -->
     <string name="astro_spring_tide">Spring tide</string>
     <string name="astro_neap_tide">Neap tide</string>
+    <string name="astro_normal_tide">Normal tide</string>
+    <string name="astro_spring_advice">Fast current · Drop-offs active · Ideal for jigging &amp; drift</string>
+    <string name="astro_neap_advice">Slack current · Ideal for bottom fishing &amp; straits</string>
+    <string name="astro_normal_advice">Moderate current · Balanced for most techniques</string>
+    <string name="astro_legend_spring">Spring tide</string>
+    <string name="astro_legend_neap">Neap tide</string>
+    <string name="astro_golden_hour">Golden Hour</string>
+    <string name="astro_solunar_starts_in_hours_minutes">Starts in %1$dh %2$dm</string>
+    <string name="astro_solunar_starts_in_minutes">Starts in %1$dm</string>
+    <string name="astro_solunar_active_now">Active now</string>
 
     <!-- Heading of the solunar section, a list of today's traditional fish feeding periods worked out from the moon's position. Keep under 28 characters. -->
     <string name="astro_solunar_title">Solunar feeding times</string>

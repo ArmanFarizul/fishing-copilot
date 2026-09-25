@@ -24,6 +24,16 @@
 
     <string name="astro_spring_tide">Air besar</string>
     <string name="astro_neap_tide">Air mati</string>
+    <string name="astro_normal_tide">Air suku</string>
+    <string name="astro_spring_advice">Arus laju · Zon tubir aktif · Sesuai jigging &amp; hanyut</string>
+    <string name="astro_neap_advice">Arus tenang · Sesuai dasar (bottom) &amp; kawasan selat</string>
+    <string name="astro_normal_advice">Arus sederhana · Sesuai kebanyakan teknik</string>
+    <string name="astro_legend_spring">Air besar</string>
+    <string name="astro_legend_neap">Air mati</string>
+    <string name="astro_golden_hour">Waktu Emas</string>
+    <string name="astro_solunar_starts_in_hours_minutes">Bermula dlm %1$dj %2$dm</string>
+    <string name="astro_solunar_starts_in_minutes">Bermula dlm %1$d min</string>
+    <string name="astro_solunar_active_now">Sedang aktif!</string>
 
     <string name="astro_solunar_title">Waktu makan ikan (solunar)</string>
     <string name="astro_solunar_major">Utama</string>
