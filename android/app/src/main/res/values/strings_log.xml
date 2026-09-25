@@ -76,27 +76,38 @@
         <item quantity="one">%1$d catch</item>
         <item quantity="other">%1$d catches</item>
     </plurals>
-    <!-- Most used bait; %1$s is the bait, %2$d the whole percent of catches that have a bait recorded (catches without a bait are not counted). -->
-    <string name="log_summary_top_bait">Top bait: %1$s, %2$d%% of catches with bait noted</string>
-    <!-- Tide state with the most catches; %1$s is log_tide_rising_phrase or log_tide_falling_phrase. -->
-    <string name="log_summary_best_tide">Most catches on a %1$s</string>
-    <!-- Phrases inserted into log_summary_best_tide, lowercase because they sit mid-sentence. -->
-    <string name="log_tide_rising_phrase">rising tide</string>
-    <string name="log_tide_falling_phrase">falling tide</string>
-    <!-- Most caught species; %1$s is the species name, %2$d how many were caught. -->
-    <string name="log_summary_best_species">Most caught: %1$s (%2$d)</string>
+    <!-- Small line under the "Catch log" title (log_title). Counts catches the user logged with strike_button, not bites. Keep under 30 characters. -->
+    <string name="log_summary_subtitle">Every fish you\'ve logged</string>
+    <!-- Small uppercase labels on the three summary tiles: the species caught most, the bait used most, and the tide most catches came on. The app uppercases them. Keep each under 22 characters. -->
+    <string name="log_summary_species_label">Top species</string>
+    <string name="log_summary_bait_label">Top bait</string>
+    <string name="log_summary_tide_label">Tide pattern</string>
+    <!-- Under the top species name on its tile; %1$d is how many of that species were caught. Keep under 16 characters. -->
+    <plurals name="log_summary_species_count">
+        <item quantity="one">%1$d catch</item>
+        <item quantity="other">%1$d catches</item>
+    </plurals>
+    <!-- Under the top bait name on its tile; %1$d is the whole percent of catches that used this bait, out of the catches where a bait was noted (catches without a bait are left out). It is a share of catches, not a success or bite rate. %% is the percent sign. Keep under 36 characters. -->
+    <string name="log_summary_bait_rate">%1$d%% of catches with bait noted</string>
+    <!-- Text on the tide tile: which tide most logged catches came on. With few catches this is only a loose pattern, so do not call it the best or optimal tide. Keep under 40 characters. -->
+    <string name="log_summary_best_tide_rising">Most catches on a rising tide</string>
+    <string name="log_summary_best_tide_falling">Most catches on a falling tide</string>
 
-    <!-- Values on each catch row in the list. %1$s is already formatted: weight such as "2.4", length such as "58", bait text, score such as "8.4". -->
+    <!-- Small uppercase label over the box on each catch card that shows the tide, water level, moon and Bite Score the app recorded by itself when the user tapped strike_button. The app uppercases it. Keep under 26 characters. -->
+    <string name="log_strike_conditions_label">Conditions at Strike</string>
+    <!-- Small hint on the empty Log tab, next to a lightning icon. Keep the button name identical to strike_button. Keep under 40 characters. -->
+    <string name="log_empty_hint">Fish on? Tap Strike!</string>
+
+    <!-- Values on each catch card in the list. %1$s is already formatted: weight such as "2.4", length such as "58", score such as "8.4". -->
     <string name="log_weight_value">%1$s kg</string>
     <string name="log_length_value">%1$s cm</string>
-    <string name="log_bait_value">Bait: %1$s</string>
     <string name="log_score_value">Score %1$s</string>
     <!-- Shown in place of the spot name for a catch whose spot was deleted. -->
     <string name="log_unknown_spot">Spot deleted</string>
 
-    <!-- Small text buttons on each catch row, log_edit above log_delete. log_edit opens the catch sheet to change a saved catch. Keep each under 10 characters. -->
-    <string name="log_edit">Edit</string>
-    <string name="log_delete">Delete</string>
+    <!-- TalkBack labels read aloud for the edit (pencil) and delete (bin) icon buttons on each catch card; they are not shown on screen. log_edit opens the catch sheet to change a saved catch; log_delete opens the log_delete_title dialog. Keep each under 20 characters. -->
+    <string name="log_edit">Edit catch</string>
+    <string name="log_delete">Delete catch</string>
     <!-- Confirmation dialog for deleting one catch; it cannot be undone. -->
     <string name="log_delete_title">Delete this catch?</string>
     <string name="log_delete_body">It\'ll be gone for good. This can\'t be undone.</string>

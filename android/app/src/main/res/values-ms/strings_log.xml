@@ -51,20 +51,27 @@
     <plurals name="log_summary_count">
         <item quantity="other">%1$d tangkapan</item>
     </plurals>
-    <string name="log_summary_top_bait">Umpan paling mengena: %1$s, %2$d%% daripada tangkapan yang ada rekod umpan</string>
-    <string name="log_summary_best_tide">Paling banyak hasil semasa %1$s</string>
-    <string name="log_tide_rising_phrase">air naik</string>
-    <string name="log_tide_falling_phrase">air turun</string>
-    <string name="log_summary_best_species">Paling banyak: %1$s (%2$d ekor)</string>
+    <string name="log_summary_subtitle">Semua ikan yang direkod</string>
+    <string name="log_summary_species_label">Ikan paling banyak</string>
+    <string name="log_summary_bait_label">Umpan paling kerap</string>
+    <string name="log_summary_tide_label">Corak pasang surut</string>
+    <plurals name="log_summary_species_count">
+        <item quantity="other">%1$d ekor</item>
+    </plurals>
+    <string name="log_summary_bait_rate">%1$d%% tangkapan yang ada rekod umpan</string>
+    <string name="log_summary_best_tide_rising">Kebanyakan tangkapan masa air naik</string>
+    <string name="log_summary_best_tide_falling">Kebanyakan tangkapan masa air turun</string>
+
+    <string name="log_strike_conditions_label">Keadaan masa Strike</string>
+    <string name="log_empty_hint">Ikan makan? Ketik Strike!</string>
 
     <string name="log_weight_value">%1$s kg</string>
     <string name="log_length_value">%1$s cm</string>
-    <string name="log_bait_value">Umpan: %1$s</string>
     <string name="log_score_value">Skor %1$s</string>
     <string name="log_unknown_spot">Lubuk dipadam</string>
 
-    <string name="log_edit">Ubah</string>
-    <string name="log_delete">Padam</string>
+    <string name="log_edit">Ubah tangkapan</string>
+    <string name="log_delete">Padam tangkapan</string>
     <string name="log_delete_title">Padam tangkapan ini?</string>
     <string name="log_delete_body">Rekod ini akan hilang terus dan tidak boleh dikembalikan.</string>
     <string name="log_delete_confirm">Padam</string>
