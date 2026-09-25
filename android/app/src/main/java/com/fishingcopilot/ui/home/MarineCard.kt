@@ -205,7 +205,7 @@ private fun WindRow(knots: Double, gusts: Double, direction: Double?) {
                 else -> "$low–$high kn"
             })
         }
-    ) { WindAnimation(knots, beaufort.force, color) }
+    ) { WindAnimation(knots, beaufort.force, color, gusts) }
 }
 
 @Composable
