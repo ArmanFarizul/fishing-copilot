@@ -73,4 +73,15 @@ class CatchLogTest {
         assertNull(tie.bestTideRising)
         assertNull(tie.topBait)
     }
+
+    @Test
+    fun `conditions come back from a saved catch`() {
+        val log = CatchConditions(1_790_000_000_000L, 3, "Kukup", 0.4, false, MoonPhaseName.FULL_MOON, HijriDate(1448, 4, 13), 8.2)
+            .toEntity("SIAKAP", null, null, null, null, null)
+        val back = CatchConditions.of(log, "Kukup")
+        assertEquals(false, back.rising)
+        assertEquals(MoonPhaseName.FULL_MOON, back.moonPhase)
+        assertEquals(HijriDate(1448, 4, 13), back.hijri)
+        assertEquals(8.2, back.biteScore!!, 0.0)
+    }
 }

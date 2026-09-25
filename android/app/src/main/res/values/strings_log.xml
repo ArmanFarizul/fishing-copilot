@@ -7,11 +7,15 @@
 
     <!-- Title of the bottom sheet for logging a catch. -->
     <string name="catch_sheet_title">New catch</string>
+    <!-- Title of the same sheet when editing a saved catch. Only species, bait, weight, length, photo and notes can change; the conditions recorded at the Strike stay fixed. Keep under 24 characters. -->
+    <string name="catch_edit_title">Edit catch</string>
 
     <!-- Heading of the panel at the top of the sheet with values the app records by itself (time, spot, water level, tide, moon phase, Hijri date, Bite Score); the user does not type these. -->
     <string name="catch_autofill_title">Recorded for you</string>
     <!-- One short line under catch_autofill_title. -->
     <string name="catch_autofill_note">Taken from the tide, moon and score right now.</string>
+    <!-- Replaces catch_autofill_note when editing a saved catch; the values shown were recorded when the user tapped strike_button and cannot be changed. Keep under 60 characters. -->
+    <string name="catch_autofill_note_saved">Taken when you hit Strike. These stay as they were.</string>
     <!-- Short labels in the auto-recorded panel. Keep each under 14 characters. -->
     <string name="catch_time_label">Time</string>
     <string name="catch_spot_label">Spot</string>
@@ -50,8 +54,12 @@
     <!-- Sheet buttons. -->
     <string name="catch_save">Save</string>
     <string name="catch_cancel">Cancel</string>
+    <!-- Save button when editing a saved catch; replaces catch_save. Keep under 16 characters. -->
+    <string name="catch_edit_save">Save changes</string>
     <!-- Snackbar after the catch is saved. -->
     <string name="catch_saved">Catch saved. Nice one!</string>
+    <!-- Snackbar after changes to a saved catch are saved. Calmer than catch_saved. -->
+    <string name="catch_updated">Catch updated.</string>
     <!-- Error shown when the user taps Save without picking a species. -->
     <string name="catch_species_required">Pick a species first.</string>
 
@@ -86,7 +94,8 @@
     <!-- Shown in place of the spot name for a catch whose spot was deleted. -->
     <string name="log_unknown_spot">Spot deleted</string>
 
-    <!-- Menu action on a catch row. -->
+    <!-- Small text buttons on each catch row, log_edit above log_delete. log_edit opens the catch sheet to change a saved catch. Keep each under 10 characters. -->
+    <string name="log_edit">Edit</string>
     <string name="log_delete">Delete</string>
     <!-- Confirmation dialog for deleting one catch; it cannot be undone. -->
     <string name="log_delete_title">Delete this catch?</string>

@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 
 data class SpotCatchCount(val spotId: Long, val count: Int)
@@ -12,6 +13,9 @@ data class SpotCatchCount(val spotId: Long, val count: Int)
 interface CatchDao {
     @Insert
     suspend fun insert(log: CatchLogEntity): Long
+
+    @Update
+    suspend fun update(log: CatchLogEntity)
 
     @Delete
     suspend fun delete(log: CatchLogEntity)

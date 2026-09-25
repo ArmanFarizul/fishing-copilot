@@ -19,6 +19,21 @@ data class CatchConditions(
     val hijri: HijriDate?,
     val biteScore: Double?
 ) {
+    companion object {
+        /** The conditions a saved catch was logged with, for showing them again when it is edited. */
+        fun of(log: CatchLogEntity, spotName: String?) = CatchConditions(
+            timestamp = log.timestamp,
+            spotId = log.spotId,
+            spotName = spotName,
+            waterLevel = log.waterLevel,
+            rising = log.tideState?.let { it == "RISING" },
+            moonPhase = MoonPhaseName.entries.firstOrNull { it.name == log.moonPhase },
+            hijri = log.hijriDate?.split("-")?.mapNotNull { it.toIntOrNull() }?.takeIf { it.size == 3 }
+                ?.let { (y, m, d) -> HijriDate(y, m, d) },
+            biteScore = log.biteScore
+        )
+    }
+
     fun toEntity(
         species: String,
         bait: String?,
@@ -82,3 +97,23 @@ data class LogSummary(
         }
     }
 }
+
+/**
+ * The same catch with the angler's own details changed. The conditions recorded at the strike stay
+ * as they were, because they describe that moment.
+ */
+fun CatchLogEntity.edited(
+    species: String,
+    bait: String?,
+    weightKg: Double?,
+    lengthCm: Double?,
+    photoUri: String?,
+    notes: String?
+) = copy(
+    species = species.trim(),
+    baitUsed = bait?.trim()?.takeIf { it.isNotEmpty() },
+    weightKg = weightKg,
+    lengthCm = lengthCm,
+    photoUri = photoUri,
+    notes = notes?.trim()?.takeIf { it.isNotEmpty() }
+)

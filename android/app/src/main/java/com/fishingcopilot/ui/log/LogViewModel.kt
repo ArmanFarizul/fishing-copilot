@@ -7,6 +7,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.fishingcopilot.catchlog.CatchConditions
 import com.fishingcopilot.catchlog.LogSummary
 import com.fishingcopilot.catchlog.PhotoStore
+import com.fishingcopilot.catchlog.edited
 import com.fishingcopilot.data.local.CatchDao
 import com.fishingcopilot.data.local.CatchLogEntity
 import com.fishingcopilot.data.local.FishingDao
@@ -55,6 +56,29 @@ class LogViewModel(
         viewModelScope.launch {
             val photo = pickedPhoto?.let { photos.import(it) }
             catches.insert(conditions.toEntity(species, bait, weightKg, lengthCm, photo, notes))
+            onSaved()
+        }
+    }
+
+    /**
+     * Saves changed details. [pickedPhoto] equal to the stored photo keeps it; a new pick is copied in
+     * and the old copy removed; null removes the photo.
+     */
+    fun update(
+        original: CatchLogEntity,
+        species: String,
+        bait: String?,
+        weightKg: Double?,
+        lengthCm: Double?,
+        pickedPhoto: String?,
+        notes: String?,
+        onSaved: () -> Unit = {}
+    ) {
+        viewModelScope.launch {
+            val photo = if (pickedPhoto == original.photoUri) pickedPhoto else pickedPhoto?.let { photos.import(it) }
+            catches.update(original.edited(species, bait, weightKg, lengthCm, photo, notes))
+            // Only drop the old file once the row no longer points at it.
+            original.photoUri?.takeIf { it != photo }?.let { photos.delete(it) }
             onSaved()
         }
     }

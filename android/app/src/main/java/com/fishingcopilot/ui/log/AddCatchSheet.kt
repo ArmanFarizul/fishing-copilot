@@ -49,6 +49,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.fishingcopilot.R
 import com.fishingcopilot.catchlog.CatchConditions
+import com.fishingcopilot.data.local.CatchLogEntity
 import com.fishingcopilot.data.profile.Species
 import com.fishingcopilot.ui.components.hijriDateText
 import com.fishingcopilot.ui.components.label
@@ -58,6 +59,7 @@ import com.fishingcopilot.ui.theme.OceanMidnight
 import com.fishingcopilot.ui.theme.OceanSurface
 import com.fishingcopilot.ui.theme.TextHighContrast
 import com.fishingcopilot.ui.theme.TextMuted
+import java.math.BigDecimal
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
@@ -74,16 +76,19 @@ fun AddCatchSheet(
     targetSpecies: Set<Species>,
     recentBaits: List<String>,
     onSave: (species: String, bait: String?, weightKg: Double?, lengthCm: Double?, photo: String?, notes: String?) -> Unit,
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit,
+    /** A saved catch to edit; its details fill the form. Null for a new catch. */
+    existing: CatchLogEntity? = null
 ) {
     val locale = LocalConfiguration.current.locales[0]
-    var species by rememberSaveable { mutableStateOf<String?>(null) }
-    var otherSpecies by rememberSaveable { mutableStateOf("") }
-    var bait by rememberSaveable { mutableStateOf("") }
-    var weight by rememberSaveable { mutableStateOf("") }
-    var length by rememberSaveable { mutableStateOf("") }
-    var notes by rememberSaveable { mutableStateOf("") }
-    var photo by rememberSaveable { mutableStateOf<String?>(null) }
+    val picked = existing?.species?.takeIf { stored -> Species.entries.any { it.name == stored } }
+    var species by rememberSaveable { mutableStateOf(existing?.let { picked ?: OTHER }) }
+    var otherSpecies by rememberSaveable { mutableStateOf(if (existing != null && picked == null) existing.species else "") }
+    var bait by rememberSaveable { mutableStateOf(existing?.baitUsed.orEmpty()) }
+    var weight by rememberSaveable { mutableStateOf(existing?.weightKg.toField()) }
+    var length by rememberSaveable { mutableStateOf(existing?.lengthCm.toField()) }
+    var notes by rememberSaveable { mutableStateOf(existing?.notes.orEmpty()) }
+    var photo by rememberSaveable { mutableStateOf(existing?.photoUri) }
     var showSpeciesError by rememberSaveable { mutableStateOf(false) }
 
     val pickPhoto = rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
@@ -103,9 +108,9 @@ fun AddCatchSheet(
                 .padding(horizontal = 20.dp)
                 .padding(bottom = 24.dp)
         ) {
-            Text(stringResource(R.string.catch_sheet_title), style = MaterialTheme.typography.headlineMedium, color = TextHighContrast)
+            Text(stringResource(if (existing == null) R.string.catch_sheet_title else R.string.catch_edit_title), style = MaterialTheme.typography.headlineMedium, color = TextHighContrast)
             Spacer(Modifier.height(12.dp))
-            ConditionsPanel(conditions, locale)
+            ConditionsPanel(conditions, locale, saved = existing != null)
 
             Spacer(Modifier.height(16.dp))
             SectionLabel(R.string.catch_species_label)
@@ -187,14 +192,14 @@ fun AddCatchSheet(
                     },
                     colors = ButtonDefaults.buttonColors(containerColor = NauticalCyan, contentColor = OceanMidnight),
                     shape = RoundedCornerShape(14.dp)
-                ) { Text(stringResource(R.string.catch_save), fontWeight = FontWeight.Bold) }
+                ) { Text(stringResource(if (existing == null) R.string.catch_save else R.string.catch_edit_save), fontWeight = FontWeight.Bold) }
             }
         }
     }
 }
 
 @Composable
-private fun ConditionsPanel(conditions: CatchConditions, locale: Locale) {
+private fun ConditionsPanel(conditions: CatchConditions, locale: Locale, saved: Boolean) {
     val none = stringResource(R.string.catch_no_data)
     Surface(shape = RoundedCornerShape(16.dp), color = OceanSurface, border = BorderStroke(1.dp, OceanCardBorder)) {
         Column(modifier = Modifier.fillMaxWidth().padding(14.dp)) {
@@ -218,7 +223,7 @@ private fun ConditionsPanel(conditions: CatchConditions, locale: Locale) {
             ConditionLine(R.string.catch_hijri_label, conditions.hijri?.let { hijriDateText(it) } ?: none)
             ConditionLine(R.string.catch_score_label, conditions.biteScore?.let { String.format(locale, "%.1f", it) } ?: none)
             Spacer(Modifier.height(6.dp))
-            Text(stringResource(R.string.catch_autofill_note), style = MaterialTheme.typography.labelSmall, color = TextMuted)
+            Text(stringResource(if (saved) R.string.catch_autofill_note_saved else R.string.catch_autofill_note), style = MaterialTheme.typography.labelSmall, color = TextMuted)
         }
     }
 }
@@ -267,6 +272,9 @@ private fun FormField(
         modifier = modifier.padding(top = 4.dp)
     )
 }
+
+/** 2.0 shows as "2" and 2.45 as "2.45", ready to edit. */
+private fun Double?.toField(): String = this?.let { BigDecimal.valueOf(it).stripTrailingZeros().toPlainString() }.orEmpty()
 
 /** Accepts both "2.4" and "2,4". */
 private fun String.toDecimal(): Double? = trim().replace(',', '.').toDoubleOrNull()?.takeIf { it > 0 }

@@ -52,6 +52,7 @@ import com.fishingcopilot.ui.home.WarningsScreen
 import com.fishingcopilot.ui.log.AddCatchSheet
 import com.fishingcopilot.ui.log.LogScreen
 import com.fishingcopilot.ui.log.LogViewModel
+import com.fishingcopilot.ui.log.LoggedCatch
 import com.fishingcopilot.ui.spots.SpotsScreen
 import com.fishingcopilot.ui.spots.SpotsViewModel
 import com.fishingcopilot.ui.theme.NauticalCyan
@@ -90,6 +91,7 @@ fun AppShell(app: FishingCopilotApp, profile: UserProfile) {
     val logState by log.uiState.collectAsStateWithLifecycle()
 
     var strike by remember { mutableStateOf<CatchConditions?>(null) }
+    var editing by remember { mutableStateOf<LoggedCatch?>(null) }
     var showSettings by rememberSaveable { mutableStateOf(false) }
     var showWarnings by rememberSaveable { mutableStateOf(false) }
 
@@ -112,6 +114,7 @@ fun AppShell(app: FishingCopilotApp, profile: UserProfile) {
     val snackbar = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
     val savedMessage = stringResource(R.string.catch_saved)
+    val updatedMessage = stringResource(R.string.catch_updated)
 
     BackHandler(enabled = tab != Tab.HOME.ordinal) { tab = Tab.HOME.ordinal }
 
@@ -144,7 +147,7 @@ fun AppShell(app: FishingCopilotApp, profile: UserProfile) {
                     onOpenSettings = { showSettings = true },
                     onOpenWarnings = { showWarnings = true }
                 )
-                Tab.LOG -> LogScreen(logState, onDelete = log::delete)
+                Tab.LOG -> LogScreen(logState, onEdit = { editing = it }, onDelete = log::delete)
                 Tab.SPOTS -> SpotsScreen(spots, homeSpotId = spotId, snackbar = snackbar)
             }
         }
@@ -162,6 +165,23 @@ fun AppShell(app: FishingCopilotApp, profile: UserProfile) {
                 }
             },
             onDismiss = { strike = null }
+        )
+    }
+
+    editing?.let { logged ->
+        val original = logged.entity
+        AddCatchSheet(
+            conditions = CatchConditions.of(original, logged.spotName),
+            targetSpecies = profile.targetSpecies,
+            recentBaits = logState.recentBaits,
+            onSave = { species, bait, weight, length, photo, notes ->
+                log.update(original, species, bait, weight, length, photo, notes) {
+                    editing = null
+                    scope.launch { snackbar.showSnackbar(updatedMessage) }
+                }
+            },
+            onDismiss = { editing = null },
+            existing = original
         )
     }
 }

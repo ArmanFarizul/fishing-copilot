@@ -5,9 +5,11 @@
     <string name="strike_button_description">Rekod tangkapan</string>
 
     <string name="catch_sheet_title">Tangkapan baharu</string>
+    <string name="catch_edit_title">Ubah tangkapan</string>
 
     <string name="catch_autofill_title">Direkod automatik</string>
     <string name="catch_autofill_note">Diambil daripada pasang surut, bulan dan skor sekarang.</string>
+    <string name="catch_autofill_note_saved">Direkod masa ketik Strike, dan kekal seperti asal.</string>
     <string name="catch_time_label">Masa</string>
     <string name="catch_spot_label">Lubuk</string>
     <string name="catch_water_label">Paras air</string>
@@ -36,7 +38,9 @@
 
     <string name="catch_save">Simpan</string>
     <string name="catch_cancel">Batal</string>
+    <string name="catch_edit_save">Simpan perubahan</string>
     <string name="catch_saved">Tangkapan disimpan. Mantap!</string>
+    <string name="catch_updated">Tangkapan dikemas kini.</string>
     <string name="catch_species_required">Pilih spesies dulu.</string>
 
     <string name="log_title">Rekod tangkapan</string>
@@ -59,6 +63,7 @@
     <string name="log_score_value">Skor %1$s</string>
     <string name="log_unknown_spot">Lubuk dipadam</string>
 
+    <string name="log_edit">Ubah</string>
     <string name="log_delete">Padam</string>
     <string name="log_delete_title">Padam tangkapan ini?</string>
     <string name="log_delete_body">Rekod ini akan hilang terus dan tidak boleh dikembalikan.</string>

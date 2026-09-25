@@ -12,7 +12,7 @@ Status pada 2026-09-25. MVP yang dipersetujui: pasang surut, Bite Score, cuaca l
 | Matahari dan bulan | Waktu disahkan dengan USNO; waktu solunar; kalendar fasa bulan 30 hari |
 | Tarikh Hijrah | Takwim rasmi JAKIM; anggaran MABIMS untuk hari yang belum diterbitkan |
 | Bite Score | Formula spesifikasi; graf 24 jam; waktu emas; lihat `bite-score.md` |
-| Log tangkapan | Butang Strike!, isian automatik keadaan, gambar, ringkasan umpan dan air |
+| Log tangkapan | Butang Strike!, isian automatik keadaan, gambar, ringkasan umpan dan air; sunting spesies, umpan, saiz, gambar dan nota (keadaan semasa Strike kekal) |
 | Lubuk | Tambah pada peta, namakan semula, jadikan utama, padam |
 | Bahasa | BM dan English; lihat `i18n.md` |
 | Peringatan waktu emas | 45 minit sebelum setiap waktu emas; bunyi loceng dan getaran; tetapan hidup/mati, bunyi, getaran dan ujian |
@@ -31,7 +31,6 @@ Status pada 2026-09-25. MVP yang dipersetujui: pasang surut, Bite Score, cuaca l
 | Widget skrin utama (Glance) | Belum |
 | Sunlight Mode | Belum; warna kini ditulis terus dalam kod, perlu dipindah ke tema dahulu |
 | Penapis spesies dan Bait Tracker | Belum |
-| Suntingan rekod tangkapan | Kini hanya tambah dan padam |
 
 ## Di luar spesifikasi (ditanya oleh pemilik)
 

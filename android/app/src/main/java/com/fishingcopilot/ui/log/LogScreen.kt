@@ -59,7 +59,7 @@ import java.time.format.FormatStyle
 import java.util.Locale
 
 @Composable
-fun LogScreen(state: LogUiState, onDelete: (CatchLogEntity) -> Unit, modifier: Modifier = Modifier) {
+fun LogScreen(state: LogUiState, onEdit: (LoggedCatch) -> Unit, onDelete: (CatchLogEntity) -> Unit, modifier: Modifier = Modifier) {
     val locale = LocalConfiguration.current.locales[0]
     var pendingDelete by remember { mutableStateOf<CatchLogEntity?>(null) }
 
@@ -77,7 +77,7 @@ fun LogScreen(state: LogUiState, onDelete: (CatchLogEntity) -> Unit, modifier: M
         } else {
             item { SummaryCard(summary) }
             items(state.catches, key = { it.entity.id }) { logged ->
-                CatchCard(logged, locale, onDelete = { pendingDelete = logged.entity })
+                CatchCard(logged, locale, onEdit = { onEdit(logged) }, onDelete = { pendingDelete = logged.entity })
             }
         }
     }
@@ -147,7 +147,7 @@ private fun SummaryCard(summary: LogSummary) {
 }
 
 @Composable
-private fun CatchCard(logged: LoggedCatch, locale: Locale, onDelete: () -> Unit) {
+private fun CatchCard(logged: LoggedCatch, locale: Locale, onEdit: () -> Unit, onDelete: () -> Unit) {
     val log = logged.entity
     val name = speciesName(log.species)
     Surface(shape = RoundedCornerShape(18.dp), color = OceanSurface, border = BorderStroke(1.dp, OceanCardBorder)) {
@@ -183,7 +183,10 @@ private fun CatchCard(logged: LoggedCatch, locale: Locale, onDelete: () -> Unit)
                 }
                 log.notes?.let { Text(it, style = MaterialTheme.typography.bodySmall, color = TextMuted) }
             }
-            TextButton(onClick = onDelete) { Text(stringResource(R.string.log_delete), color = TextMuted) }
+            Column(horizontalAlignment = Alignment.End) {
+                TextButton(onClick = onEdit) { Text(stringResource(R.string.log_edit), color = NauticalCyan) }
+                TextButton(onClick = onDelete) { Text(stringResource(R.string.log_delete), color = TextMuted) }
+            }
         }
     }
 }
