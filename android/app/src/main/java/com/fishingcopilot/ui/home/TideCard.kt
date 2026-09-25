@@ -53,6 +53,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.fishingcopilot.R
+import com.fishingcopilot.ui.components.signedMeters
 import com.fishingcopilot.tide.SeaLevelSample
 import com.fishingcopilot.tide.TideEvent
 import com.fishingcopilot.tide.TideEventType
@@ -687,10 +688,6 @@ private fun TideChart(summary: TideSummary, now: Long, locale: Locale) {
 // Read through LocalConfiguration so formatting follows a per-app language change.
 @Composable
 private fun currentLocale(): Locale = LocalConfiguration.current.locales[0]
-
-/** "+0.4 m"; heights that round to zero read "+0.0 m" rather than "-0.0 m". */
-private fun signedMeters(height: Double, locale: Locale): String =
-    String.format(locale, "%+.1f m", if (abs(height) < 0.05) 0.0 else height)
 
 private fun clockTime(epochMillis: Long, locale: Locale): String =
     Instant.ofEpochMilli(epochMillis).atZone(ZoneId.systemDefault())

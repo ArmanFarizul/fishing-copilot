@@ -10,14 +10,10 @@
     <string name="catch_autofill_title">Direkod automatik</string>
     <string name="catch_autofill_note">Diambil daripada pasang surut, bulan dan skor sekarang.</string>
     <string name="catch_autofill_note_saved">Direkod masa ketik Strike, dan kekal seperti asal.</string>
-    <string name="catch_time_label">Masa</string>
-    <string name="catch_spot_label">Lubuk</string>
-    <string name="catch_water_label">Paras air</string>
     <string name="catch_tide_label">Pasang surut</string>
     <string name="catch_moon_label">Bulan</string>
-    <string name="catch_hijri_label">Tarikh Hijrah</string>
     <string name="catch_score_label">Skor</string>
-    <string name="catch_water_value">%1$s dari paras purata</string>
+    <string name="catch_water_value">%1$s daripada purata</string>
     <string name="catch_no_data">Belum ada</string>
 
     <string name="catch_species_label">Spesies</string>
@@ -34,7 +30,10 @@
     <string name="catch_notes_label">Nota</string>
 
     <string name="catch_photo_add">Tambah gambar</string>
+    <string name="catch_photo_change">Tukar gambar</string>
+    <string name="catch_photo_hint">Pilih gambar hasil tangkapan</string>
     <string name="catch_photo_remove">Buang gambar</string>
+    <string name="catch_telemetry_locked">Rekod terkunci</string>
 
     <string name="catch_save">Simpan</string>
     <string name="catch_cancel">Batal</string>

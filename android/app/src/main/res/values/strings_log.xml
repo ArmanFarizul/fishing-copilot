@@ -17,15 +17,11 @@
     <!-- Replaces catch_autofill_note when editing a saved catch; the values shown were recorded when the user tapped strike_button and cannot be changed. Keep under 60 characters. -->
     <string name="catch_autofill_note_saved">Taken when you hit Strike. These stay as they were.</string>
     <!-- Short labels in the auto-recorded panel. Keep each under 14 characters. -->
-    <string name="catch_time_label">Time</string>
-    <string name="catch_spot_label">Spot</string>
-    <string name="catch_water_label">Water level</string>
     <string name="catch_tide_label">Tide</string>
     <string name="catch_moon_label">Moon</string>
-    <!-- Label for the Hijri date in the panel; the value is shown like "13 Rabiulakhir 1448H". Keep under 14 characters. -->
-    <string name="catch_hijri_label">Hijri date</string>
+    <!-- Label beside the score badge in the bottom row of the auto-recorded panel; the score (1 to 10) is the app's fishing forecast at the moment of the Strike. Same name as bite_card_title. Keep under 14 characters. -->
     <string name="catch_score_label">Bite Score</string>
-    <!-- Water level value in the panel; %1$s is the signed height already formatted, such as "+0.6 m", measured from average (mean) sea level. Keep very short. -->
+    <!-- Second line of the small Tide tile in the panel, under the tide state (such as "Tide falling"); %1$s is the signed water height already formatted, such as "+0.3 m", measured from average (mean) sea level. The tile is narrow: keep the whole line, value included, around 22 characters. -->
     <string name="catch_water_value">%1$s from average</string>
     <!-- Shown in the panel in place of a value that is not available yet (for example offline). Keep under 12 characters. -->
     <string name="catch_no_data">No data yet</string>
@@ -49,7 +45,13 @@
 
     <!-- Optional photo picked from the gallery. -->
     <string name="catch_photo_add">Add photo</string>
+    <!-- Button that opens the gallery to pick a different photo in place of the current one. Keep under 16 characters. -->
+    <string name="catch_photo_change">Change photo</string>
+    <!-- Grey line under catch_photo_add in the empty photo box; invites the user to pick a picture of the fish from the gallery. Keep under 36 characters. -->
+    <string name="catch_photo_hint">Pick a shot of your catch</string>
     <string name="catch_photo_remove">Remove photo</string>
+    <!-- Small badge shown in uppercase at the top-right of the catch_autofill_title panel, beside a lock icon. Says the time, spot, tide, moon and Bite Score were filled in when the user tapped Strike and cannot be edited. Keep under 18 characters. -->
+    <string name="catch_telemetry_locked">Locked at Strike</string>
 
     <!-- Sheet buttons. -->
     <string name="catch_save">Save</string>

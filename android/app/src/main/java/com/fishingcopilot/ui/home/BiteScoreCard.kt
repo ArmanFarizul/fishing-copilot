@@ -53,6 +53,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.fishingcopilot.R
+import com.fishingcopilot.ui.components.biteBandColor
 import com.fishingcopilot.ui.components.ClearSelectionButton
 import com.fishingcopilot.astro.TideStrength
 import com.fishingcopilot.bite.BiteForecast
@@ -119,7 +120,7 @@ fun BiteScoreCard(forecast: BiteForecast?, modifier: Modifier = Modifier) {
                         text = band,
                         style = MaterialTheme.typography.headlineMedium,
                         fontWeight = FontWeight.Bold,
-                        color = bandColor(score)
+                        color = biteBandColor(score)
                     )
                     Spacer(Modifier.height(2.dp))
                     Text(
@@ -131,14 +132,14 @@ fun BiteScoreCard(forecast: BiteForecast?, modifier: Modifier = Modifier) {
                     // Tactical Angler Advice Badge
                     Surface(
                         shape = RoundedCornerShape(8.dp),
-                        color = bandColor(score).copy(alpha = 0.12f),
-                        border = BorderStroke(1.dp, bandColor(score).copy(alpha = 0.35f))
+                        color = biteBandColor(score).copy(alpha = 0.12f),
+                        border = BorderStroke(1.dp, biteBandColor(score).copy(alpha = 0.35f))
                     ) {
                         Text(
                             text = stringResource(tacticalAdvice(score)),
                             style = MaterialTheme.typography.labelSmall,
                             fontWeight = FontWeight.Medium,
-                            color = bandColor(score),
+                            color = biteBandColor(score),
                             modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
                         )
                     }
@@ -260,7 +261,7 @@ private fun RadialBiteGauge(
         alpha
     } else if (isPrimeTime) 0.20f else 0f
 
-    val color = bandColor(score)
+    val color = biteBandColor(score)
 
     Box(
         contentAlignment = Alignment.Center,
@@ -546,7 +547,7 @@ private fun ScoreTimeline(
             val ptTime = clockTime(pt.epochMillis, locale)
             val ptScoreText = String.format(locale, "%.1f", pt.score)
             val ptBand = stringResource(bandLabel(pt.score))
-            val ptColor = bandColor(pt.score)
+            val ptColor = biteBandColor(pt.score)
 
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -711,7 +712,7 @@ private fun ScoreTimeline(
                     val idx = scrubbedIndex!!
                     val scrubX = getX(idx)
                     val scrubY = getY(points[idx].score)
-                    val scrubColor = bandColor(points[idx].score)
+                    val scrubColor = biteBandColor(points[idx].score)
 
                     // Vertical Scrubber Line
                     drawLine(
@@ -788,13 +789,6 @@ private fun bandLabel(score: Double): Int = when {
     score >= 6 -> R.string.bite_band_good
     score >= 4 -> R.string.bite_band_fair
     else -> R.string.bite_band_poor
-}
-
-private fun bandColor(score: Double): Color = when {
-    score >= BiteTimeline.PRIME_THRESHOLD -> PrimeGreen
-    score >= 6 -> NauticalCyan
-    score >= 4 -> CautionYellow
-    else -> AlertRed
 }
 
 /** Colour for a 0..1 factor value, from red through yellow to green. */
