@@ -38,7 +38,12 @@ class LogViewModelTest {
         }
         override suspend fun update(log: CatchLogEntity) { rows.value = rows.value.map { if (it.id == log.id) log else it } }
         override suspend fun delete(log: CatchLogEntity) { rows.value = rows.value.filterNot { it.id == log.id } }
-        override fun allFlow(): Flow<List<CatchLogEntity>> = rows
+        override fun allFlow(): Flow<List<CatchLogEntity>> = rows.map { list -> list.sortedByDescending { it.timestamp } }
+        override fun betweenFlow(start: Long, end: Long): Flow<List<CatchLogEntity>> =
+            rows.map { list -> list.filter { it.timestamp in start until end }.sortedByDescending { it.timestamp } }
+        override fun yearsFlow(): Flow<List<Int>> = rows.map { list ->
+            list.map { java.time.Instant.ofEpochMilli(it.timestamp).atZone(java.time.ZoneId.systemDefault()).year }.distinct().sortedDescending()
+        }
         override fun recentBaitsFlow(limit: Int): Flow<List<String>> =
             rows.map { logs -> logs.mapNotNull { it.baitUsed }.distinct().take(limit) }
         override fun countsBySpotFlow(): Flow<List<SpotCatchCount>> = error("unused")
@@ -73,6 +78,8 @@ class LogViewModelTest {
         val photos = FakePhotos()
         val vm = LogViewModel(dao, FakeSpots(), photos)
         backgroundScope.launch { vm.uiState.collect {} }
+        // The fixture catches are dated 1970, outside the default "this year".
+        vm.show(com.fishingcopilot.catchlog.LogPeriod.All)
         var saved = false
 
         vm.save(conditions, "SIAKAP", "udang hidup", 2.1, null, "picked.jpg", null) { saved = true }
@@ -92,6 +99,8 @@ class LogViewModelTest {
         val photos = FakePhotos()
         val vm = LogViewModel(dao, FakeSpots(), photos)
         backgroundScope.launch { vm.uiState.collect {} }
+        // The fixture catches are dated 1970, outside the default "this year".
+        vm.show(com.fishingcopilot.catchlog.LogPeriod.All)
         vm.save(conditions, "PARI", null, null, null, "p.jpg", null)
         advanceUntilIdle()
 
@@ -107,6 +116,8 @@ class LogViewModelTest {
         val dao = FakeCatchDao()
         val vm = LogViewModel(dao, FakeSpots(), FakePhotos())
         backgroundScope.launch { vm.uiState.collect {} }
+        // The fixture catches are dated 1970, outside the default "this year".
+        vm.show(com.fishingcopilot.catchlog.LogPeriod.All)
         vm.save(conditions, "SIAKAP", "udang", 2.1, null, null, null)
         advanceUntilIdle()
         val original = vm.uiState.value.catches.single().entity
@@ -133,6 +144,8 @@ class LogViewModelTest {
         val photos = FakePhotos()
         val vm = LogViewModel(dao, FakeSpots(), photos)
         backgroundScope.launch { vm.uiState.collect {} }
+        // The fixture catches are dated 1970, outside the default "this year".
+        vm.show(com.fishingcopilot.catchlog.LogPeriod.All)
         vm.save(conditions, "PARI", null, null, null, "first.jpg", null)
         advanceUntilIdle()
         fun current() = vm.uiState.value.catches.single().entity
@@ -153,5 +166,44 @@ class LogViewModelTest {
         advanceUntilIdle()
         assertNull(current().photoUri)
         assertTrue(photos.stored.isEmpty())
+    }
+
+    @Test
+    fun `the log opens on this year and can show other periods`() = runTest {
+        val dao = FakeCatchDao()
+        val zone = java.time.ZoneId.of("Asia/Kuala_Lumpur")
+        fun at(date: String) = java.time.LocalDate.parse(date).atStartOfDay(zone).toInstant().toEpochMilli() + 3_600_000
+        val vm = LogViewModel(dao, FakeSpots(), FakePhotos(), { zone }, { java.time.LocalDate.of(2026, 9, 25) })
+        backgroundScope.launch { vm.uiState.collect {} }
+        listOf("2026-09-20", "2026-08-01", "2025-06-15", "2024-02-02").forEach { date ->
+            vm.save(conditions.copy(timestamp = at(date)), "SIAKAP", null, null, null, null, null)
+        }
+        advanceUntilIdle()
+
+        var state = vm.uiState.value
+        assertEquals(com.fishingcopilot.catchlog.LogPeriod.ThisYear, state.period)
+        assertEquals(2, state.catches.size)
+        assertEquals(2, state.summary!!.count)
+        assertEquals(2, state.months.size)
+        assertEquals(listOf(2026, 2025, 2024), state.years)
+
+        vm.show(com.fishingcopilot.catchlog.LogPeriod.LastYear)
+        advanceUntilIdle()
+        assertEquals(1, vm.uiState.value.catches.size)
+
+        vm.show(com.fishingcopilot.catchlog.LogPeriod.Year(2023))
+        advanceUntilIdle()
+        state = vm.uiState.value
+        assertTrue(state.catches.isEmpty())
+        assertNull(state.summary)
+        assertTrue(state.hasAnyCatch)
+
+        vm.show(com.fishingcopilot.catchlog.LogPeriod.All)
+        advanceUntilIdle()
+        assertEquals(4, vm.uiState.value.catches.size)
+
+        vm.show(com.fishingcopilot.catchlog.LogPeriod.Year(2025))
+        advanceUntilIdle()
+        assertEquals(com.fishingcopilot.catchlog.LogPeriod.LastYear, vm.uiState.value.period)
     }
 }

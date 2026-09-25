@@ -23,6 +23,17 @@ interface CatchDao {
     @Query("SELECT * FROM catch_logs ORDER BY timestamp DESC")
     fun allFlow(): Flow<List<CatchLogEntity>>
 
+    /** Catches with start <= timestamp < end, newest first. */
+    @Query("SELECT * FROM catch_logs WHERE timestamp >= :start AND timestamp < :end ORDER BY timestamp DESC")
+    fun betweenFlow(start: Long, end: Long): Flow<List<CatchLogEntity>>
+
+    /** Calendar years that have catches, newest first, in the phone's time zone. */
+    @Query(
+        "SELECT DISTINCT CAST(strftime('%Y', timestamp / 1000, 'unixepoch', 'localtime') AS INTEGER) AS year " +
+            "FROM catch_logs ORDER BY year DESC"
+    )
+    fun yearsFlow(): Flow<List<Int>>
+
     /** Most recently used distinct baits, for quick-pick chips. */
     @Query(
         "SELECT baitUsed FROM catch_logs WHERE baitUsed IS NOT NULL AND baitUsed != '' " +

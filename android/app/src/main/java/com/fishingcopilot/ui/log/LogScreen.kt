@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
@@ -55,13 +56,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.fishingcopilot.R
-import com.fishingcopilot.ui.components.signedMeters
 import com.fishingcopilot.astro.MoonPhaseName
+import com.fishingcopilot.catchlog.LogPeriod
 import com.fishingcopilot.catchlog.LogSummary
 import com.fishingcopilot.data.local.CatchLogEntity
 import com.fishingcopilot.data.profile.Species
 import com.fishingcopilot.ui.components.imageRes
 import com.fishingcopilot.ui.components.label
+import com.fishingcopilot.ui.components.biteBandColor
+import com.fishingcopilot.ui.components.signedMeters
 import com.fishingcopilot.ui.theme.AlertRed
 import com.fishingcopilot.ui.theme.CardBorder
 import com.fishingcopilot.ui.theme.CautionYellow
@@ -74,6 +77,7 @@ import com.fishingcopilot.ui.theme.SelectedContainer
 import com.fishingcopilot.ui.theme.TextHighContrast
 import com.fishingcopilot.ui.theme.TextMuted
 import java.time.Instant
+import java.time.LocalDate
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
@@ -84,46 +88,71 @@ fun LogScreen(
     state: LogUiState,
     onEdit: (LoggedCatch) -> Unit,
     onDelete: (CatchLogEntity) -> Unit,
-    modifier: Modifier = Modifier
+    onPeriod: (LogPeriod) -> Unit,
+    modifier: Modifier = Modifier,
+    today: LocalDate = LocalDate.now()
 ) {
     val locale = LocalConfiguration.current.locales[0]
     var pendingDelete by remember { mutableStateOf<CatchLogEntity?>(null) }
+    val listState = rememberLazyListState()
+    // Fixed rows before the months: title, chips, summary. Each month adds a header before its catches.
+    val anchors = remember(state.months) {
+        var index = 3
+        state.months.flatMap { group ->
+            index++ // the month header
+            group.items.map { (index++) to group.month }
+        }
+    }
 
-    LazyColumn(
-        contentPadding = PaddingValues(horizontal = 20.dp, vertical = 24.dp),
-        verticalArrangement = Arrangement.spacedBy(14.dp),
-        modifier = modifier.fillMaxSize()
-    ) {
-        item {
-            Column(modifier = Modifier.fillMaxWidth().padding(bottom = 4.dp)) {
-                Text(
-                    text = stringResource(R.string.log_title),
-                    style = MaterialTheme.typography.headlineMedium,
-                    fontWeight = FontWeight.Bold,
-                    color = TextHighContrast
-                )
-                Spacer(Modifier.height(2.dp))
-                Text(
-                    text = stringResource(R.string.log_summary_subtitle),
-                    style = MaterialTheme.typography.labelMedium,
-                    color = NauticalCyan
-                )
+    Box(modifier = modifier.fillMaxSize()) {
+        LazyColumn(
+            state = listState,
+            contentPadding = PaddingValues(horizontal = 20.dp, vertical = 24.dp),
+            verticalArrangement = Arrangement.spacedBy(14.dp),
+            modifier = Modifier.fillMaxSize()
+        ) {
+            item {
+                Column(modifier = Modifier.fillMaxWidth().padding(bottom = 4.dp)) {
+                    Text(
+                        text = stringResource(R.string.log_title),
+                        style = MaterialTheme.typography.headlineMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = TextHighContrast
+                    )
+                    Spacer(Modifier.height(2.dp))
+                    Text(
+                        text = stringResource(R.string.log_summary_subtitle),
+                        style = MaterialTheme.typography.labelMedium,
+                        color = NauticalCyan
+                    )
+                }
+            }
+            item { PeriodChips(state.period, state.years, today, onPick = onPeriod) }
+            val summary = state.summary
+            when {
+                !state.loaded -> Unit
+                !state.hasAnyCatch -> item { EmptyLog() }
+                summary == null -> item {
+                    EmptyPeriod(periodLabel(state.period, today, locale), onShowAll = { onPeriod(LogPeriod.All) })
+                }
+                else -> {
+                    item { SummaryCard(summary, periodTitle(state.period, today, locale)) }
+                    state.months.forEach { group ->
+                        stickyHeader(key = "month-${group.month}") { MonthHeader(group.month, group.items.size) }
+                        items(group.items, key = { it.entity.id }) { logged ->
+                            CatchCard(
+                                logged = logged,
+                                locale = locale,
+                                onEdit = { onEdit(logged) },
+                                onDelete = { pendingDelete = logged.entity }
+                            )
+                        }
+                    }
+                }
             }
         }
-        val summary = state.summary
-        if (summary == null) {
-            item { EmptyLog() }
-        } else {
-            item { SummaryCard(summary) }
-            items(state.catches, key = { it.entity.id }) { logged ->
-                CatchCard(
-                    logged = logged,
-                    locale = locale,
-                    onEdit = { onEdit(logged) },
-                    onDelete = { pendingDelete = logged.entity }
-                )
-            }
-        }
+        // A handle only helps once the list is long enough to lose your place in.
+        if (state.catches.size >= FAST_SCROLL_MIN) FastScroller(listState, anchors)
     }
 
     pendingDelete?.let { log ->
@@ -143,6 +172,30 @@ fun LogScreen(
             },
             containerColor = OceanSurface
         )
+    }
+}
+
+private const val FAST_SCROLL_MIN = 15
+
+@Composable
+private fun periodTitle(period: LogPeriod, today: LocalDate, locale: Locale): String =
+    if (period == LogPeriod.All) stringResource(R.string.log_summary_all_title)
+    else stringResource(R.string.log_summary_period_title, periodLabel(period, today, locale))
+
+/** The chosen period has no catches, but older ones exist. */
+@Composable
+private fun EmptyPeriod(label: String, onShowAll: () -> Unit) {
+    Surface(shape = RoundedCornerShape(22.dp), color = OceanSurface, border = CardBorder) {
+        Column(modifier = Modifier.fillMaxWidth().padding(20.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(
+                text = stringResource(R.string.log_period_empty, label),
+                style = MaterialTheme.typography.bodyMedium,
+                color = TextHighContrast
+            )
+            TextButton(onClick = onShowAll) {
+                Text(stringResource(R.string.log_period_show_all), color = NauticalCyan, fontWeight = FontWeight.Bold)
+            }
+        }
     }
 }
 
@@ -278,7 +331,7 @@ private fun EmptyLog() {
  * Tactical angler summary dashboard with live telemetry insights, top species, top bait, and best tide.
  */
 @Composable
-private fun SummaryCard(summary: LogSummary) {
+private fun SummaryCard(summary: LogSummary, title: String) {
     Surface(
         shape = RoundedCornerShape(22.dp),
         color = OceanSurface,
@@ -300,7 +353,7 @@ private fun SummaryCard(summary: LogSummary) {
                         TrophyIcon(color = NauticalCyan, modifier = Modifier.size(16.dp))
                         Spacer(Modifier.width(6.dp))
                         Text(
-                            text = stringResource(R.string.log_summary_title).uppercase(),
+                            text = title.uppercase(),
                             style = MaterialTheme.typography.labelSmall,
                             fontWeight = FontWeight.Bold,
                             color = NauticalCyan
@@ -755,11 +808,9 @@ private fun CatchCard(
 
                             // Bite score badge
                             if (scoreVal != null) {
-                                val (badgeBg, badgeText) = when {
-                                    scoreVal >= 7.0 -> PrimeGreen.copy(alpha = 0.2f) to PrimeGreen
-                                    scoreVal >= 4.0 -> CautionYellow.copy(alpha = 0.2f) to CautionYellow
-                                    else -> NauticalCyan.copy(alpha = 0.2f) to NauticalCyan
-                                }
+                                // Same band colours as the Bite Score card.
+                                val badgeText = biteBandColor(scoreVal)
+                                val badgeBg = badgeText.copy(alpha = 0.2f)
                                 Surface(
                                     shape = RoundedCornerShape(6.dp),
                                     color = badgeBg,

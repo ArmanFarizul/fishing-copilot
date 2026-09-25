@@ -46,7 +46,18 @@
     <string name="log_empty_title">Belum ada tangkapan</string>
     <string name="log_empty_body">Bila ikan makan, ketik Strike! di skrin utama. Pasang surut, bulan dan skor akan direkod sekali.</string>
 
-    <string name="log_summary_title">Ringkasan tangkapan</string>
+    <string name="log_filter_this_year">Tahun ini</string>
+    <string name="log_filter_last_year">Tahun lepas</string>
+    <string name="log_filter_all">Semua</string>
+    <string name="log_filter_pick">Tarikh lain</string>
+    <string name="log_filter_pick_title">Pilih tempoh</string>
+    <string name="log_filter_custom">Pilih tarikh sendiri</string>
+    <string name="log_filter_range_title">Pilih tarikh mula dan akhir</string>
+    <string name="log_filter_apply">Guna</string>
+    <string name="log_filter_cancel">Batal</string>
+
+    <string name="log_summary_period_title">Tangkapan %1$s</string>
+    <string name="log_summary_all_title">Semua tangkapan</string>
     <plurals name="log_summary_count">
         <item quantity="other">%1$d tangkapan</item>
     </plurals>
@@ -63,6 +74,13 @@
 
     <string name="log_strike_conditions_label">Keadaan masa Strike</string>
     <string name="log_empty_hint">Ikan makan? Ketik Strike!</string>
+
+    <plurals name="log_month_count">
+        <item quantity="other">%1$d tangkapan</item>
+    </plurals>
+    <string name="log_period_empty">Tiada tangkapan pada %1$s</string>
+    <string name="log_period_show_all">Lihat semua</string>
+    <string name="log_fast_scroll_description">Skrol ikut bulan</string>
 
     <string name="log_weight_value">%1$s kg</string>
     <string name="log_length_value">%1$s cm</string>

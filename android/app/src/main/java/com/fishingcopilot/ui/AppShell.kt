@@ -151,7 +151,7 @@ fun AppShell(app: FishingCopilotApp, profile: UserProfile) {
                     onOpenSettings = { showSettings = true },
                     onOpenWarnings = { showWarnings = true }
                 )
-                Tab.LOG -> LogScreen(logState, onEdit = { editing = it }, onDelete = log::delete)
+                Tab.LOG -> LogScreen(logState, onEdit = { editing = it }, onDelete = log::delete, onPeriod = log::show)
                 Tab.SPOTS -> SpotsScreen(
                     spots, satelliteMap,
                     showMap = spotsShowMap,

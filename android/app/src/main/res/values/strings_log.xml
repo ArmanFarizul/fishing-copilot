@@ -71,8 +71,26 @@
     <string name="log_empty_title">No catches yet</string>
     <string name="log_empty_body">When a fish is on, tap Strike! on the home screen. Tide, moon and score get saved with it.</string>
 
-    <!-- Summary card at the top of the Log tab. -->
-    <string name="log_summary_title">Your catches so far</string>
+    <!-- Filter chips in a row under log_title. The log opens on log_filter_this_year; log_filter_last_year is the calendar year before; log_filter_all shows every catch ever logged. Keep each under 12 characters. -->
+    <string name="log_filter_this_year">This year</string>
+    <string name="log_filter_last_year">Last year</string>
+    <string name="log_filter_all">All time</string>
+    <!-- Last chip in the row. Opens the log_filter_pick_title dialog to choose an older year or a date range; once one is chosen, the chip shows that year or range instead of this text. Keep under 12 characters. -->
+    <string name="log_filter_pick">Pick dates</string>
+    <!-- Title of the dialog opened by log_filter_pick. It lists the years that have catches, then log_filter_custom. Keep under 28 characters. -->
+    <string name="log_filter_pick_title">Show catches from</string>
+    <!-- Last option in the log_filter_pick_title dialog, below the list of years. Opens a calendar to pick a start and an end date. Keep under 24 characters. -->
+    <string name="log_filter_custom">Pick a date range</string>
+    <!-- Headline at the top of the calendar where the user taps a start date and an end date. Keep under 28 characters. -->
+    <string name="log_filter_range_title">Pick start and end dates</string>
+    <!-- Buttons of the calendar range picker (log_filter_cancel also closes the log_filter_pick_title dialog). log_filter_apply shows the catches in the chosen range. Keep each under 12 characters. -->
+    <string name="log_filter_apply">Apply</string>
+    <string name="log_filter_cancel">Cancel</string>
+
+    <!-- Summary card at the top of the Log tab; its tiles cover only the catches in the chosen period. The app uppercases the title. %1$s is the period, already formatted: a year such as "2026" or a date range such as "1 Jan – 5 Mar 2025". Keep under 30 characters with the value. -->
+    <string name="log_summary_period_title">Catches in %1$s</string>
+    <!-- Summary card title when the log_filter_all chip is on. The app uppercases it. Keep under 24 characters. -->
+    <string name="log_summary_all_title">All your catches</string>
     <!-- Total number of catches; %1$d is the count. -->
     <plurals name="log_summary_count">
         <item quantity="one">%1$d catch</item>
@@ -99,6 +117,18 @@
     <string name="log_strike_conditions_label">Conditions at Strike</string>
     <!-- Small hint on the empty Log tab, next to a lightning icon. Keep the button name identical to strike_button. Keep under 40 characters. -->
     <string name="log_empty_hint">Fish on? Tap Strike!</string>
+
+    <!-- Small count on each month header in the list, which sticks to the top while scrolling. The app shows it after the month name and a dot: "September 2026 · 12 catches". %1$d is the number of catches that month. Keep under 16 characters. -->
+    <plurals name="log_month_count">
+        <item quantity="one">%1$d catch</item>
+        <item quantity="other">%1$d catches</item>
+    </plurals>
+    <!-- Shown in the list when the chosen period has no catches but older catches exist. %1$s is the period, formatted as in log_summary_period_title. Keep under 50 characters with the value. -->
+    <string name="log_period_empty">No catches logged in %1$s</string>
+    <!-- Button under log_period_empty that switches the filter to log_filter_all. Keep under 20 characters. -->
+    <string name="log_period_show_all">Show all catches</string>
+    <!-- TalkBack label for the handle on the right edge of the list that the user drags to jump between months. Not shown on screen. Keep under 30 characters. -->
+    <string name="log_fast_scroll_description">Scroll through months</string>
 
     <!-- Values on each catch card in the list. %1$s is already formatted: weight such as "2.4", length such as "58", score such as "8.4". -->
     <string name="log_weight_value">%1$s kg</string>

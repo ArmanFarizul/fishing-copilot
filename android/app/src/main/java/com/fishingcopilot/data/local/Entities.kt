@@ -30,7 +30,8 @@ data class SpotEntity(
             onDelete = ForeignKey.SET_NULL
         )
     ],
-    indices = [Index(value = ["spotId"])]
+    // timestamp: the log filters by date range and sorts newest first, which stays fast with years of catches.
+    indices = [Index(value = ["spotId"]), Index(value = ["timestamp"])]
 )
 data class CatchLogEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,

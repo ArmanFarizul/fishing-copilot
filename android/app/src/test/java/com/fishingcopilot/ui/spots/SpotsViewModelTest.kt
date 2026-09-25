@@ -56,6 +56,8 @@ class SpotsViewModelTest {
     private class FakeCatches : CatchDao {
         override suspend fun insert(log: CatchLogEntity): Long = error("unused")
         override suspend fun update(log: CatchLogEntity) = error("unused")
+        override fun betweenFlow(start: Long, end: Long): Flow<List<CatchLogEntity>> = error("unused")
+        override fun yearsFlow(): Flow<List<Int>> = error("unused")
         override suspend fun delete(log: CatchLogEntity) = error("unused")
         override fun allFlow(): Flow<List<CatchLogEntity>> = error("unused")
         override fun recentBaitsFlow(limit: Int): Flow<List<String>> = error("unused")
