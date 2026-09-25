@@ -40,6 +40,8 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -71,6 +73,7 @@ import com.fishingcopilot.ui.onboarding.SpotMap
 import com.fishingcopilot.ui.onboarding.SpotSelection
 import com.fishingcopilot.ui.onboarding.fetchCurrentLocation
 import com.fishingcopilot.ui.onboarding.hasLocationPermission
+import com.fishingcopilot.ui.onboarding.placeName
 import com.fishingcopilot.ui.theme.CardBorder
 import com.fishingcopilot.ui.theme.NauticalCyan
 import com.fishingcopilot.ui.theme.OceanCardBorder
@@ -78,6 +81,7 @@ import com.fishingcopilot.ui.theme.OceanMidnight
 import com.fishingcopilot.ui.theme.OceanSurface
 import com.fishingcopilot.ui.theme.TextHighContrast
 import com.fishingcopilot.ui.theme.TextMuted
+import kotlinx.coroutines.launch
 import java.util.Locale
 import kotlin.math.roundToInt
 
@@ -97,13 +101,25 @@ fun ColumnScope.SpotPicker(
     onNameChange: (String) -> Unit
 ) {
     val context = LocalContext.current
-    val defaultName = stringResource(R.string.onboarding_spot_default_name)
     var status by rememberSaveable { mutableStateOf(LocationStatus.IDLE) }
     var showList by rememberSaveable { mutableStateOf(false) }
 
+    val scope = rememberCoroutineScope()
+    val currentSelection by rememberUpdatedState(selection)
+    val areaNames = CoastalArea.entries.associateWith { stringResource(it.label) }
+    val nearTemplate = stringResource(R.string.here_near_area)
+
+    // Names the point at once from the nearest coastal area (works offline), then with the town name
+    // once the phone's geocoder answers. Both only fill the name while the angler has not typed one.
     fun selectPoint(latitude: Double, longitude: Double) {
         status = LocationStatus.IDLE
-        onSelect(SpotSelection.Point(latitude, longitude), defaultName)
+        val point = SpotSelection.Point(latitude, longitude)
+        val nearest = CoastalArea.nearest(latitude, longitude).first
+        onSelect(point, String.format(nearTemplate, areaNames.getValue(nearest)))
+        scope.launch {
+            val town = placeName(context, latitude, longitude) ?: return@launch
+            if (currentSelection == point) onSelect(point, town)
+        }
     }
 
     fun locate() {
@@ -120,7 +136,6 @@ fun ColumnScope.SpotPicker(
         if (grants.values.any { it }) locate() else status = LocationStatus.DENIED
     }
 
-    val areaNames = CoastalArea.entries.associateWith { stringResource(it.label) }
     val mapController = rememberMapController()
     var goTo by rememberSaveable { mutableStateOf(false) }
     val mapDescription = stringResource(R.string.onboarding_spot_map_description)

@@ -4,8 +4,8 @@
     <string name="here_section">Where you are</string>
     <!-- Section label on the home screen above the part that follows the chosen fishing spot (Bite Score, tides, marine weather, satellite, MetMalaysia warnings). Shown in capitals. Keep under 22 characters. -->
     <string name="spot_section">Your spot</string>
-    <!-- Small tag under the spot name marking the home spot, the one alerts are based on. Keep under 14 characters. -->
-    <string name="spot_home_tag">Home spot</string>
+    <!-- Small tag under the spot name marking the main spot, the one prime-time alerts are based on. Keep under 14 characters. -->
+    <string name="spot_home_tag">Main spot</string>
     <!-- Small tag under the spot name when the phone is within 2 km of that spot and the app picked it automatically. Keep under 20 characters. -->
     <string name="spot_nearby_tag">You\'re nearby</string>
 

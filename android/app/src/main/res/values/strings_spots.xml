@@ -2,21 +2,25 @@
 <resources>
     <!-- Title of the Spots tab, which lists the user's saved fishing spots. -->
     <string name="spots_title">Your spots</string>
-    <!-- Small badge on the home spot, the one the home screen cards use. Keep under 10 characters. -->
-    <string name="spots_home_badge">Home</string>
+    <!-- Small badge on the main spot: the one spot that prime-time alerts and the home screen default use. Keep under 12 characters. -->
+    <string name="spots_home_badge">Main</string>
 
     <!-- spots_add is the button on the Spots tab. It opens a full-screen map picker (same map, pins and list as onboarding step 4) titled spots_add_title, with spots_add_save and spots_add_cancel. -->
     <string name="spots_add">Add spot</string>
     <string name="spots_add_title">New spot</string>
     <string name="spots_add_save">Save</string>
     <string name="spots_add_cancel">Cancel</string>
+    <!-- Checkbox row on the Add spot screen, above Cancel and Save. Ticking it makes the new spot the main spot. Keep under 28 characters. -->
+    <string name="spots_add_make_main">Make this my main spot</string>
+    <!-- One small line under spots_add_make_main explaining what the main spot does. Keep under 70 characters. -->
+    <string name="spots_add_make_main_hint">Prime time alerts and the home screen will use this spot.</string>
 
     <!-- Two toggle chips under the Spots title: spots_view_list shows saved spots as a list, spots_view_map shows them on a map with a satellite layer (plankton, sea temperature, fronts, water clarity). Keep each under 10 characters. -->
     <string name="spots_view_list">List</string>
     <string name="spots_view_map">Map</string>
 
     <!-- Actions on each spot. Keep each under 18 characters. -->
-    <string name="spots_set_home">Set as home</string>
+    <string name="spots_set_home">Make main spot</string>
     <string name="spots_rename">Rename</string>
     <string name="spots_delete">Delete</string>
 
@@ -31,11 +35,11 @@
     <string name="spots_delete_body">Its downloaded tide and weather data will be removed. Catches logged here stay in your log, just without a spot.</string>
     <string name="spots_delete_confirm">Delete</string>
     <string name="spots_delete_cancel">Cancel</string>
-    <!-- Shown when the user tries to delete the home spot, which is not allowed. -->
-    <string name="spots_delete_home_blocked">This is your home spot. Set another spot as home first, then delete this one.</string>
+    <!-- Shown when the user tries to delete the main spot, which is not allowed. -->
+    <string name="spots_delete_home_blocked">This is your main spot. Make another spot your main spot first, then delete this one.</string>
 
-    <!-- Snackbar after changing the home spot; %1$s is the spot name. -->
-    <string name="spots_home_changed">%1$s is now your home spot.</string>
+    <!-- Snackbar after changing the main spot; %1$s is the spot name. -->
+    <string name="spots_home_changed">%1$s is now your main spot.</string>
     <!-- Number of catches logged at this spot; %1$d is the count. -->
     <plurals name="spots_catch_count">
         <item quantity="one">%1$d catch</item>

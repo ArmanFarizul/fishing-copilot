@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Title of the tide card on the home screen, under the greeting; the home spot name sits next to it. Keep under 20 characters. -->
+    <!-- Title of the tide card on the home screen, under the greeting; the main spot name sits next to it. Keep under 20 characters. -->
     <string name="tide_card_title">Tides</string>
 
-    <!-- Big line on the tide card saying which way the water is moving at the home spot right now; keep under 20 characters. -->
+    <!-- Big line on the tide card saying which way the water is moving at the main spot right now; keep under 20 characters. -->
     <string name="tide_rising">Tide rising</string>
     <string name="tide_falling">Tide falling</string>
     <!-- Line under the rising/falling state; %1$s is the signed height already formatted, such as "+0.8 m" or "-1.2 m", measured from mean sea level (not chart datum). Keep under 35 characters. -->

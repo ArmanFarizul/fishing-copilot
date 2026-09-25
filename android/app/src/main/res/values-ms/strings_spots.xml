@@ -8,11 +8,13 @@
     <string name="spots_add_title">Lubuk baharu</string>
     <string name="spots_add_save">Simpan</string>
     <string name="spots_add_cancel">Batal</string>
+    <string name="spots_add_make_main">Jadikan lubuk utama</string>
+    <string name="spots_add_make_main_hint">Peringatan waktu emas dan skrin utama akan guna lubuk ini.</string>
 
     <string name="spots_view_list">Senarai</string>
     <string name="spots_view_map">Peta</string>
 
-    <string name="spots_set_home">Jadikan utama</string>
+    <string name="spots_set_home">Jadikan lubuk utama</string>
     <string name="spots_rename">Tukar nama</string>
     <string name="spots_delete">Padam</string>
 
@@ -25,7 +27,7 @@
     <string name="spots_delete_body">Data pasang surut dan cuaca yang dimuat turun untuk lubuk ini akan dibuang. Tangkapan di sini kekal dalam rekod, cuma tidak lagi dikaitkan dengan mana-mana lubuk.</string>
     <string name="spots_delete_confirm">Padam</string>
     <string name="spots_delete_cancel">Batal</string>
-    <string name="spots_delete_home_blocked">Ini lubuk utama. Jadikan lubuk lain sebagai utama dulu, baru boleh padam.</string>
+    <string name="spots_delete_home_blocked">Ini lubuk utama anda. Jadikan lubuk lain sebagai lubuk utama dulu, baru boleh padam.</string>
 
     <string name="spots_home_changed">%1$s kini lubuk utama.</string>
     <plurals name="spots_catch_count">

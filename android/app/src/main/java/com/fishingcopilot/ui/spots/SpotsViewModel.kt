@@ -35,9 +35,13 @@ class SpotsViewModel(
             .sortedWith(compareByDescending<SpotItem> { it.isHome }.thenByDescending { it.spot.createdAt })
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptyList())
 
-    fun add(selection: SpotSelection, name: String) {
+    fun add(selection: SpotSelection, name: String, makeMain: Boolean = false) {
         viewModelScope.launch {
-            spots.insertSpot(SpotEntity(name = name.trim(), latitude = selection.latitude, longitude = selection.longitude))
+            val id = spots.insertSpot(SpotEntity(name = name.trim(), latitude = selection.latitude, longitude = selection.longitude))
+            if (makeMain) {
+                val profile = profiles.profile.filterNotNull().first()
+                profiles.save(profile.copy(homeSpotId = id))
+            }
         }
     }
 

@@ -12,7 +12,7 @@
     <!-- Master switch that turns prime-time alerts on or off; prime time is when the Bite Score reaches 7.5 or more (bite_band_prime). Keep under 28 characters. -->
     <string name="alerts_golden_title">Prime time alerts</string>
     <!-- One or two short lines under the master switch explaining what it does. Keep under 100 characters. -->
-    <string name="alerts_golden_body">A heads-up 45 minutes before prime time at your home spot, based on the Bite Score.</string>
+    <string name="alerts_golden_body">A heads-up 45 minutes before prime time at your main spot, based on the Bite Score.</string>
     <!-- Switch labels under the master switch: play the soft bell sound, and vibrate the phone. Keep under 20 characters. -->
     <string name="alerts_sound">Sound</string>
     <string name="alerts_vibration">Vibration</string>
@@ -35,11 +35,11 @@
 
     <!-- Notification channel names and descriptions, shown in the phone's system notification settings. Only one channel is used at a time, matching the sound and vibration switches. Names under 40 characters, descriptions under 100. -->
     <string name="channel_golden_full_name">Prime time: sound and vibration</string>
-    <string name="channel_golden_full_description">Alerts before prime time at your home spot, with sound and vibration.</string>
+    <string name="channel_golden_full_description">Alerts before prime time at your main spot, with sound and vibration.</string>
     <string name="channel_golden_sound_name">Prime time: sound only</string>
-    <string name="channel_golden_sound_description">Alerts before prime time at your home spot, with sound only.</string>
+    <string name="channel_golden_sound_description">Alerts before prime time at your main spot, with sound only.</string>
     <string name="channel_golden_vibrate_name">Prime time: vibration only</string>
-    <string name="channel_golden_vibrate_description">Alerts before prime time at your home spot, with vibration and no sound.</string>
+    <string name="channel_golden_vibrate_description">Alerts before prime time at your main spot, with vibration and no sound.</string>
 
     <!-- Title of the prime-time notification; %1$d is the minutes until prime time starts, normally 45. Keep under 40 characters. -->
     <string name="notif_golden_title">Prime time in %1$d min</string>

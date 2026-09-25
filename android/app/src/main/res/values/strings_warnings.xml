@@ -2,7 +2,7 @@
 <resources>
     <!-- Headline of the warnings screen, under the back button (settings_back). The screen lists all current official MetMalaysia weather and sea warnings (thunderstorm, strong wind and rough sea, low visibility, tropical cyclone), the user's area first. Keep under 24 characters. -->
     <string name="warnings_title">Weather &amp; sea warnings</string>
-    <!-- Used in two places when official MetMalaysia warnings name the state or waters of the user's home spot; %1$d is how many. 1) The one-line tappable row on the home screen, in red, followed by a "›" chevron that opens the warnings screen. 2) The section label above those warnings on the warnings screen, shown in capitals. Keep under 32 characters. -->
+    <!-- Used in two places when official MetMalaysia warnings name the state or waters of the user's main spot; %1$d is how many. 1) The one-line tappable row on the home screen, in red, followed by a "›" chevron that opens the warnings screen. 2) The section label above those warnings on the warnings screen, shown in capitals. Keep under 32 characters. -->
     <plurals name="warning_for_spot_title">
         <item quantity="one">Warning for your area</item>
         <item quantity="other">%1$d warnings for your area</item>

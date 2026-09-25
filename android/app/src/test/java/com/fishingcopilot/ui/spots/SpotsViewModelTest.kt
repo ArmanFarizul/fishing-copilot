@@ -118,4 +118,18 @@ class SpotsViewModelTest {
         assertEquals(CoastalArea.MERSING.latitude, spots.rows.value.last().latitude, 0.0)
         assertEquals(2L, vm.uiState.value[0].spot.id) // new home now listed first
     }
+
+    @Test
+    fun `a new spot can become the main spot as it is added`() = runTest {
+        val spots = FakeSpots()
+        val profiles = FakeProfiles()
+        val vm = SpotsViewModel(spots, FakeCatches(), profiles)
+        backgroundScope.launch { vm.uiState.collect {} }
+
+        vm.add(SpotSelection.Point(1.3538, 104.2273), "Sungai Rengit", makeMain = true)
+        advanceUntilIdle()
+
+        assertEquals(3L, profiles.profile.value!!.homeSpotId)
+        assertEquals("Sungai Rengit", vm.uiState.value[0].spot.name)
+    }
 }

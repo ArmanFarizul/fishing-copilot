@@ -4,8 +4,8 @@
     <string name="map_zoom_in">Zoom in</string>
     <!-- Screen reader description for the minus button over the map. Zooms the map out one step. Keep under 30 characters. -->
     <string name="map_zoom_out">Zoom out</string>
-    <!-- Screen reader description for the pin button over the map; it moves the map back to the angler's home spot. Keep under 30 characters. -->
-    <string name="map_my_spot">Back to your home spot</string>
+    <!-- Screen reader description for the pin button over the map; it moves the map back to the angler's main spot. Keep under 30 characters. -->
+    <string name="map_my_spot">Back to your main spot</string>
 
     <!-- Short label on a small button in the map's top-left corner; opens a dialog to type in a GPS coordinate. Keep under 16 characters. -->
     <string name="map_go_to">Coordinates</string>

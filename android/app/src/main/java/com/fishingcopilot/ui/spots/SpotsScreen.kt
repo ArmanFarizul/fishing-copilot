@@ -15,10 +15,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -37,6 +40,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -74,8 +78,8 @@ fun SpotsScreen(
 
     if (adding) {
         AddSpot(
-            onSave = { selection, name ->
-                viewModel.add(selection, name)
+            onSave = { selection, name, makeMain ->
+                viewModel.add(selection, name, makeMain)
                 adding = false
             },
             onCancel = { adding = false }
@@ -224,10 +228,11 @@ private fun SpotCard(item: SpotItem, locale: Locale, onSetHome: () -> Unit, onRe
 
 /** Full-screen map picker, the same one onboarding uses. */
 @Composable
-private fun AddSpot(onSave: (SpotSelection, String) -> Unit, onCancel: () -> Unit) {
+private fun AddSpot(onSave: (SpotSelection, String, Boolean) -> Unit, onCancel: () -> Unit) {
     var selection by remember { mutableStateOf<SpotSelection?>(null) }
     var name by remember { mutableStateOf("") }
     var nameEdited by remember { mutableStateOf(false) }
+    var makeMain by remember { mutableStateOf(false) }
     BackHandler(onBack = onCancel)
 
     Column(
@@ -247,12 +252,29 @@ private fun AddSpot(onSave: (SpotSelection, String) -> Unit, onCancel: () -> Uni
             },
             onNameChange = { name = it.take(30); nameEdited = true }
         )
-        Spacer(Modifier.height(12.dp))
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .fillMaxWidth()
+                .toggleable(value = makeMain, role = Role.Checkbox, onValueChange = { makeMain = it })
+                .padding(vertical = 4.dp)
+        ) {
+            Checkbox(
+                checked = makeMain,
+                onCheckedChange = null,
+                colors = CheckboxDefaults.colors(checkedColor = NauticalCyan, checkmarkColor = OceanMidnight)
+            )
+            Spacer(Modifier.width(8.dp))
+            Column {
+                Text(stringResource(R.string.spots_add_make_main), style = MaterialTheme.typography.bodyMedium, color = TextHighContrast)
+                Text(stringResource(R.string.spots_add_make_main_hint), style = MaterialTheme.typography.bodySmall, color = TextMuted)
+            }
+        }
         Row(verticalAlignment = Alignment.CenterVertically) {
             TextButton(onClick = onCancel) { Text(stringResource(R.string.spots_add_cancel), color = TextMuted) }
             Spacer(Modifier.weight(1f))
             Button(
-                onClick = { selection?.let { onSave(it, name) } },
+                onClick = { selection?.let { onSave(it, name, makeMain) } },
                 enabled = selection != null && name.isNotBlank(),
                 colors = ButtonDefaults.buttonColors(containerColor = NauticalCyan, contentColor = OceanMidnight),
                 shape = RoundedCornerShape(12.dp)

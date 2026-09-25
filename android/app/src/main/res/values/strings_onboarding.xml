@@ -28,7 +28,7 @@
     </plurals>
 
     <!-- Onboarding step 4: the user's main fishing spot, used to show tides. A map of Malaysia with 24 coastal area pins and a fixed crosshair fills the top of the screen; the user taps a pin, drags the map under the crosshair or jumps to their current location. Area and state names live in strings_areas.xml. -->
-    <string name="onboarding_spot_title">Where\'s your home spot?</string>
+    <string name="onboarding_spot_title">Where\'s your main spot?</string>
     <!-- One line under the headline in the panel below the map. -->
     <string name="onboarding_spot_subtitle">Tap a pin or drag the map to your spot.</string>
     <!-- TalkBack description of the map itself; it must name the onboarding_spot_pick_from_list button so screen reader users can find the list. -->
@@ -51,7 +51,6 @@
     <string name="onboarding_spot_pick_from_list">Pick from a list</string>
     <!-- Title of the bottom sheet listing the coastal areas. -->
     <string name="onboarding_spot_areas_label">Pick an area</string>
-    <!-- Text field at the bottom, prefilled with the chosen area name or with onboarding_spot_default_name for a custom point; keep the default under 16 characters. -->
+    <!-- Text field at the bottom, prefilled with the chosen area name, or for a point on the map with the nearest town or coastal area. -->
     <string name="onboarding_spot_name_label">Spot name</string>
-    <string name="onboarding_spot_default_name">My spot</string>
 </resources>
