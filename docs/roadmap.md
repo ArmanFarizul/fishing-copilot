@@ -32,7 +32,7 @@ Status pada 2026-09-25. MVP yang dipersetujui: pasang surut, Bite Score, cuaca l
 
 | Ciri | Keperluan / sebab tertangguh |
 |---|---|
-| Jadual pasang surut JUPEM | Belum diperoleh; akan digunakan untuk menyelaras ketepatan dan datum |
+| Jadual pasang surut JUPEM | Tiada API dan tiada izin guna semula ("All Rights Reserved"); perlu mohon daripada JUPEM. Semakan Langkawi: model kira-kira 15 min lebih awal, boleh dibetulkan dengan laras waktu lubuk (`sumber-data.md` bahagian 8) |
 | Tackle Advisor penuh | Saiz ladung sudah dipaparkan pada baris arus; skrin khusus belum |
 | Keselamatan marin: penggera sauh hanyut, tersadai, tebing tenggelam | Perlukan servis GPS latar belakang |
 | Widget skrin utama (Glance) | Belum |

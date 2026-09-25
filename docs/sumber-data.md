@@ -195,3 +195,26 @@ Diuji pada 2026-09-25.
 - **Tanda laut:** OpenSeaMap `https://tiles.openseamap.org/seamark/{z}/{x}/{y}.png` (zum 9 ke atas). Data daripada OpenStreetMap (ODbL). Halaman syarat penggunaan jubin tidak ditemui; atribusi "OpenSeaMap contributors".
 - **Carian tempat:** Nominatim `nominatim.openstreetmap.org/search`. Polisi (operations.osmfoundation.org/policies/nominatim): maksimum 1 permintaan sesaat, User-Agent sendiri, hasil disimpan dalam cache, **tiada autocomplete**. Aplikasi hanya mencari apabila butang ditekan.
 - Kedua-dua lapisan carta tidak dimasukkan dalam muat turun peta luar talian; MapLibre hanya menyimpan jubin yang pernah dipaparkan.
+
+## 8. JUPEM: ramalan pasang surut rasmi
+
+Disemak pada 2026-09-25.
+
+- **Sumber:** `jupem.gov.my/en/staps` (Sistem Tabel Air Pasang Surut) dan aplikasi STAPS di Google Play. Waktu air pasang dan surut serta tinggi (cm) untuk 7 hari, bagi 22 stesen: Pulau Langkawi, Pulau Pinang, Lumut, Pelabuhan Kelang, Tanjung Keling, Kukup, Johor Bahru, Tanjung Sedili, Pulau Tioman, Tanjung Gelang, Cendering, Geting, Pulau Lakei, Sejingkat, Bintulu, Miri, Labuan, Kota Kinabalu, Kudat, Sandakan, Lahad Datu, Tawau.
+- **Tiada API awam.** Stesen dipilih melalui interaksi Livewire di laman web, bukan URL tetap.
+- **Syarat:** laman bertanda "All Rights Reserved 2026 © Department of Survey and Mapping Malaysia". Halaman penafian hanya menyatakan JUPEM tidak bertanggungjawab atas kerugian; tiada izin untuk mengguna semula data. Oleh itu aplikasi **tidak** memuat turun atau memaparkan data JUPEM.
+
+**Semakan ketepatan (Pulau Langkawi, 25 September hingga 1 Oktober 2026, 27 waktu pasang/surut):** waktu pasang dan surut daripada data Open-Meteo (`sea_level_height_msl`, titik 6.29 U, 99.88 T), iaitu data yang dilatih oleh model harmonik aplikasi, dibandingkan dengan jadual JUPEM:
+
+| | Minit (Open-Meteo tolak JUPEM) |
+|---|---|
+| Purata | -15 |
+| Median | -14 |
+| Sisihan piawai | 8 |
+| Maksimum mutlak | 29 |
+
+Open-Meteo konsisten **kira-kira 15 minit lebih awal** daripada JUPEM di Langkawi, dengan serakan kecil. Ralat yang konsisten begini ialah jenis yang boleh dibetulkan oleh **laras waktu lubuk** (kad pasang surut, contohnya +15 min). Satu stesen sahaja disemak; beza di stesen lain mungkin berlainan.
+
+**Cara disyorkan untuk pengguna:** bandingkan waktu pasang/surut di aplikasi dengan STAPS JUPEM untuk stesen terdekat, kemudian laraskan waktu lubuk.
+
+**Langkah seterusnya (tindakan pemilik):** mohon izin atau akses data daripada JUPEM (Bahagian Hidrografi) jika mahu jadual rasmi dipaparkan terus dalam aplikasi.
