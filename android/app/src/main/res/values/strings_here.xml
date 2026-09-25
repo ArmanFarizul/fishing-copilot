@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Section label on the home screen above the part that follows the phone's GPS (weather, storm warning, prayer times, distance to the chosen spot). Shown in capitals. Keep under 22 characters. -->
+    <string name="here_section">Where you are</string>
+    <!-- Section label on the home screen above the part that follows the chosen fishing spot (Bite Score, tides, marine weather, satellite, MetMalaysia warnings). Shown in capitals. Keep under 22 characters. -->
+    <string name="spot_section">Your spot</string>
+    <!-- Small tag under the spot name marking the home spot, the one alerts are based on. Keep under 14 characters. -->
+    <string name="spot_home_tag">Home spot</string>
+    <!-- Small tag under the spot name when the phone is within 2 km of that spot and the app picked it automatically. Keep under 20 characters. -->
+    <string name="spot_nearby_tag">You\'re nearby</string>
+
+    <!-- Card text asking the user to allow location so the app can show weather, prayer times and distance to the spot where they are. Must say the location stays on the phone. Keep under 110 characters. -->
+    <string name="here_permission_body">Allow location to see the weather, prayer times and how far your spot is. It stays on your phone.</string>
+    <!-- Button under here_permission_body that opens the system location permission prompt. Keep under 22 characters. -->
+    <string name="here_permission_button">Allow location</string>
+    <!-- Shown while the phone looks for a GPS fix. Keep under 40 characters. -->
+    <string name="here_locating">Finding your location…</string>
+    <!-- Shown when location is turned off or the phone has no fix; suggests turning location on. here_retry is the button under it. Keep under 80 characters. -->
+    <string name="here_unavailable">Can\'t find where you are. Turn on location and try again.</string>
+    <!-- Button to look for the location again. Keep under 16 characters. -->
+    <string name="here_retry">Try again</string>
+    <!-- Bold line naming where the user is when the phone can't look up a town name (offline or at sea); %1$s is the nearest listed coastal area, such as "Kuala Terengganu". Keep under 30 characters with the name filled in. -->
+    <string name="here_near_area">Near %1$s</string>
+    <!-- Line shown when the phone is at the chosen spot; %1$s is the spot name. Keep under 40 characters with the name filled in. -->
+    <string name="here_at_spot">You\'re at %1$s</string>
+    <!-- Line saying how far the chosen spot is; %1$s is the spot name, %2$s is the distance in kilometres already formatted, such as "4.2" or "18", %3$s is a compass abbreviation (direction_*) giving the direction FROM the user TO the spot. Keep under 50 characters with values filled in. -->
+    <string name="here_spot_distance">%1$s is %2$s km %3$s of you</string>
+
+    <!-- Title of the weather card for the user's GPS location. Shown in capitals. Keep under 20 characters. -->
+    <string name="here_weather_title">Weather here</string>
+    <!-- Shown in the weather card while the first forecast downloads. Keep under 70 characters. -->
+    <string name="here_weather_loading">Getting the weather where you are.</string>
+    <!-- Shown when the forecast could not download and nothing is saved yet. Keep under 70 characters. -->
+    <string name="here_weather_failed">Couldn\'t get the weather. Check your internet.</string>
+    <!-- Small warning when the saved forecast is more than 3 hours old. Keep under 70 characters. -->
+    <string name="here_weather_stale">This forecast is over 3 hours old and may be out of date.</string>
+    <!-- Line under the current condition; %1$s is the apparent temperature already formatted, such as "38°". Keep under 22 characters with the value filled in. -->
+    <string name="here_feels_like">Feels like %1$s</string>
+    <!-- Tiny tile labels in the weather card: chance of rain this hour (value is a percent), wind speed (value in knots), and UV index (value is a number and a uv_* band). Keep under 12 characters each. -->
+    <string name="here_rain_label">Rain chance</string>
+    <string name="here_wind_label">Wind</string>
+    <string name="here_uv_label">UV index</string>
+    <!-- Sub-headings in the weather card above the hourly row and the daily list. Keep under 22 characters each. -->
+    <string name="here_hourly_title">Next 12 hours</string>
+    <string name="here_daily_title">Next 7 days</string>
+    <!-- Label on the first chip of the hourly row, in place of the clock time. Keep under 8 characters. -->
+    <string name="here_now">Now</string>
+    <!-- Day names for the first two rows of the 7-day list; later days use the short weekday name. Keep under 10 characters each. -->
+    <string name="here_today">Today</string>
+    <string name="here_tomorrow">Tomorrow</string>
+    <!-- Red warning banner when a thunderstorm is forecast at the user's location within 3 hours; %1$s is the clock time, such as "3:00 PM". Plain and firm, never suggest conditions are safe. Keep under 80 characters with the time filled in. -->
+    <string name="here_storm_thunder">Thunderstorm likely around %1$s. Small boats, get back before then.</string>
+    <!-- Red warning banner when heavy rain is forecast at the user's location within 3 hours; %1$s is the clock time, such as "3:00 PM". Plain and firm, never suggest conditions are safe. Keep under 80 characters with the time filled in. -->
+    <string name="here_storm_rain">Heavy rain likely around %1$s. Expect poor visibility on the water.</string>
+
+    <!-- Weather condition names shown large next to the temperature, and read by screen readers for the hourly and daily icons. Keep under 20 characters each. -->
+    <string name="sky_clear">Clear</string>
+    <string name="sky_partly_cloudy">Partly cloudy</string>
+    <string name="sky_cloudy">Cloudy</string>
+    <string name="sky_fog">Fog</string>
+    <string name="sky_drizzle">Drizzle</string>
+    <string name="sky_rain">Rain</string>
+    <string name="sky_heavy_rain">Heavy rain</string>
+    <string name="sky_thunderstorm">Thunderstorm</string>
+
+    <!-- WHO UV index bands shown after the number, such as "9 · Very high": low 0-2, moderate 3-5, high 6-7, very high 8-10, extreme 11+. Keep under 12 characters each. -->
+    <string name="uv_low">Low</string>
+    <string name="uv_moderate">Moderate</string>
+    <string name="uv_high">High</string>
+    <string name="uv_very_high">Very high</string>
+    <string name="uv_extreme">Extreme</string>
+
+    <!-- Title of today's prayer times card. Shown in capitals. Keep under 20 characters. -->
+    <string name="here_prayer_title">Prayer times</string>
+    <!-- Large line naming the next prayer; %1$s is the prayer name (prayer_*), %2$s is its clock time, such as "7:12 PM". Keep under 30 characters with values filled in. -->
+    <string name="here_prayer_next">Next: %1$s %2$s</string>
+    <!-- Small line under the prayer card title naming the JAKIM zone the times are for; %1$s is the zone code, such as "TRG01", %2$s is the district name from JAKIM, such as "Kuala Terengganu". Keep under 40 characters with values filled in. -->
+    <string name="here_prayer_zone">Zone %1$s · %2$s</string>
+    <!-- Same line as here_prayer_zone when the user is at sea and the nearest coastal town's zone is used; %1$s is the zone code, such as "TRG01". Keep under 40 characters with the value filled in. -->
+    <string name="here_prayer_zone_sea">Zone %1$s · nearest coastal town</string>
+    <!-- Small source line at the bottom of the prayer card. Must say the times are official JAKIM e-Solat times. Keep under 50 characters. -->
+    <string name="here_prayer_source">Official JAKIM e-Solat times.</string>
+    <!-- Short column labels for today's prayer times, using the names JAKIM e-Solat uses in English. Keep under 8 characters each. -->
+    <string name="prayer_fajr">Fajr</string>
+    <string name="prayer_syuruk">Syuruk</string>
+    <string name="prayer_dhuhr">Dhuhr</string>
+    <string name="prayer_asr">Asr</string>
+    <string name="prayer_maghrib">Maghrib</string>
+    <string name="prayer_isha">Isha</string>
+</resources>

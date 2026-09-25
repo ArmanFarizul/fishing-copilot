@@ -3,20 +3,28 @@ package com.fishingcopilot.ui.home
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -27,14 +35,20 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fishingcopilot.R
 import com.fishingcopilot.bite.BiteForecast
 import com.fishingcopilot.catchlog.CatchConditions
+import com.fishingcopilot.data.local.SpotEntity
 import com.fishingcopilot.data.profile.UserProfile
 import com.fishingcopilot.ui.components.AvatarBadge
+import com.fishingcopilot.ui.theme.NauticalCyan
+import com.fishingcopilot.ui.theme.OceanSurface
+import com.fishingcopilot.ui.theme.TextHighContrast
 import com.fishingcopilot.ui.theme.TextMuted
 import java.time.LocalTime
 
@@ -48,8 +62,19 @@ fun HomeScreen(
     sunMoonViewModel: SunMoonViewModel?,
     biteViewModel: BiteViewModel?,
     onOpenSettings: () -> Unit,
-    onOpenWarnings: () -> Unit
+    onOpenWarnings: () -> Unit,
+    hereViewModel: HereViewModel,
+    spots: List<SpotEntity>,
+    viewedSpot: SpotEntity?,
+    homeSpotId: Long?,
+    onSelectSpot: (Long) -> Unit
 ) {
+    val hereState by hereViewModel.uiState.collectAsStateWithLifecycle()
+    // Look again whenever the angler comes back to the app; the repositories skip what is still fresh.
+    LifecycleResumeEffect(hereViewModel) {
+        hereViewModel.refresh()
+        onPauseOrDispose { }
+    }
     val period = remember { DayPeriod.fromHour(LocalTime.now().hour) }
     val tideState = homeViewModel?.uiState?.collectAsStateWithLifecycle()?.value
     val marineState = marineViewModel?.uiState?.collectAsStateWithLifecycle()?.value
@@ -80,17 +105,21 @@ fun HomeScreen(
                     style = MaterialTheme.typography.headlineMedium
                 )
             }
+            if (warningState != null) WarningBell(warningState, onOpenWarnings)
             val settingsLabel = stringResource(R.string.settings_open)
             IconButton(onClick = onOpenSettings, modifier = Modifier.semantics { contentDescription = settingsLabel }) {
                 GearIcon()
             }
         }
-        if (warningState != null) {
-            Spacer(Modifier.height(16.dp))
-            WarningChip(state = warningState, onOpen = onOpenWarnings)
-        }
+        Spacer(Modifier.height(24.dp))
+        HereSection(hereState, viewedSpot, onRefresh = hereViewModel::refresh, now = System.currentTimeMillis())
+
+        Spacer(Modifier.height(28.dp))
+        SectionLabel(R.string.spot_section)
+        Spacer(Modifier.height(4.dp))
+        SpotSwitcher(spots, viewedSpot, homeSpotId, nearbySpotId = hereState.nearbySpot?.id, onSelect = onSelectSpot)
         if (biteViewModel != null) {
-            Spacer(Modifier.height(24.dp))
+            Spacer(Modifier.height(16.dp))
             BiteScoreCard(forecast = bite)
         }
         if (homeViewModel != null && tideState != null) {
@@ -130,6 +159,52 @@ fun HomeScreen(
             )
         }
     }
+}
+
+/** The spot every card below follows; tap to pick another saved spot. */
+@Composable
+private fun SpotSwitcher(spots: List<SpotEntity>, viewed: SpotEntity?, homeSpotId: Long?, nearbySpotId: Long?, onSelect: (Long) -> Unit) {
+    var open by remember { mutableStateOf(false) }
+    Box {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .heightIn(min = 48.dp)
+                .clickable(role = Role.Button, enabled = spots.size > 1) { open = true }
+        ) {
+            Text(
+                text = viewed?.name.orEmpty(),
+                style = MaterialTheme.typography.headlineMedium,
+                color = TextHighContrast
+            )
+            if (spots.size > 1) {
+                Spacer(Modifier.width(6.dp))
+                Text("▾", style = MaterialTheme.typography.titleLarge, color = NauticalCyan)
+            }
+        }
+        DropdownMenu(expanded = open, onDismissRequest = { open = false }, containerColor = OceanSurface) {
+            spots.forEach { spot ->
+                DropdownMenuItem(
+                    text = {
+                        Column {
+                            Text(spot.name, fontWeight = if (spot.id == viewed?.id) FontWeight.Bold else FontWeight.Normal, color = TextHighContrast)
+                            val tags = listOfNotNull(
+                                stringResource(R.string.spot_home_tag).takeIf { spot.id == homeSpotId },
+                                stringResource(R.string.spot_nearby_tag).takeIf { spot.id == nearbySpotId }
+                            )
+                            if (tags.isNotEmpty()) Text(tags.joinToString(" · "), style = MaterialTheme.typography.labelSmall, color = NauticalCyan)
+                        }
+                    },
+                    onClick = { onSelect(spot.id); open = false }
+                )
+            }
+        }
+    }
+    val tags = listOfNotNull(
+        stringResource(R.string.spot_home_tag).takeIf { viewed?.id == homeSpotId },
+        stringResource(R.string.spot_nearby_tag).takeIf { viewed != null && viewed.id == nearbySpotId }
+    )
+    if (tags.isNotEmpty()) Text(tags.joinToString(" · "), style = MaterialTheme.typography.labelMedium, color = TextMuted)
 }
 
 /** What the cards show right now, frozen at the moment of the strike. */

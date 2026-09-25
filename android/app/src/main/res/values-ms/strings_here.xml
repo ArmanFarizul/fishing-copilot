@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Context for every string is in values/strings_here.xml. Keep keys and format arguments identical to that file. -->
+<resources>
+    <string name="here_section">Lokasi anda</string>
+    <string name="spot_section">Lubuk pilihan</string>
+    <string name="spot_home_tag">Lubuk utama</string>
+    <string name="spot_nearby_tag">Anda berdekatan</string>
+
+    <string name="here_permission_body">Benarkan lokasi untuk lihat cuaca, waktu solat dan jarak ke lubuk anda. Lokasi kekal dalam telefon.</string>
+    <string name="here_permission_button">Benarkan lokasi</string>
+    <string name="here_locating">Mencari lokasi anda…</string>
+    <string name="here_unavailable">Lokasi anda tidak dapat dikesan. Hidupkan lokasi dan cuba lagi.</string>
+    <string name="here_retry">Cuba lagi</string>
+    <string name="here_near_area">Berhampiran %1$s</string>
+    <string name="here_at_spot">Anda di %1$s</string>
+    <string name="here_spot_distance">%1$s: %2$s km arah %3$s dari anda</string>
+
+    <string name="here_weather_title">Cuaca di sini</string>
+    <string name="here_weather_loading">Sedang dapatkan cuaca di lokasi anda.</string>
+    <string name="here_weather_failed">Cuaca belum dapat dimuat. Periksa internet anda.</string>
+    <string name="here_weather_stale">Ramalan ini sudah lebih 3 jam, mungkin tidak terkini.</string>
+    <string name="here_feels_like">Terasa %1$s</string>
+    <string name="here_rain_label">Hujan</string>
+    <string name="here_wind_label">Angin</string>
+    <string name="here_uv_label">Indeks UV</string>
+    <string name="here_hourly_title">12 jam akan datang</string>
+    <string name="here_daily_title">7 hari</string>
+    <string name="here_now">Kini</string>
+    <string name="here_today">Hari ini</string>
+    <string name="here_tomorrow">Esok</string>
+    <string name="here_storm_thunder">Ribut petir dijangka sekitar %1$s. Bot kecil, pulang ke darat sebelum itu.</string>
+    <string name="here_storm_rain">Hujan lebat dijangka sekitar %1$s. Jarak penglihatan di laut akan terhad.</string>
+
+    <string name="sky_clear">Cerah</string>
+    <string name="sky_partly_cloudy">Sebahagian mendung</string>
+    <string name="sky_cloudy">Mendung</string>
+    <string name="sky_fog">Berkabus</string>
+    <string name="sky_drizzle">Gerimis</string>
+    <string name="sky_rain">Hujan</string>
+    <string name="sky_heavy_rain">Hujan lebat</string>
+    <string name="sky_thunderstorm">Ribut petir</string>
+
+    <string name="uv_low">Rendah</string>
+    <string name="uv_moderate">Sederhana</string>
+    <string name="uv_high">Tinggi</string>
+    <string name="uv_very_high">Amat tinggi</string>
+    <string name="uv_extreme">Melampau</string>
+
+    <string name="here_prayer_title">Waktu solat</string>
+    <string name="here_prayer_next">Seterusnya: %1$s %2$s</string>
+    <string name="here_prayer_zone">Zon %1$s · %2$s</string>
+    <string name="here_prayer_zone_sea">Zon %1$s · pekan pantai terdekat</string>
+    <string name="here_prayer_source">Waktu rasmi JAKIM e-Solat.</string>
+    <string name="prayer_fajr">Subuh</string>
+    <string name="prayer_syuruk">Syuruk</string>
+    <string name="prayer_dhuhr">Zohor</string>
+    <string name="prayer_asr">Asar</string>
+    <string name="prayer_maghrib">Maghrib</string>
+    <string name="prayer_isha">Isyak</string>
+</resources>

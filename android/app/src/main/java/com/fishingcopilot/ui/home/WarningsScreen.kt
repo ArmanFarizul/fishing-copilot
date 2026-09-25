@@ -3,20 +3,24 @@ package com.fishingcopilot.ui.home
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -29,17 +33,24 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.StrokeJoin
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.fishingcopilot.R
 import com.fishingcopilot.ui.theme.AlertRed
-import com.fishingcopilot.ui.theme.CardBorder
 import com.fishingcopilot.ui.theme.CautionYellow
 import com.fishingcopilot.ui.theme.NauticalCyan
 import com.fishingcopilot.ui.theme.OceanSurface
@@ -52,35 +63,54 @@ import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import java.util.Locale
 
-/** One line on the home screen; red when a warning names the spot's area. Opens [WarningsScreen]. */
+/**
+ * Bell beside the settings gear that opens [WarningsScreen]. A red count shows warnings naming the
+ * spot's area; the spoken label says the same in words.
+ */
 @Composable
-fun WarningChip(state: WarningState, onOpen: () -> Unit, modifier: Modifier = Modifier) {
-    val (text, color) = when (state) {
-        is WarningState.Unknown -> if (state.failed) stringResource(R.string.warning_error_offline) to TextMuted else return
-        is WarningState.Ready -> {
-            val count = state.summary.forSpot.size
-            if (count > 0) pluralStringResource(R.plurals.warning_for_spot_title, count, count) to AlertRed
-            else stringResource(R.string.warning_none_for_spot) to TextMuted
-        }
+fun WarningBell(state: WarningState, onOpen: () -> Unit, modifier: Modifier = Modifier) {
+    val count = (state as? WarningState.Ready)?.summary?.forSpot?.size ?: 0
+    val label = when {
+        count > 0 -> pluralStringResource(R.plurals.warning_for_spot_title, count, count)
+        state is WarningState.Unknown && state.failed -> stringResource(R.string.warning_error_offline)
+        else -> stringResource(R.string.warning_none_for_spot)
     }
-    Surface(
-        shape = RoundedCornerShape(14.dp),
-        color = if (color == AlertRed) AlertRed.copy(alpha = 0.10f) else OceanSurface,
-        border = if (color == AlertRed) BorderStroke(CardBorder.width, AlertRed) else CardBorder,
-        modifier = modifier.fillMaxWidth()
-    ) {
-        Row(
-            modifier = Modifier.clickable(role = Role.Button, onClick = onOpen).padding(horizontal = 16.dp, vertical = 12.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text,
-                style = MaterialTheme.typography.bodyMedium,
-                fontWeight = if (color == AlertRed) FontWeight.Bold else FontWeight.Normal,
-                color = color,
-                modifier = Modifier.weight(1f)
-            )
-            Text("›", style = MaterialTheme.typography.titleLarge, color = color)
+    IconButton(onClick = onOpen, modifier = modifier.semantics { contentDescription = label }) {
+        Box {
+            Canvas(modifier = Modifier.size(24.dp)) {
+                val tint = if (count > 0) AlertRed else TextMuted
+                val w = size.width
+                val h = size.height
+                val bell = Path().apply {
+                    moveTo(w * 0.2f, h * 0.72f)
+                    lineTo(w * 0.8f, h * 0.72f)
+                    lineTo(w * 0.72f, h * 0.6f)
+                    lineTo(w * 0.72f, h * 0.42f)
+                    cubicTo(w * 0.72f, h * 0.18f, w * 0.28f, h * 0.18f, w * 0.28f, h * 0.42f)
+                    lineTo(w * 0.28f, h * 0.6f)
+                    close()
+                }
+                drawPath(bell, tint, style = Stroke(width = 2.dp.toPx(), join = StrokeJoin.Round))
+                drawLine(tint, Offset(w * 0.5f, h * 0.12f), Offset(w * 0.5f, h * 0.2f), strokeWidth = 2.dp.toPx(), cap = StrokeCap.Round)
+                drawArc(tint, 0f, 180f, useCenter = false, topLeft = Offset(w * 0.42f, h * 0.74f), size = Size(w * 0.16f, h * 0.12f),
+                    style = Stroke(width = 2.dp.toPx(), cap = StrokeCap.Round))
+            }
+            if (count > 0) {
+                Surface(
+                    shape = CircleShape,
+                    color = AlertRed,
+                    modifier = Modifier.align(Alignment.TopEnd).offset(x = 6.dp, y = (-4).dp).size(16.dp)
+                ) {
+                    Box(contentAlignment = Alignment.Center) {
+                        Text(
+                            if (count > 9) "9+" else count.toString(),
+                            style = MaterialTheme.typography.labelSmall,
+                            fontWeight = FontWeight.Bold,
+                            color = Color.White
+                        )
+                    }
+                }
+            }
         }
     }
 }

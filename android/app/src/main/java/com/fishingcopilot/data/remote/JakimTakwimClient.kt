@@ -1,6 +1,8 @@
 package com.fishingcopilot.data.remote
 
 import com.fishingcopilot.astro.HijriDate
+import com.fishingcopilot.prayer.Prayer
+import com.fishingcopilot.prayer.PrayerDay
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
@@ -9,6 +11,7 @@ import java.io.IOException
 import java.net.HttpURLConnection
 import java.net.URL
 import java.time.LocalDate
+import java.time.LocalTime
 
 /**
  * Official Malaysian Hijri dates from JAKIM's e-solat takwim. The Hijri date is the same for every
@@ -22,6 +25,27 @@ class JakimTakwimClient(
         val response = json.decodeFromString<TakwimResponse>(get("$BASE_URL&period=year&zone=$ZONE"))
         if (!response.status.startsWith("OK")) throw IOException("JAKIM e-solat: ${response.status}")
         return response.prayerTime.associate { day -> parseDate(day.date) to parseHijri(day.hijri) }
+    }
+
+    /** Official prayer times for every day of the current month in one JAKIM zone, Malaysian time. */
+    suspend fun prayerMonth(zone: String): List<PrayerDay> {
+        val body = get("$BASE_URL&period=month&zone=$zone")
+        val response = try {
+            json.decodeFromString<TakwimResponse>(body)
+        } catch (e: IllegalArgumentException) {
+            throw IOException("Unreadable e-solat response", e)
+        }
+        if (!response.status.startsWith("OK")) throw IOException("JAKIM e-solat: ${response.status}")
+        return response.prayerTime.map { day ->
+            PrayerDay(
+                date = parseDate(day.date),
+                times = listOfNotNull(
+                    day.fajr?.let { Prayer.FAJR to it }, day.syuruk?.let { Prayer.SYURUK to it },
+                    day.dhuhr?.let { Prayer.DHUHR to it }, day.asr?.let { Prayer.ASR to it },
+                    day.maghrib?.let { Prayer.MAGHRIB to it }, day.isha?.let { Prayer.ISHA to it }
+                ).associate { (prayer, time) -> prayer to LocalTime.parse(time) }
+            )
+        }
     }
 
     private companion object {
@@ -62,4 +86,13 @@ class JakimTakwimClient(
 private data class TakwimResponse(val status: String = "", val prayerTime: List<TakwimDay> = emptyList())
 
 @Serializable
-private data class TakwimDay(val hijri: String, val date: String)
+private data class TakwimDay(
+    val hijri: String,
+    val date: String,
+    val fajr: String? = null,
+    val syuruk: String? = null,
+    val dhuhr: String? = null,
+    val asr: String? = null,
+    val maghrib: String? = null,
+    val isha: String? = null
+)

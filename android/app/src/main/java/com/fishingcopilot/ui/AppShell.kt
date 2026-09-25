@@ -33,6 +33,7 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.StrokeJoin
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -42,8 +43,10 @@ import com.fishingcopilot.FishingCopilotApp
 import com.fishingcopilot.R
 import com.fishingcopilot.catchlog.CatchConditions
 import com.fishingcopilot.data.profile.UserProfile
+import com.fishingcopilot.maps.LatLon
 import com.fishingcopilot.ui.components.StrikeBubble
 import com.fishingcopilot.ui.home.BiteViewModel
+import com.fishingcopilot.ui.home.HereViewModel
 import com.fishingcopilot.ui.home.HomeScreen
 import com.fishingcopilot.ui.home.HomeViewModel
 import com.fishingcopilot.ui.home.MarineViewModel
@@ -56,6 +59,9 @@ import com.fishingcopilot.ui.log.AddCatchSheet
 import com.fishingcopilot.ui.log.LogScreen
 import com.fishingcopilot.ui.log.LogViewModel
 import com.fishingcopilot.ui.log.LoggedCatch
+import com.fishingcopilot.ui.onboarding.awaitCurrentLocation
+import com.fishingcopilot.ui.onboarding.hasLocationPermission
+import com.fishingcopilot.ui.onboarding.placeName
 import com.fishingcopilot.ui.settings.SettingsScreen
 import com.fishingcopilot.ui.spots.SatelliteMapViewModel
 import com.fishingcopilot.ui.spots.SpotsScreen
@@ -73,8 +79,26 @@ private enum class Tab(val label: Int) { HOME(R.string.nav_home), LOG(R.string.n
 @Composable
 fun AppShell(app: FishingCopilotApp, profile: UserProfile) {
     var tab by rememberSaveable { mutableIntStateOf(Tab.HOME.ordinal) }
-    val spotId = profile.homeSpotId
+    val homeSpotId = profile.homeSpotId
     val db = app.database
+    val spots = viewModel<SpotsViewModel>(key = "spots", factory = SpotsViewModel.factory(db.fishingDao(), db.catchDao(), app.profileRepository))
+    val spotItems by spots.uiState.collectAsStateWithLifecycle()
+    val context = LocalContext.current
+    val here = viewModel<HereViewModel>(
+        key = "here",
+        factory = HereViewModel.factory(
+            db.fishingDao(), app.weatherRepository, app.prayerRepository,
+            hasPermission = { hasLocationPermission(context) },
+            locate = { awaitCurrentLocation(context)?.let { LatLon(it.latitude, it.longitude) } },
+            placeName = { placeName(context, it.latitude, it.longitude) }
+        )
+    )
+    // The spot the home cards follow. Starts on the home spot; standing at another saved spot switches to it.
+    var viewedSpotId by rememberSaveable(homeSpotId) { mutableStateOf(homeSpotId) }
+    val nearbySpotId = here.uiState.collectAsStateWithLifecycle().value.nearbySpot?.id
+    LaunchedEffect(nearbySpotId) { nearbySpotId?.let { viewedSpotId = it } }
+    // A deleted spot falls back to the home spot.
+    val spotId = viewedSpotId?.takeIf { id -> spotItems.isEmpty() || spotItems.any { it.spot.id == id } } ?: homeSpotId
 
     // Keyed by spot, so choosing another home spot builds fresh cards for it.
     val home = spotId?.let { viewModel<HomeViewModel>(key = "home-$it", factory = HomeViewModel.factory(it, db.fishingDao(), app.tideRepository)) }
@@ -94,7 +118,6 @@ fun AppShell(app: FishingCopilotApp, profile: UserProfile) {
     }
     val log = viewModel<LogViewModel>(key = "log", factory = LogViewModel.factory(db.catchDao(), db.fishingDao(), app.photoStore))
     val satelliteMap = viewModel<SatelliteMapViewModel>(key = "satellite-map", factory = SatelliteMapViewModel.factory(app.satelliteRepository))
-    val spots = viewModel<SpotsViewModel>(key = "spots", factory = SpotsViewModel.factory(db.fishingDao(), db.catchDao(), app.profileRepository))
     val logState by log.uiState.collectAsStateWithLifecycle()
 
     var strike by remember { mutableStateOf<CatchConditions?>(null) }
@@ -105,7 +128,7 @@ fun AppShell(app: FishingCopilotApp, profile: UserProfile) {
     var spotsShowMap by rememberSaveable { mutableStateOf(false) }
 
     // Re-plan prime-time alerts on launch and whenever the home spot changes.
-    LaunchedEffect(spotId) { app.goldenAlerts.reschedule() }
+    LaunchedEffect(homeSpotId) { app.goldenAlerts.reschedule() }
 
     if (showWarnings && warning != null) {
         val warningState by warning.uiState.collectAsStateWithLifecycle()
@@ -156,14 +179,19 @@ fun AppShell(app: FishingCopilotApp, profile: UserProfile) {
                 Tab.HOME -> HomeScreen(
                     profile, home, marine, satellite, warning, sunMoon, bite,
                     onOpenSettings = { showSettings = true },
-                    onOpenWarnings = { showWarnings = true }
+                    onOpenWarnings = { showWarnings = true },
+                    hereViewModel = here,
+                    spots = spotItems.map { it.spot },
+                    viewedSpot = spotItems.firstOrNull { it.spot.id == spotId }?.spot,
+                    homeSpotId = homeSpotId,
+                    onSelectSpot = { viewedSpotId = it }
                 )
                 Tab.LOG -> LogScreen(logState, onEdit = { editing = it }, onDelete = log::delete, onPeriod = log::show)
                 Tab.SPOTS -> SpotsScreen(
                     spots, satelliteMap,
                     showMap = spotsShowMap,
                     onShowMap = { spotsShowMap = it },
-                    homeSpotId = spotId,
+                    homeSpotId = homeSpotId,
                     snackbar = snackbar
                 )
             }
@@ -174,7 +202,7 @@ fun AppShell(app: FishingCopilotApp, profile: UserProfile) {
                 onStrike = {
                     // Spec "Quick Strike Snap": a long-press haptic confirms the tap even with wet hands.
                     haptics.performHapticFeedback(HapticFeedbackType.LongPress)
-                    strike = strikeConditions(profile.homeSpotId, home?.uiState?.value, sunMoon?.uiState?.value, bite?.uiState?.value)
+                    strike = strikeConditions(spotId, home?.uiState?.value, sunMoon?.uiState?.value, bite?.uiState?.value)
                 }
             )
         }

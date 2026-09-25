@@ -177,3 +177,12 @@ Diuji pada 2026-09-24. Enjin harmonik (`android/app/src/main/java/com/fishingcop
 - Enjin menghasilkan semula Open-Meteo hampir tepat. Jurang yang tinggal dengan pengukuran sebenar datang daripada model Open-Meteo sendiri: julat pasang surutnya kira-kira 20% lebih kecil di Pulau Pinang.
 - **Datum berbeza.** Open-Meteo memberi ketinggian relatif kepada aras laut min (MSL). Jadual JUPEM dan tolok IOC menggunakan datum carta atau sifar tolok, jadi nombor ketinggian tidak boleh dibandingkan terus. Masa pasang dan surut pula boleh dibandingkan.
 - Konstituen utama: Kukup M2 0.87 m, S2 0.39 m, O1 0.29 m dan K1 0.29 m (pasang surut campuran, kebanyakannya separuh harian). Pulau Pinang M2 0.50 m, S2 0.29 m dan K1 0.21 m.
+
+## 6. Cuaca dan waktu solat di lokasi semasa
+
+Diuji pada 2026-09-25.
+
+- **Open-Meteo Forecast** (`api.open-meteo.com/v1/forecast`): `current` (suhu, suhu terasa, `weather_code`, indeks UV, angin), `hourly` (suhu, `precipitation_probability`, `weather_code`) dan `daily` (7 hari) dengan `timezone=auto`. Kod cuaca ikut WMO 4677. Salinan disimpan dan dimuat semula selepas 30 minit atau jika bergerak lebih 5 km.
+- **Zon JAKIM daripada koordinat:** JAKIM tiada carian ini, jadi aplikasi guna `api.waktusolat.app/zones/{lat}/{lon}` (projek komuniti). Di laut ia tiada zon, jadi aplikasi guna zon pekan pantai terdekat (`CoastalArea.prayerZone`, disemak 2026-09-25). Lebih 400 km dari pantai Malaysia, waktu solat tidak dipaparkan.
+- **Waktu solat:** terus daripada JAKIM e-Solat (`esolatApi/TakwimSolat&period=month&zone=`), sebulan setiap muat turun, disimpan untuk luar talian.
+- **Nama tempat:** `Geocoder` Android (perlukan internet pada kebanyakan telefon); jika tiada, "Berhampiran" kawasan pesisir terdekat.
