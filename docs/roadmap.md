@@ -18,6 +18,7 @@ Status pada 2026-09-25. MVP yang dipersetujui: pasang surut, Bite Score, cuaca l
 | Peringatan waktu emas | 45 minit sebelum setiap waktu emas; bunyi loceng dan getaran; tetapan hidup/mati, bunyi, getaran dan ujian |
 | Pipeline satelit | Larian harian di GitHub (`pipeline/`); suhu, tubir suhu, klorofil-a dan kejernihan air diterbitkan ke release `latest-data` (~49 KB) |
 | Kad satelit | Suhu, plankton, kejernihan dan tubir suhu terdekat bagi lubuk utama; berfungsi tanpa internet; lihat `satelit.md` |
+| Amaran MetMalaysia | Skrin sendiri, dibuka daripada satu baris di skrin utama (merah jika ada amaran untuk kawasan lubuk); teks rasmi BM/EN; dipadankan dengan negeri lubuk; lihat `sumber-data.md` bahagian 5 |
 
 ## Belum dibuat (daripada spesifikasi)
 
@@ -27,7 +28,6 @@ Status pada 2026-09-25. MVP yang dipersetujui: pasang surut, Bite Score, cuaca l
 | Jadual pasang surut JUPEM | Belum diperoleh; akan digunakan untuk menyelaras ketepatan dan datum |
 | Tackle Advisor penuh | Saiz ladung sudah dipaparkan pada baris arus; skrin khusus belum |
 | Keselamatan marin: penggera sauh hanyut, tersadai, tebing tenggelam | Perlukan servis GPS latar belakang |
-| Amaran MetMalaysia | API diuji (`sumber-data.md`); belum dipaparkan |
 | Widget skrin utama (Glance) | Belum |
 | Sunlight Mode | Belum; warna kini ditulis terus dalam kod, perlu dipindah ke tema dahulu |
 | Penapis spesies dan Bait Tracker | Belum |
@@ -49,4 +49,5 @@ Status pada 2026-09-25. MVP yang dipersetujui: pasang surut, Bite Score, cuaca l
 - Bite Score: tiga keadaan yang tidak ditakrif dalam spesifikasi (`bite-score.md`).
 - Nama Beaufort BM tahap 7 hingga 10 menggunakan istilah DBP yang kurang dikenali (`strings_marine_guide.xml`).
 - Istilah "tiupan" untuk gust angin.
+- Amaran MetMalaysia: garis pemisah Johor (103.6° T) dan Sabah (117.2° T), dan kawasan perkapalan yang belum dipadankan (`sumber-data.md`).
 - Data satelit: tahap tubir lemah dan jalur kejernihan air ialah andaian (`satelit.md`).

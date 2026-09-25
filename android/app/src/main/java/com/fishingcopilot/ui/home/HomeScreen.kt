@@ -51,15 +51,18 @@ fun HomeScreen(
     homeViewModel: HomeViewModel?,
     marineViewModel: MarineViewModel?,
     satelliteViewModel: SatelliteViewModel?,
+    warningViewModel: WarningViewModel?,
     sunMoonViewModel: SunMoonViewModel?,
     biteViewModel: BiteViewModel?,
     onStrike: (CatchConditions) -> Unit,
-    onOpenSettings: () -> Unit
+    onOpenSettings: () -> Unit,
+    onOpenWarnings: () -> Unit
 ) {
     val period = remember { DayPeriod.fromHour(LocalTime.now().hour) }
     val tideState = homeViewModel?.uiState?.collectAsStateWithLifecycle()?.value
     val marineState = marineViewModel?.uiState?.collectAsStateWithLifecycle()?.value
     val satelliteState = satelliteViewModel?.uiState?.collectAsStateWithLifecycle()?.value
+    val warningState = warningViewModel?.uiState?.collectAsStateWithLifecycle()?.value
     val sunMoonState = sunMoonViewModel?.uiState?.collectAsStateWithLifecycle()?.value
     val bite = biteViewModel?.uiState?.collectAsStateWithLifecycle()?.value
     val haptics = LocalHapticFeedback.current
@@ -108,6 +111,10 @@ fun HomeScreen(
                 IconButton(onClick = onOpenSettings, modifier = Modifier.semantics { contentDescription = settingsLabel }) {
                     GearIcon()
                 }
+            }
+            if (warningState != null) {
+                Spacer(Modifier.height(16.dp))
+                WarningChip(state = warningState, onOpen = onOpenWarnings)
             }
             if (biteViewModel != null) {
                 Spacer(Modifier.height(24.dp))

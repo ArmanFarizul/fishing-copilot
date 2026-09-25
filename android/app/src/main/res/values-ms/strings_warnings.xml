@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Context for every string is in values/strings_warnings.xml. Keep keys and format arguments identical to that file. -->
+<resources>
+    <string name="warnings_title">Amaran cuaca &amp; laut</string>
+    <plurals name="warning_for_spot_title">
+        <item quantity="other">%1$d amaran untuk kawasan anda</item>
+    </plurals>
+    <string name="warning_none_for_spot">Belum ada amaran MetMalaysia untuk kawasan anda</string>
+    <plurals name="warning_elsewhere">
+        <item quantity="other">%1$d amaran di kawasan lain</item>
+    </plurals>
+    <string name="warning_read_more">Baca penuh</string>
+    <string name="warning_issued">Dikeluarkan %1$s</string>
+    <string name="warning_source">MetMalaysia via data.gov.my · disemak %1$s</string>
+    <string name="warning_error_offline">Amaran MetMalaysia belum dapat dimuat. Periksa internet anda.</string>
+    <string name="warning_retry">Cuba lagi</string>
+</resources>

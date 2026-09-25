@@ -47,6 +47,8 @@ import com.fishingcopilot.ui.home.HomeViewModel
 import com.fishingcopilot.ui.home.MarineViewModel
 import com.fishingcopilot.ui.home.SatelliteViewModel
 import com.fishingcopilot.ui.home.SunMoonViewModel
+import com.fishingcopilot.ui.home.WarningViewModel
+import com.fishingcopilot.ui.home.WarningsScreen
 import com.fishingcopilot.ui.log.AddCatchSheet
 import com.fishingcopilot.ui.log.LogScreen
 import com.fishingcopilot.ui.log.LogViewModel
@@ -73,6 +75,9 @@ fun AppShell(app: FishingCopilotApp, profile: UserProfile) {
     val satellite = spotId?.let {
         viewModel<SatelliteViewModel>(key = "satellite-$it", factory = SatelliteViewModel.factory(it, db.fishingDao(), app.satelliteRepository))
     }
+    val warning = spotId?.let {
+        viewModel<WarningViewModel>(key = "warning-$it", factory = WarningViewModel.factory(it, db.fishingDao(), app.warningRepository))
+    }
     val sunMoon = spotId?.let { viewModel<SunMoonViewModel>(key = "sunmoon-$it", factory = SunMoonViewModel.factory(it, db.fishingDao(), app.hijriRepository)) }
     val bite = spotId?.let {
         viewModel<BiteViewModel>(
@@ -86,10 +91,18 @@ fun AppShell(app: FishingCopilotApp, profile: UserProfile) {
 
     var strike by remember { mutableStateOf<CatchConditions?>(null) }
     var showSettings by rememberSaveable { mutableStateOf(false) }
+    var showWarnings by rememberSaveable { mutableStateOf(false) }
 
     // Re-plan prime-time alerts on launch and whenever the home spot changes.
     LaunchedEffect(spotId) { app.goldenAlerts.reschedule() }
 
+    if (showWarnings && warning != null) {
+        val warningState by warning.uiState.collectAsStateWithLifecycle()
+        Box(modifier = Modifier.fillMaxSize().background(OceanMidnight).systemBarsPadding()) {
+            WarningsScreen(warningState, onRetry = warning::retry, onBack = { showWarnings = false })
+        }
+        return
+    }
     if (showSettings) {
         Box(modifier = Modifier.fillMaxSize().background(OceanMidnight).systemBarsPadding()) {
             SettingsScreen(app, onBack = { showSettings = false })
@@ -126,9 +139,10 @@ fun AppShell(app: FishingCopilotApp, profile: UserProfile) {
         Box(modifier = Modifier.fillMaxSize().padding(padding).consumeWindowInsets(padding)) {
             when (Tab.entries[tab]) {
                 Tab.HOME -> HomeScreen(
-                    profile, home, marine, satellite, sunMoon, bite,
+                    profile, home, marine, satellite, warning, sunMoon, bite,
                     onStrike = { strike = it },
-                    onOpenSettings = { showSettings = true }
+                    onOpenSettings = { showSettings = true },
+                    onOpenWarnings = { showWarnings = true }
                 )
                 Tab.LOG -> LogScreen(logState, onDelete = log::delete)
                 Tab.SPOTS -> SpotsScreen(spots, homeSpotId = spotId, snackbar = snackbar)

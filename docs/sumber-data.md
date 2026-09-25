@@ -101,7 +101,22 @@ https://api.data.gov.my/weather/warning/
 
 Percuma, tanpa kunci. Setiap amaran ada teks dalam BM dan English (`heading_bm`, `text_bm`, `heading_en`, `text_en`) serta tempoh sah (`valid_from`, `valid_to`). Jenis amaran yang dilihat semasa diuji: "Strong Winds and Rough Seas Warning", "Thunderstorms Warning" dan nasihat siklon tropika ("No Advisory" jika tiada).
 
-Kegunaan: modul keselamatan marin. Bukan keperluan MVP.
+Kegunaan: skrin Amaran, dibuka daripada satu baris di skrin utama (`warnings/MetWarnings.kt`, `ui/home/WarningsScreen.kt`). Aplikasi menyemak setiap minit semasa skrin utama atau skrin Amaran dipaparkan, dan memuat turun jika salinan lebih 30 minit.
+
+Struktur yang dilihat pada 2026-09-25:
+
+- Tarikh tanpa zon waktu; ia waktu Malaysia.
+- Buletin marin yang sama disenaraikan beberapa kali, satu bagi setiap tempoh sah. Buletin dikira aktif jika mana-mana tempohnya belum tamat.
+- Buletin marin mengandungi "SECTION A" (perairan Malaysia, dalam 24 batu nautika) dan "SECTION B" (perkapalan). Setiap satu ada amaran bernombor `1)`, `2)`.
+- Kawasan disenaraikan selepas "waters of" atau "states of" dan dipisahkan dengan `•`, contohnya "West Johor", "Western Sabah", "Selangor (Klang and Kuala Langat)".
+- "No Advisory" bermaksud tiada siklon tropika.
+
+Padanan dengan lubuk: negeri lubuk diambil daripada kawasan pesisir terdekat (`CoastalArea`). Johor dibahagi pada 103.6° T (barat/timur), Sabah pada 117.2° T. Labuan turut dipadankan dengan "Western Sabah", kerana versi BM menulis "Sabah Barat dan Labuan". Amaran yang kawasannya tidak dapat dibaca dipaparkan untuk semua lubuk.
+
+Had yang diketahui:
+- Kawasan perkapalan (Tioman, Condore, Selat Melaka Utara/Selatan dan lain-lain) tidak dipadankan dengan lubuk. Ia hanya dipaparkan di bawah "kawasan lain".
+- Tarikh tamat dalam teks item (contohnya "until 9:00 AM") tidak dibaca. Item kekal selagi buletinnya aktif.
+- Lesen data.gov.my belum disahkan. Halaman terma tidak dapat dibuka semasa diuji, jadi aplikasi menyebut sumber sebagai "MetMalaysia via data.gov.my".
 
 Nota: URL mesti berakhir dengan `/`. Tanpanya, pelayan membalas dengan redirect 301.
 

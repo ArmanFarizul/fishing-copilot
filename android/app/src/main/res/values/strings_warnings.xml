@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Headline of the warnings screen, under the back button (settings_back). The screen lists all current official MetMalaysia weather and sea warnings (thunderstorm, strong wind and rough sea, low visibility, tropical cyclone), the user's area first. Keep under 24 characters. -->
+    <string name="warnings_title">Weather &amp; sea warnings</string>
+    <!-- Used in two places when official MetMalaysia warnings name the state or waters of the user's home spot; %1$d is how many. 1) The one-line tappable row on the home screen, in red, followed by a "›" chevron that opens the warnings screen. 2) The section label above those warnings on the warnings screen, shown in capitals. Keep under 32 characters. -->
+    <plurals name="warning_for_spot_title">
+        <item quantity="one">Warning for your area</item>
+        <item quantity="other">%1$d warnings for your area</item>
+    </plurals>
+    <!-- Shown when no MetMalaysia warning names the user's area: in muted text on the one-line home screen row (followed by a "›" chevron that opens the warnings screen), and at the top of the warnings screen. Modest only: never say the sea is safe or all clear, because MetMalaysia may still issue one and local weather can change. Keep under 50 characters. -->
+    <string name="warning_none_for_spot">No MetMalaysia warning for your area right now</string>
+    <!-- Section label on the warnings screen, shown in capitals, above the warnings that name other states or waters of Malaysia; %1$d is how many. Keep under 40 characters. -->
+    <plurals name="warning_elsewhere">
+        <item quantity="one">%1$d warning elsewhere in Malaysia</item>
+        <item quantity="other">%1$d warnings elsewhere in Malaysia</item>
+    </plurals>
+    <!-- Small hint under a warning whose text is cut short; tapping the warning shows the full text. Keep under 20 characters. -->
+    <string name="warning_read_more">Tap to read all</string>
+    <!-- Small line under each warning; %1$s is when MetMalaysia issued it, already formatted as a date and time such as "25 Sep 2026, 10:21 PM". Keep under 30 characters. -->
+    <string name="warning_issued">Issued %1$s</string>
+    <!-- Source line at the bottom of the warnings screen. Must name MetMalaysia (who writes the warnings) and data.gov.my (where the app gets them). %1$s is when the app last checked, already formatted as a date and time such as "25 Sep 2026, 10:21 PM". Keep under 60 characters. -->
+    <string name="warning_source">MetMalaysia via data.gov.my · checked %1$s</string>
+    <!-- Shown when the app could not check for warnings and has nothing saved: in muted text on the one-line home screen row (followed by a "›" chevron), and on the warnings screen next to the warning_retry button (keep under 16 characters). Must not suggest there are no warnings. Keep under 70 characters. -->
+    <string name="warning_error_offline">Couldn\'t load MetMalaysia warnings. Check your internet.</string>
+    <string name="warning_retry">Try again</string>
+</resources>
