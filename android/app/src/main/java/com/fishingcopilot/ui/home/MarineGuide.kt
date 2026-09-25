@@ -9,6 +9,7 @@ import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -33,6 +34,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
@@ -52,7 +54,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.fishingcopilot.R
 import com.fishingcopilot.ui.theme.AlertRed
+import com.fishingcopilot.ui.theme.AnimationBackdrop
 import com.fishingcopilot.ui.theme.CautionYellow
+import com.fishingcopilot.ui.theme.InsetBorder
 import com.fishingcopilot.ui.theme.NauticalCyan
 import com.fishingcopilot.ui.theme.OceanCardBorder
 import com.fishingcopilot.ui.theme.OceanMidnight
@@ -89,6 +93,7 @@ fun GuideRow(
     Surface(
         shape = RoundedCornerShape(14.dp),
         color = OceanMidnight,
+        border = InsetBorder,
         modifier = Modifier
             .fillMaxWidth()
             .clickable(role = Role.Button) { expanded = !expanded }
@@ -101,7 +106,12 @@ fun GuideRow(
                     Text(comparison, style = MaterialTheme.typography.bodySmall, color = TextHighContrast)
                 }
                 Spacer(Modifier.width(10.dp))
-                Box(modifier = Modifier.size(width = 96.dp, height = 48.dp)) { animation() }
+                Box(
+                    modifier = Modifier
+                        .size(width = 96.dp, height = 48.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(AnimationBackdrop)
+                ) { animation() }
             }
             Spacer(Modifier.height(8.dp))
             LevelBar(levelIndex, levelCount, levelColor, levelName)

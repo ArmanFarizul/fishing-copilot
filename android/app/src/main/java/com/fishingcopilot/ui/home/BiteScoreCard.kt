@@ -53,6 +53,7 @@ import com.fishingcopilot.bite.LightFactor
 import com.fishingcopilot.bite.TideFactor
 import com.fishingcopilot.marine.PressureTrend
 import com.fishingcopilot.ui.theme.AlertRed
+import com.fishingcopilot.ui.theme.CardBorder
 import com.fishingcopilot.ui.theme.CautionYellow
 import com.fishingcopilot.ui.theme.NauticalCyan
 import com.fishingcopilot.ui.theme.OceanCardBorder
@@ -73,7 +74,7 @@ fun BiteScoreCard(forecast: BiteForecast?, modifier: Modifier = Modifier) {
     Surface(
         shape = RoundedCornerShape(20.dp),
         color = OceanSurface,
-        border = BorderStroke(1.dp, OceanCardBorder),
+        border = CardBorder,
         modifier = modifier.fillMaxWidth()
     ) {
         Column(modifier = Modifier.padding(16.dp)) {

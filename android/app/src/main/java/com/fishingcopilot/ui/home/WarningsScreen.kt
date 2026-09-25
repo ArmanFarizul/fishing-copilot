@@ -39,9 +39,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.fishingcopilot.R
 import com.fishingcopilot.ui.theme.AlertRed
+import com.fishingcopilot.ui.theme.CardBorder
 import com.fishingcopilot.ui.theme.CautionYellow
 import com.fishingcopilot.ui.theme.NauticalCyan
-import com.fishingcopilot.ui.theme.OceanCardBorder
 import com.fishingcopilot.ui.theme.OceanSurface
 import com.fishingcopilot.ui.theme.TextHighContrast
 import com.fishingcopilot.ui.theme.TextMuted
@@ -66,7 +66,7 @@ fun WarningChip(state: WarningState, onOpen: () -> Unit, modifier: Modifier = Mo
     Surface(
         shape = RoundedCornerShape(14.dp),
         color = if (color == AlertRed) AlertRed.copy(alpha = 0.10f) else OceanSurface,
-        border = BorderStroke(1.dp, if (color == AlertRed) AlertRed else OceanCardBorder),
+        border = if (color == AlertRed) BorderStroke(CardBorder.width, AlertRed) else CardBorder,
         modifier = modifier.fillMaxWidth()
     ) {
         Row(

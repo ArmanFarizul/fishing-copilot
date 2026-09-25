@@ -3,8 +3,13 @@ package com.fishingcopilot.ui.home
 import android.provider.Settings
 import androidx.annotation.StringRes
 import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
@@ -52,6 +57,8 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.PathEffect
+import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.clipPath
@@ -67,13 +74,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.fishingcopilot.R
-import com.fishingcopilot.ui.components.hijriDateText
-import com.fishingcopilot.ui.components.label
 import com.fishingcopilot.astro.MoonPhaseName
 import com.fishingcopilot.astro.SolunarType
 import com.fishingcopilot.astro.TideStrength
 import com.fishingcopilot.data.hijri.HijriEntry
+import com.fishingcopilot.ui.components.hijriDateText
+import com.fishingcopilot.ui.components.label
+import com.fishingcopilot.ui.theme.CardBorder
 import com.fishingcopilot.ui.theme.CautionYellow
+import com.fishingcopilot.ui.theme.InsetBorder
 import com.fishingcopilot.ui.theme.NauticalCyan
 import com.fishingcopilot.ui.theme.OceanCardBorder
 import com.fishingcopilot.ui.theme.OceanMidnight
@@ -84,13 +93,6 @@ import com.fishingcopilot.ui.theme.TextMuted
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
-import androidx.compose.animation.core.FastOutSlowInEasing
-import androidx.compose.animation.core.RepeatMode
-import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.rememberInfiniteTransition
-import androidx.compose.ui.graphics.PathEffect
-import androidx.compose.ui.graphics.StrokeCap
 import java.time.Duration
 import java.time.LocalDate
 import java.time.ZonedDateTime
@@ -105,7 +107,7 @@ fun SunMoonCard(state: SunMoonUiState?, modifier: Modifier = Modifier) {
     Surface(
         shape = RoundedCornerShape(20.dp),
         color = OceanSurface,
-        border = BorderStroke(1.dp, OceanCardBorder),
+        border = CardBorder,
         modifier = modifier.fillMaxWidth()
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
@@ -526,7 +528,7 @@ private fun animationsDisabled(): Boolean {
 
 @Composable
 private fun TimeColumn(@StringRes label: Int, time: ZonedDateTime?, locale: Locale, modifier: Modifier) {
-    Surface(shape = RoundedCornerShape(12.dp), color = OceanMidnight, modifier = modifier) {
+    Surface(shape = RoundedCornerShape(12.dp), color = OceanMidnight, border = InsetBorder, modifier = modifier) {
         Column(modifier = Modifier.padding(horizontal = 8.dp, vertical = 8.dp)) {
             Text(stringResource(label), style = MaterialTheme.typography.labelSmall, color = TextMuted, maxLines = 1)
             Text(

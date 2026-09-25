@@ -35,9 +35,10 @@ import com.fishingcopilot.satellite.FrontStrength
 import com.fishingcopilot.satellite.NearbyFront
 import com.fishingcopilot.satellite.PlanktonLevel
 import com.fishingcopilot.satellite.WaterTempLevel
+import com.fishingcopilot.ui.theme.CardBorder
 import com.fishingcopilot.ui.theme.CautionYellow
+import com.fishingcopilot.ui.theme.InsetBorder
 import com.fishingcopilot.ui.theme.NauticalCyan
-import com.fishingcopilot.ui.theme.OceanCardBorder
 import com.fishingcopilot.ui.theme.OceanMidnight
 import com.fishingcopilot.ui.theme.OceanSurface
 import com.fishingcopilot.ui.theme.PrimeGreen
@@ -55,7 +56,7 @@ fun SatelliteCard(state: SatelliteCardState, onRetry: () -> Unit, modifier: Modi
     Surface(
         shape = RoundedCornerShape(20.dp),
         color = OceanSurface,
-        border = BorderStroke(1.dp, OceanCardBorder),
+        border = CardBorder,
         modifier = modifier.fillMaxWidth()
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
@@ -202,7 +203,7 @@ private fun FrontRow(front: NearbyFront?) {
 
 @Composable
 private fun SatelliteRow(title: String, value: String?, levelName: String, levelColor: Color, meaning: String) {
-    Surface(shape = RoundedCornerShape(14.dp), color = OceanMidnight) {
+    Surface(shape = RoundedCornerShape(14.dp), color = OceanMidnight, border = InsetBorder) {
         Column(modifier = Modifier.fillMaxWidth().padding(12.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(title, style = MaterialTheme.typography.labelMedium, color = TextMuted, modifier = Modifier.weight(1f))

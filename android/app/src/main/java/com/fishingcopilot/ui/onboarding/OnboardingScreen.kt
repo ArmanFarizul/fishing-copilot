@@ -83,6 +83,7 @@ import com.fishingcopilot.ui.components.label
 import com.fishingcopilot.ui.components.subtitle
 import com.fishingcopilot.ui.components.tag
 import com.fishingcopilot.ui.spots.SpotPicker
+import com.fishingcopilot.ui.theme.CardBorder
 import com.fishingcopilot.ui.theme.NauticalCyan
 import com.fishingcopilot.ui.theme.OceanCardBorder
 import com.fishingcopilot.ui.theme.OceanMidnight
@@ -289,7 +290,7 @@ private fun IdentityStep(
     Surface(
         shape = RoundedCornerShape(16.dp),
         color = OceanSurface,
-        border = BorderStroke(1.dp, OceanCardBorder),
+        border = CardBorder,
         modifier = Modifier.fillMaxWidth()
     ) {
         Row(

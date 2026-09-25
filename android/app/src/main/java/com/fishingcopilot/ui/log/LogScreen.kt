@@ -46,8 +46,8 @@ import com.fishingcopilot.data.profile.Species
 import com.fishingcopilot.ui.components.imageRes
 import com.fishingcopilot.ui.components.label
 import com.fishingcopilot.ui.theme.AlertRed
+import com.fishingcopilot.ui.theme.CardBorder
 import com.fishingcopilot.ui.theme.NauticalCyan
-import com.fishingcopilot.ui.theme.OceanCardBorder
 import com.fishingcopilot.ui.theme.OceanMidnight
 import com.fishingcopilot.ui.theme.OceanSurface
 import com.fishingcopilot.ui.theme.TextHighContrast
@@ -102,7 +102,7 @@ fun LogScreen(state: LogUiState, onEdit: (LoggedCatch) -> Unit, onDelete: (Catch
 
 @Composable
 private fun EmptyLog() {
-    Surface(shape = RoundedCornerShape(20.dp), color = OceanSurface, border = BorderStroke(1.dp, OceanCardBorder)) {
+    Surface(shape = RoundedCornerShape(20.dp), color = OceanSurface, border = CardBorder) {
         Column(modifier = Modifier.fillMaxWidth().padding(20.dp)) {
             Text(stringResource(R.string.log_empty_title), style = MaterialTheme.typography.titleMedium, color = TextHighContrast)
             Spacer(Modifier.height(6.dp))
@@ -113,7 +113,7 @@ private fun EmptyLog() {
 
 @Composable
 private fun SummaryCard(summary: LogSummary) {
-    Surface(shape = RoundedCornerShape(20.dp), color = OceanSurface, border = BorderStroke(1.dp, OceanCardBorder)) {
+    Surface(shape = RoundedCornerShape(20.dp), color = OceanSurface, border = CardBorder) {
         Column(modifier = Modifier.fillMaxWidth().padding(16.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
             Text(stringResource(R.string.log_summary_title).uppercase(), style = MaterialTheme.typography.labelMedium, color = NauticalCyan)
             Text(
@@ -150,7 +150,7 @@ private fun SummaryCard(summary: LogSummary) {
 private fun CatchCard(logged: LoggedCatch, locale: Locale, onEdit: () -> Unit, onDelete: () -> Unit) {
     val log = logged.entity
     val name = speciesName(log.species)
-    Surface(shape = RoundedCornerShape(18.dp), color = OceanSurface, border = BorderStroke(1.dp, OceanCardBorder)) {
+    Surface(shape = RoundedCornerShape(18.dp), color = OceanSurface, border = CardBorder) {
         Row(modifier = Modifier.fillMaxWidth().padding(12.dp)) {
             CatchThumbnail(log, name)
             Spacer(Modifier.width(12.dp))

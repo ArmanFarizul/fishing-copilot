@@ -9,6 +9,8 @@ import com.fishingcopilot.catchlog.PhotoStore
 import com.fishingcopilot.data.hijri.HijriRepository
 import com.fishingcopilot.data.local.FishingDatabase
 import com.fishingcopilot.data.marine.MarineRepository
+import com.fishingcopilot.data.profile.DataStoreProfileRepository
+import com.fishingcopilot.data.profile.ProfileRepository
 import com.fishingcopilot.data.remote.JakimTakwimClient
 import com.fishingcopilot.data.remote.MetWarningClient
 import com.fishingcopilot.data.remote.OpenMeteoMarineClient
@@ -18,10 +20,9 @@ import com.fishingcopilot.data.satellite.SatelliteRepository
 import com.fishingcopilot.data.tide.TideRepository
 import com.fishingcopilot.data.warnings.WarningRepository
 import com.fishingcopilot.maps.OfflineMaps
+import com.fishingcopilot.ui.theme.DisplaySettingsRepository
 import org.maplibre.android.MapLibre
 import java.io.File
-import com.fishingcopilot.data.profile.DataStoreProfileRepository
-import com.fishingcopilot.data.profile.ProfileRepository
 
 class FishingCopilotApp : Application() {
     override fun onCreate() {
@@ -42,6 +43,7 @@ class FishingCopilotApp : Application() {
         WarningRepository(File(filesDir, "warnings/metmalaysia.json"), MetWarningClient())
     }
     val offlineMaps: OfflineMaps by lazy { OfflineMaps(this, database.fishingDao()) }
+    val displaySettings: DisplaySettingsRepository by lazy { DisplaySettingsRepository(this) }
     val photoStore: PhotoStore by lazy { AppPhotoStore(this) }
     val alertSettings: AlertSettingsRepository by lazy { AlertSettingsRepository(this) }
     val biteForecaster: BiteForecaster by lazy {

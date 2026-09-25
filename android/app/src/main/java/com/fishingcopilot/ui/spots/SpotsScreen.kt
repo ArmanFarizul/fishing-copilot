@@ -44,8 +44,8 @@ import com.fishingcopilot.R
 import com.fishingcopilot.data.local.SpotEntity
 import com.fishingcopilot.ui.onboarding.SpotSelection
 import com.fishingcopilot.ui.theme.AlertRed
+import com.fishingcopilot.ui.theme.CardBorder
 import com.fishingcopilot.ui.theme.NauticalCyan
-import com.fishingcopilot.ui.theme.OceanCardBorder
 import com.fishingcopilot.ui.theme.OceanMidnight
 import com.fishingcopilot.ui.theme.OceanSurface
 import com.fishingcopilot.ui.theme.PrimeGreen
@@ -181,7 +181,7 @@ private fun SpotCard(item: SpotItem, locale: Locale, onSetHome: () -> Unit, onRe
     Surface(
         shape = RoundedCornerShape(18.dp),
         color = OceanSurface,
-        border = BorderStroke(1.dp, if (item.isHome) PrimeGreen.copy(alpha = 0.6f) else OceanCardBorder)
+        border = if (item.isHome) BorderStroke(CardBorder.width, PrimeGreen) else CardBorder
     ) {
         Column(modifier = Modifier.fillMaxWidth().padding(14.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {

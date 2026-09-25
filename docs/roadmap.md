@@ -20,6 +20,7 @@ Status pada 2026-09-25. MVP yang dipersetujui: pasang surut, Bite Score, cuaca l
 | Kad satelit | Suhu, plankton, kejernihan dan tubir suhu terdekat bagi lubuk utama; berfungsi tanpa internet; lihat `satelit.md` |
 | Peta luar talian | Tetapan: muat turun peta asas OpenFreeMap (zoom 0–10 seluruh kawasan, zoom 11–14 kira-kira 40 km sekeliling setiap lubuk) ke pangkalan data luar talian MapLibre |
 | Peta satelit | Tab Lubuk, paparan Peta: petak berwarna bagi plankton, suhu, tubir suhu atau kejernihan; ketik petak untuk nilai dan koordinat (darjah-minit dan perpuluhan); pin lubuk sendiri |
+| Sunlight Mode | Suis dalam Tetapan (bahagian Paparan); latar putih, sempadan kad hitam 2 dp, teks hitam, kecerahan skrin penuh semasa aplikasi dibuka; semua warna kini melalui satu palet (`ui/theme/Color.kt`) |
 | Kawalan peta | Butang + / −, butang ke lubuk utama, dan pergi ke koordinat (perpuluhan, darjah-minit atau darjah-minit-saat; huruf N/S/E/W atau U/S/T/B) pada kedua-dua peta; berfungsi tanpa internet |
 | Amaran MetMalaysia | Skrin sendiri, dibuka daripada satu baris di skrin utama (merah jika ada amaran untuk kawasan lubuk); teks rasmi BM/EN; dipadankan dengan negeri lubuk; lihat `sumber-data.md` bahagian 5 |
 
@@ -32,7 +33,6 @@ Status pada 2026-09-25. MVP yang dipersetujui: pasang surut, Bite Score, cuaca l
 | Tackle Advisor penuh | Saiz ladung sudah dipaparkan pada baris arus; skrin khusus belum |
 | Keselamatan marin: penggera sauh hanyut, tersadai, tebing tenggelam | Perlukan servis GPS latar belakang |
 | Widget skrin utama (Glance) | Belum |
-| Sunlight Mode | Belum; warna kini ditulis terus dalam kod, perlu dipindah ke tema dahulu |
 | Penapis spesies dan Bait Tracker | Belum |
 
 ## Di luar spesifikasi (ditanya oleh pemilik)

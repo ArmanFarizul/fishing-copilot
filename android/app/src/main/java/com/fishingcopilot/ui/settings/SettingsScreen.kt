@@ -56,11 +56,13 @@ import com.fishingcopilot.FishingCopilotApp
 import com.fishingcopilot.R
 import com.fishingcopilot.maps.OfflineMaps
 import com.fishingcopilot.maps.OfflineMapsState
+import com.fishingcopilot.ui.theme.CardBorder
 import com.fishingcopilot.ui.theme.CautionYellow
 import com.fishingcopilot.ui.theme.NauticalCyan
 import com.fishingcopilot.ui.theme.OceanCardBorder
 import com.fishingcopilot.ui.theme.OceanMidnight
 import com.fishingcopilot.ui.theme.OceanSurface
+import com.fishingcopilot.ui.theme.SunlightMode
 import com.fishingcopilot.ui.theme.TextHighContrast
 import com.fishingcopilot.ui.theme.TextMuted
 import kotlinx.coroutines.launch
@@ -120,7 +122,7 @@ fun SettingsScreen(app: FishingCopilotApp, onBack: () -> Unit) {
         Text(stringResource(R.string.alerts_section).uppercase(), style = MaterialTheme.typography.labelMedium, color = NauticalCyan)
         Spacer(Modifier.height(8.dp))
 
-        Surface(shape = RoundedCornerShape(18.dp), color = OceanSurface, border = BorderStroke(1.dp, OceanCardBorder)) {
+        Surface(shape = RoundedCornerShape(18.dp), color = OceanSurface, border = CardBorder) {
             Column(modifier = Modifier.fillMaxWidth().padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 SwitchRow(
                     title = stringResource(R.string.alerts_golden_title),
@@ -190,6 +192,17 @@ fun SettingsScreen(app: FishingCopilotApp, onBack: () -> Unit) {
         }
 
         Spacer(Modifier.height(24.dp))
+        Text(stringResource(R.string.sunlight_section).uppercase(), style = MaterialTheme.typography.labelMedium, color = NauticalCyan)
+        Spacer(Modifier.height(8.dp))
+        Surface(shape = RoundedCornerShape(18.dp), color = OceanSurface, border = CardBorder) {
+            Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
+                SwitchRow(stringResource(R.string.sunlight_title), stringResource(R.string.sunlight_body), SunlightMode.enabled) {
+                    scope.launch { app.displaySettings.setSunlight(it) }
+                }
+            }
+        }
+
+        Spacer(Modifier.height(24.dp))
         OfflineMapsSection(app.offlineMaps)
     }
 }
@@ -203,7 +216,7 @@ private fun OfflineMapsSection(offline: OfflineMaps) {
 
     Text(stringResource(R.string.offline_section).uppercase(), style = MaterialTheme.typography.labelMedium, color = NauticalCyan)
     Spacer(Modifier.height(8.dp))
-    Surface(shape = RoundedCornerShape(18.dp), color = OceanSurface, border = BorderStroke(1.dp, OceanCardBorder)) {
+    Surface(shape = RoundedCornerShape(18.dp), color = OceanSurface, border = CardBorder) {
         Column(modifier = Modifier.fillMaxWidth().padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
             Text(stringResource(R.string.offline_body), style = MaterialTheme.typography.bodySmall, color = TextHighContrast)
             when (val current = state) {

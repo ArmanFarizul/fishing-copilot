@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Section heading on the Settings screen above the sunlight mode switch. Shown in capitals. Keep under 20 characters. -->
+    <string name="sunlight_section">Display</string>
+    <!-- Switch title in Settings: the name of the mode that makes the app readable on a boat under strong midday sun. Keep under 24 characters. -->
+    <string name="sunlight_title">Sunlight mode</string>
+    <!-- One line under the switch: a white, high-contrast screen at full brightness for reading in bright sun, and it uses more battery. Keep under 90 characters. -->
+    <string name="sunlight_body">White, high-contrast screen at full brightness for bright sun. Uses more battery.</string>
+</resources>

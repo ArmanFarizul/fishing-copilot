@@ -39,6 +39,8 @@ import com.fishingcopilot.R
 import com.fishingcopilot.tide.TideEvent
 import com.fishingcopilot.tide.TideSummary
 import com.fishingcopilot.ui.components.label
+import com.fishingcopilot.ui.theme.CardBorder
+import com.fishingcopilot.ui.theme.InsetBorder
 import com.fishingcopilot.ui.theme.NauticalCyan
 import com.fishingcopilot.ui.theme.OceanCardBorder
 import com.fishingcopilot.ui.theme.OceanMidnight
@@ -68,7 +70,7 @@ fun TideCard(
     Surface(
         shape = RoundedCornerShape(20.dp),
         color = OceanSurface,
-        border = BorderStroke(1.dp, OceanCardBorder),
+        border = CardBorder,
         modifier = modifier.fillMaxWidth()
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
@@ -192,7 +194,7 @@ private fun NextEvent(labelRes: Int, event: TideEvent, now: Long, modifier: Modi
     } else {
         stringResource(R.string.tide_countdown_minutes, minutes)
     }
-    Surface(shape = RoundedCornerShape(14.dp), color = OceanMidnight, modifier = modifier) {
+    Surface(shape = RoundedCornerShape(14.dp), color = OceanMidnight, border = InsetBorder, modifier = modifier) {
         Column(modifier = Modifier.padding(horizontal = 12.dp, vertical = 10.dp)) {
             // Label and time share one string; let it wrap so the time is never clipped on narrow cards.
             Text(stringResource(labelRes, time), style = MaterialTheme.typography.titleMedium, color = TextHighContrast)

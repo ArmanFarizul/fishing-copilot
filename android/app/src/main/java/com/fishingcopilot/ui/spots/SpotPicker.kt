@@ -58,12 +58,12 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.unit.dp
 import com.fishingcopilot.R
+import com.fishingcopilot.data.spots.CoastalArea
 import com.fishingcopilot.maps.rememberMapController
+import com.fishingcopilot.ui.components.GlowCheckIndicator
 import com.fishingcopilot.ui.components.GoToCoordinateButton
 import com.fishingcopilot.ui.components.GoToCoordinateDialog
 import com.fishingcopilot.ui.components.MapZoomControls
-import com.fishingcopilot.data.spots.CoastalArea
-import com.fishingcopilot.ui.components.GlowCheckIndicator
 import com.fishingcopilot.ui.components.icon
 import com.fishingcopilot.ui.components.label
 import com.fishingcopilot.ui.components.subtitle
@@ -71,6 +71,7 @@ import com.fishingcopilot.ui.onboarding.SpotMap
 import com.fishingcopilot.ui.onboarding.SpotSelection
 import com.fishingcopilot.ui.onboarding.fetchCurrentLocation
 import com.fishingcopilot.ui.onboarding.hasLocationPermission
+import com.fishingcopilot.ui.theme.CardBorder
 import com.fishingcopilot.ui.theme.NauticalCyan
 import com.fishingcopilot.ui.theme.OceanCardBorder
 import com.fishingcopilot.ui.theme.OceanMidnight
@@ -129,7 +130,7 @@ fun ColumnScope.SpotPicker(
             .weight(1f)
             .fillMaxWidth()
             .clip(RoundedCornerShape(20.dp))
-            .border(1.dp, OceanCardBorder, RoundedCornerShape(20.dp))
+            .border(CardBorder, RoundedCornerShape(20.dp))
             .background(OceanSurface)
     ) {
         SpotMap(
@@ -255,7 +256,7 @@ private fun SelectionCard(
     Surface(
         shape = RoundedCornerShape(16.dp),
         color = OceanSurface,
-        border = BorderStroke(1.dp, if (selection != null) NauticalCyan.copy(alpha = 0.6f) else OceanCardBorder),
+        border = if (selection != null) BorderStroke(CardBorder.width, NauticalCyan) else CardBorder,
         modifier = Modifier.fillMaxWidth()
     ) {
         Column(modifier = Modifier.padding(horizontal = 14.dp, vertical = 12.dp)) {

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Context for every string is in values/strings_display.xml. Keep keys and format arguments identical to that file. -->
+<resources>
+
+    <string name="sunlight_section">Paparan</string>
+    <string name="sunlight_title">Mod cahaya matahari</string>
+    <string name="sunlight_body">Skrin putih kontras tinggi, terang penuh untuk panas terik. Bateri lebih cepat habis.</string>
+</resources>

@@ -35,9 +35,9 @@ import com.fishingcopilot.marine.SeaState
 import com.fishingcopilot.marine.WaveBody
 import com.fishingcopilot.marine.WaveStatus
 import com.fishingcopilot.ui.theme.AlertRed
+import com.fishingcopilot.ui.theme.CardBorder
 import com.fishingcopilot.ui.theme.CautionYellow
 import com.fishingcopilot.ui.theme.NauticalCyan
-import com.fishingcopilot.ui.theme.OceanCardBorder
 import com.fishingcopilot.ui.theme.OceanMidnight
 import com.fishingcopilot.ui.theme.OceanSurface
 import com.fishingcopilot.ui.theme.PrimeGreen
@@ -56,7 +56,7 @@ fun MarineCard(state: MarineCardState, onRetry: () -> Unit, modifier: Modifier =
     Surface(
         shape = RoundedCornerShape(20.dp),
         color = OceanSurface,
-        border = BorderStroke(1.dp, OceanCardBorder),
+        border = CardBorder,
         modifier = modifier.fillMaxWidth()
     ) {
         Column(modifier = Modifier.padding(16.dp)) {

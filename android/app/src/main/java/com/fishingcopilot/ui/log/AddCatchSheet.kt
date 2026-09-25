@@ -53,6 +53,7 @@ import com.fishingcopilot.data.local.CatchLogEntity
 import com.fishingcopilot.data.profile.Species
 import com.fishingcopilot.ui.components.hijriDateText
 import com.fishingcopilot.ui.components.label
+import com.fishingcopilot.ui.theme.CardBorder
 import com.fishingcopilot.ui.theme.NauticalCyan
 import com.fishingcopilot.ui.theme.OceanCardBorder
 import com.fishingcopilot.ui.theme.OceanMidnight
@@ -201,7 +202,7 @@ fun AddCatchSheet(
 @Composable
 private fun ConditionsPanel(conditions: CatchConditions, locale: Locale, saved: Boolean) {
     val none = stringResource(R.string.catch_no_data)
-    Surface(shape = RoundedCornerShape(16.dp), color = OceanSurface, border = BorderStroke(1.dp, OceanCardBorder)) {
+    Surface(shape = RoundedCornerShape(16.dp), color = OceanSurface, border = CardBorder) {
         Column(modifier = Modifier.fillMaxWidth().padding(14.dp)) {
             Text(stringResource(R.string.catch_autofill_title), style = MaterialTheme.typography.labelMedium, color = NauticalCyan)
             Spacer(Modifier.height(6.dp))

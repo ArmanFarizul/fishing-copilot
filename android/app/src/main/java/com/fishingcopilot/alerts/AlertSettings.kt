@@ -26,7 +26,8 @@ data class AlertSettings(
     val lastNotifiedStart: Long? = null
 )
 
-private val Context.settingsDataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
+// One store per file: DataStore allows only one instance for "settings", so display settings share it.
+internal val Context.settingsDataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
 class AlertSettingsRepository(context: Context) {
     private val store = context.applicationContext.settingsDataStore
