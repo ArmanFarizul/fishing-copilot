@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Context for every string is in values/strings_offline.xml. Keep keys and format arguments identical to that file. -->
+<resources>
+    <string name="offline_section">Peta luar talian</string>
+    <string name="offline_body">Simpan peta dalam telefon supaya masih boleh guna di laut walaupun tiada line. Elok muat turun guna Wi-Fi.</string>
+
+    <string name="offline_status_none">Belum ada peta disimpan</string>
+    <string name="offline_status_ready">%1$s disimpan %2$s</string>
+    <string name="offline_status_incomplete">%1$s disimpan. Muat turun terhenti sebelum siap.</string>
+    <string name="offline_status_new_spots">%1$s disimpan. Lubuk baru atau dialih belum termasuk.</string>
+    <string name="offline_status_failed">Muat turun lepas tak siap. Cuba lagi guna Wi-Fi.</string>
+    <string name="offline_downloading">Memuat turun %1$d%% · %2$s</string>
+
+    <string name="offline_download">Muat turun peta</string>
+    <string name="offline_resume">Sambung muat turun</string>
+    <string name="offline_download_new">Muat turun lubuk baru</string>
+    <string name="offline_cancel">Jeda</string>
+    <string name="offline_delete">Padam peta</string>
+</resources>

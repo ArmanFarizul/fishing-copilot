@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.provider.Settings
+import android.text.format.Formatter
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -22,6 +23,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
@@ -31,6 +33,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -51,6 +54,8 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fishingcopilot.FishingCopilotApp
 import com.fishingcopilot.R
+import com.fishingcopilot.maps.OfflineMaps
+import com.fishingcopilot.maps.OfflineMapsState
 import com.fishingcopilot.ui.theme.CautionYellow
 import com.fishingcopilot.ui.theme.NauticalCyan
 import com.fishingcopilot.ui.theme.OceanCardBorder
@@ -180,6 +185,77 @@ fun SettingsScreen(app: FishingCopilotApp, onBack: () -> Unit) {
                         colors = ButtonDefaults.buttonColors(containerColor = CautionYellow, contentColor = OceanMidnight),
                         shape = RoundedCornerShape(12.dp)
                     ) { Text(stringResource(R.string.alerts_exact_button), fontWeight = FontWeight.Bold) }
+                }
+            }
+        }
+
+        Spacer(Modifier.height(24.dp))
+        OfflineMapsSection(app.offlineMaps)
+    }
+}
+
+@Composable
+private fun OfflineMapsSection(offline: OfflineMaps) {
+    val context = LocalContext.current
+    val state by offline.state.collectAsStateWithLifecycle()
+    LaunchedEffect(Unit) { offline.refresh() }
+    fun size(bytes: Long) = Formatter.formatShortFileSize(context, bytes)
+
+    Text(stringResource(R.string.offline_section).uppercase(), style = MaterialTheme.typography.labelMedium, color = NauticalCyan)
+    Spacer(Modifier.height(8.dp))
+    Surface(shape = RoundedCornerShape(18.dp), color = OceanSurface, border = BorderStroke(1.dp, OceanCardBorder)) {
+        Column(modifier = Modifier.fillMaxWidth().padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+            Text(stringResource(R.string.offline_body), style = MaterialTheme.typography.bodySmall, color = TextHighContrast)
+            when (val current = state) {
+                OfflineMapsState.Checking -> Unit
+                is OfflineMapsState.Downloading -> {
+                    LinearProgressIndicator(
+                        progress = { current.fraction },
+                        color = NauticalCyan,
+                        trackColor = OceanCardBorder,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    Text(
+                        stringResource(R.string.offline_downloading, (current.fraction * 100).toInt(), size(current.bytes)),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = TextMuted
+                    )
+                    OutlinedButton(onClick = offline::cancel, shape = RoundedCornerShape(12.dp)) {
+                        Text(stringResource(R.string.offline_cancel), color = TextHighContrast)
+                    }
+                }
+                is OfflineMapsState.Saved -> {
+                    val status = when {
+                        current.failed -> stringResource(R.string.offline_status_failed)
+                        current.isEmpty -> stringResource(R.string.offline_status_none)
+                        !current.complete -> stringResource(R.string.offline_status_incomplete, size(current.bytes))
+                        !current.coversAllSpots -> stringResource(R.string.offline_status_new_spots, size(current.bytes))
+                        else -> stringResource(R.string.offline_status_ready, size(current.bytes), dayAndTime(current.downloadedAt ?: 0L))
+                    }
+                    Text(
+                        status,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = if (current.failed) CautionYellow else TextMuted
+                    )
+                    val action = when {
+                        current.isEmpty -> R.string.offline_download
+                        current.failed || !current.complete -> R.string.offline_resume
+                        !current.coversAllSpots -> R.string.offline_download_new
+                        else -> null
+                    }
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        if (action != null) {
+                            Button(
+                                onClick = offline::download,
+                                colors = ButtonDefaults.buttonColors(containerColor = NauticalCyan, contentColor = OceanMidnight),
+                                shape = RoundedCornerShape(12.dp)
+                            ) { Text(stringResource(action), fontWeight = FontWeight.Bold) }
+                        }
+                        Spacer(Modifier.weight(1f))
+                        if (!current.isEmpty) {
+                            TextButton(onClick = offline::delete) { Text(stringResource(R.string.offline_delete), color = TextMuted) }
+                        }
+                    }
                 }
             }
         }

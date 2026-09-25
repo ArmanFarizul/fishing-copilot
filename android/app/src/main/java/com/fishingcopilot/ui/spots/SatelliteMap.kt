@@ -51,6 +51,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.fishingcopilot.R
+import com.fishingcopilot.maps.MAP_STYLE_URL
 import com.fishingcopilot.satellite.ClarityLevel
 import com.fishingcopilot.satellite.FrontStrength
 import com.fishingcopilot.satellite.MapCell
@@ -88,7 +89,6 @@ import java.time.format.FormatStyle
 import java.util.Locale
 import kotlin.math.roundToInt
 
-private const val STYLE_URL = "https://tiles.openfreemap.org/styles/dark"
 private const val CELLS_SOURCE = "satellite-cells"
 private const val CELLS_LAYER = "satellite-cells-fill"
 private const val SPOTS_SOURCE = "my-spots"
@@ -239,13 +239,20 @@ private fun SatelliteMapView(cells: List<MapCell>, spots: List<SpotItem>, onCell
                     setAttributionTintColor(TextMuted.toArgb())
                 }
                 libreMap.moveCamera(CameraUpdateFactory.newLatLngBounds(COVERAGE, 16))
-                libreMap.setStyle(STYLE_URL) { style ->
+                libreMap.setStyle(MAP_STYLE_URL) { style ->
                     style.addSource(GeoJsonSource(CELLS_SOURCE, FeatureCollection.fromFeatures(emptyList())))
                     style.addSource(GeoJsonSource(SPOTS_SOURCE, FeatureCollection.fromFeatures(emptyList())))
                     style.addLayer(
                         FillLayer(CELLS_LAYER, CELLS_SOURCE).withProperties(
                             fillColor(Expression.toColor(Expression.get(COLOR))),
-                            fillOpacity(0.55f),
+                            // Close in, one 25 km square fills the screen, so let the coastline show through.
+                            fillOpacity(
+                                Expression.interpolate(
+                                    Expression.linear(), Expression.zoom(),
+                                    Expression.stop(6, 0.55f),
+                                    Expression.stop(11, 0.25f)
+                                )
+                            ),
                             // Antialiased edges leave hairline seams between neighbouring squares.
                             fillAntialias(false)
                         )

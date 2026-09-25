@@ -18,6 +18,7 @@ Status pada 2026-09-25. MVP yang dipersetujui: pasang surut, Bite Score, cuaca l
 | Peringatan waktu emas | 45 minit sebelum setiap waktu emas; bunyi loceng dan getaran; tetapan hidup/mati, bunyi, getaran dan ujian |
 | Pipeline satelit | Larian harian di GitHub (`pipeline/`); suhu, tubir suhu, klorofil-a dan kejernihan air diterbitkan ke release `latest-data` (~49 KB) |
 | Kad satelit | Suhu, plankton, kejernihan dan tubir suhu terdekat bagi lubuk utama; berfungsi tanpa internet; lihat `satelit.md` |
+| Peta luar talian | Tetapan: muat turun peta asas OpenFreeMap (zoom 0–10 seluruh kawasan, zoom 11–14 kira-kira 40 km sekeliling setiap lubuk) ke pangkalan data luar talian MapLibre |
 | Peta satelit | Tab Lubuk, paparan Peta: petak berwarna bagi plankton, suhu, tubir suhu atau kejernihan; ketik petak untuk nilai; pin lubuk sendiri |
 | Amaran MetMalaysia | Skrin sendiri, dibuka daripada satu baris di skrin utama (merah jika ada amaran untuk kawasan lubuk); teks rasmi BM/EN; dipadankan dengan negeri lubuk; lihat `sumber-data.md` bahagian 5 |
 
@@ -25,7 +26,7 @@ Status pada 2026-09-25. MVP yang dipersetujui: pasang surut, Bite Score, cuaca l
 
 | Ciri | Keperluan / sebab tertangguh |
 |---|---|
-| Peta luar talian (MBTiles) dan carta nautika (OpenSeaMap, GEBCO) | Peta kini perlukan internet; OpenFreeMap menyediakan MBTiles mingguan |
+| Carta nautika (OpenSeaMap, GEBCO) | Kedalaman dan tanda pelayaran; peta asas luar talian sudah ada |
 | Jadual pasang surut JUPEM | Belum diperoleh; akan digunakan untuk menyelaras ketepatan dan datum |
 | Tackle Advisor penuh | Saiz ladung sudah dipaparkan pada baris arus; skrin khusus belum |
 | Keselamatan marin: penggera sauh hanyut, tersadai, tebing tenggelam | Perlukan servis GPS latar belakang |

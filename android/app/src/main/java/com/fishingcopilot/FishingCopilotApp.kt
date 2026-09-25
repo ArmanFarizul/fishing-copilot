@@ -17,6 +17,7 @@ import com.fishingcopilot.data.remote.SatelliteClient
 import com.fishingcopilot.data.satellite.SatelliteRepository
 import com.fishingcopilot.data.tide.TideRepository
 import com.fishingcopilot.data.warnings.WarningRepository
+import com.fishingcopilot.maps.OfflineMaps
 import org.maplibre.android.MapLibre
 import java.io.File
 import com.fishingcopilot.data.profile.DataStoreProfileRepository
@@ -40,6 +41,7 @@ class FishingCopilotApp : Application() {
     val warningRepository: WarningRepository by lazy {
         WarningRepository(File(filesDir, "warnings/metmalaysia.json"), MetWarningClient())
     }
+    val offlineMaps: OfflineMaps by lazy { OfflineMaps(this, database.fishingDao()) }
     val photoStore: PhotoStore by lazy { AppPhotoStore(this) }
     val alertSettings: AlertSettingsRepository by lazy { AlertSettingsRepository(this) }
     val biteForecaster: BiteForecaster by lazy {

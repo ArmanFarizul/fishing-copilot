@@ -19,6 +19,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.fishingcopilot.data.spots.CoastalArea
+import com.fishingcopilot.maps.MAP_STYLE_URL
 import com.fishingcopilot.data.spots.haversineKm
 import com.fishingcopilot.ui.theme.NauticalCyan
 import com.fishingcopilot.ui.theme.OceanMidnight
@@ -38,8 +39,6 @@ import org.maplibre.geojson.Feature
 import org.maplibre.geojson.FeatureCollection
 import org.maplibre.geojson.Point
 
-// OpenFreeMap: free, no key, attribution shown by MapLibre (https://openfreemap.org).
-private const val STYLE_URL = "https://tiles.openfreemap.org/styles/dark"
 private const val AREAS_SOURCE = "coastal-areas"
 private const val AREAS_LAYER = "coastal-areas-pins"
 private const val SELECTED_SOURCE = "selected-area"
@@ -80,7 +79,7 @@ fun SpotMap(
                     setAttributionTintColor(TextMuted.toArgb())
                 }
                 libreMap.moveCamera(CameraUpdateFactory.newLatLngBounds(MALAYSIA, 24))
-                libreMap.setStyle(STYLE_URL) { style ->
+                libreMap.setStyle(MAP_STYLE_URL) { style ->
                     style.addSource(GeoJsonSource(AREAS_SOURCE, areaFeatures()))
                     style.addSource(GeoJsonSource(SELECTED_SOURCE, FeatureCollection.fromFeatures(emptyList())))
                     style.addLayer(

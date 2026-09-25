@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Section heading on the Settings screen, below the prime-time alerts, for downloading map tiles so the spot picker and the satellite map work at sea with no signal. Shown in capitals. Keep under 24 characters. -->
+    <string name="offline_section">Offline maps</string>
+    <!-- One or two short lines under the heading: what it does (maps keep working at sea without signal) and that Wi-Fi is recommended because the download is tens of MB. Keep under 150 characters. -->
+    <string name="offline_body">Save the maps to your phone so they still work at sea with no signal. Best downloaded on Wi-Fi.</string>
+
+    <!-- Status line when nothing has been downloaded yet. Keep under 50 characters. -->
+    <string name="offline_status_none">No maps saved yet</string>
+    <!-- Status line when the download is complete; %1$s is the size on the phone, such as "38 MB", %2$s is when it was downloaded, already formatted as a day and time. Keep under 50 characters with values filled in. -->
+    <string name="offline_status_ready">%1$s saved %2$s</string>
+    <!-- Status line when a download was stopped before it finished; %1$s is the size saved so far, such as "12 MB". It can be resumed with offline_resume. Keep under 60 characters with the size filled in. -->
+    <string name="offline_status_incomplete">%1$s saved. The download stopped before it finished.</string>
+    <!-- Status line when the maps are downloaded but spots added or moved since then are not covered in close detail yet; %1$s is the size, such as "38 MB". Fixed with offline_download_new. Keep under 60 characters with the size filled in. -->
+    <string name="offline_status_new_spots">%1$s saved. New or moved spots aren\'t covered yet.</string>
+    <!-- Status line when the last download hit an error; the user should try again, ideally on Wi-Fi. Keep under 60 characters. -->
+    <string name="offline_status_failed">The last download didn\'t finish. Try again on Wi-Fi.</string>
+    <!-- Progress line while downloading; %1$d is the whole percent done (followed by a percent sign, written %% here), %2$s is the size so far, such as "12 MB". Keep under 40 characters with values filled in. -->
+    <string name="offline_downloading">Downloading %1$d%% · %2$s</string>
+
+    <!-- Button for the first download. Keep under 20 characters. -->
+    <string name="offline_download">Download maps</string>
+    <!-- Button to continue a download that was stopped or failed; it picks up where it left off. Keep under 20 characters. -->
+    <string name="offline_resume">Resume download</string>
+    <!-- Button to download close detail for spots added or moved since the last download. Keep under 22 characters. -->
+    <string name="offline_download_new">Download new spots</string>
+    <!-- Button shown while downloading; stops the download, which can be resumed later. Keep under 16 characters. -->
+    <string name="offline_cancel">Pause</string>
+    <!-- Small text button that removes the downloaded maps to free up space. Keep under 16 characters. -->
+    <string name="offline_delete">Delete maps</string>
+</resources>
